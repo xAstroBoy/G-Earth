@@ -166,6 +166,22 @@ public class HConnection {
         return proxy.sendToServer(packet);
     }
 
+    /**
+     * Pushes an extension-injected packet into the AFTER_MODIFICATION traffic pipeline purely so the packet
+     * logger shows it (tagged with the injecting extension). Injections normally go straight to the socket
+     * and never touch this pipeline, so they were invisible in the log. Order 2 is logging-only — no listener
+     * there re-sends — so this only displays the packet, it does not transmit it (the caller already did).
+     */
+    public void logInjectedPacket(HMessage.Direction direction, HPacket packet, String injectedBy) {
+        HMessage message = new HMessage(packet, direction, -1);
+        message.setInjectedBy(injectedBy);
+        trafficObservables[TrafficListener.AFTER_MODIFICATION].fireEvent(trafficListener -> {
+            message.getPacket().resetReadIndex();
+            trafficListener.onCapture(message);
+        });
+        message.getPacket().resetReadIndex();
+    }
+
     public boolean canSendPacket(HMessage.Direction direction, HPacket packet) {
         return isPacketSendingAllowed(direction, packet) && (developerMode || isPacketSendingSafe(direction, packet));
     }

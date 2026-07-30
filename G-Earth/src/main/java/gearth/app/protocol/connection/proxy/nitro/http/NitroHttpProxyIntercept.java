@@ -6,6 +6,8 @@ import com.github.monkeywie.proxyee.intercept.HttpProxyInterceptPipeline;
 import com.github.monkeywie.proxyee.intercept.common.FullResponseIntercept;
 import gearth.protocol.HPacket;
 import gearth.protocol.HPacketFormat;
+import gearth.app.protocol.connection.proxy.nitro.NitroConstants;
+import gearth.app.protocol.connection.proxy.nitro.NitroCookieForwarder;
 import gearth.app.protocol.connection.proxy.nitro.websocket.NitroWebsocketCallback;
 import gearth.app.protocol.connection.proxy.nitro.websocket.NitroWebsocketProxy;
 import gearth.app.services.nitro.NitroHotel;
@@ -30,6 +32,15 @@ public class NitroHttpProxyIntercept extends HttpProxyInterceptInitializer {
      */
     private static final int DEFAULT_MAX_CONTENT_LENGTH = 1024 * 1024 * 100;
     private static final int CLIENT_HELLO_PACKET_ID = 4000;
+
+    /**
+     * The first field of the nitro ClientHello (RELEASE_VERSION) message is the client release
+     * version, which always starts with this prefix (e.g. "NITRO-1-5-4"). We use this together
+     * with the {@link NitroConstants#WEBSOCKET_CLIENT_IDENTIFIER} field to detect the ClientHello
+     * by its payload signature, because some hotels remap header ids and therefore do not use the
+     * default {@link #CLIENT_HELLO_PACKET_ID}.
+     */
+    private static final String NITRO_RELEASE_VERSION_PREFIX = "NITRO";
 
     private final NitroHotelManager nitroHotelManager;
     private final NitroWebsocketCallback callback;
@@ -75,14 +86,47 @@ public class NitroHttpProxyIntercept extends HttpProxyInterceptInitializer {
             return false;
         }
 
-        // Check packet id.
+        // Fast path: the standard nitro ClientHello header id.
         final short packetId = packet.readShort();
-        if (packetId != CLIENT_HELLO_PACKET_ID) {
-            log.debug("websocket[{}] packet id mismatch: {} != {}", websocketUrl, packetId, CLIENT_HELLO_PACKET_ID);
-            return false;
+        if (packetId == CLIENT_HELLO_PACKET_ID) {
+            return true;
         }
 
-        return true;
+        // Fallback: hotels commonly remap their header ids, so the ClientHello is not guaranteed to
+        // use CLIENT_HELLO_PACKET_ID. Detect it by its payload signature instead, otherwise the
+        // connection is treated as non-nitro, the proxy is never paused and the client stalls
+        // mid-load (e.g. stuck at 60% right after authenticating).
+        if (isReleaseVersionSignature(packet)) {
+            log.info("websocket[{}] detected nitro ClientHello via payload signature (header id {})", websocketUrl, packetId);
+            return true;
+        }
+
+        log.debug("websocket[{}] packet id mismatch: {} != {} and no ClientHello signature", websocketUrl, packetId, CLIENT_HELLO_PACKET_ID);
+        return false;
+    }
+
+    /**
+     * Detect a nitro ClientHello (RELEASE_VERSION) message by its payload rather than its header id.
+     * The message layout is {@code [int length][short header][string releaseVersion][string clientIdentifier]...},
+     * where {@code releaseVersion} starts with {@link #NITRO_RELEASE_VERSION_PREFIX} and
+     * {@code clientIdentifier} equals {@link NitroConstants#WEBSOCKET_CLIENT_IDENTIFIER}.
+     *
+     * @param packet a packet positioned right after the header id has been read.
+     * @return true when the payload matches the ClientHello signature.
+     */
+    private boolean isReleaseVersionSignature(final HPacket packet) {
+        try {
+            final String releaseVersion = packet.readString();
+            if (!releaseVersion.startsWith(NITRO_RELEASE_VERSION_PREFIX)) {
+                return false;
+            }
+
+            final String clientIdentifier = packet.readString();
+            return NitroConstants.WEBSOCKET_CLIENT_IDENTIFIER.equals(clientIdentifier);
+        } catch (Exception e) {
+            // Reading past the buffer or malformed strings simply means this is not a ClientHello.
+            return false;
+        }
     }
 
     @Override
@@ -95,6 +139,10 @@ public class NitroHttpProxyIntercept extends HttpProxyInterceptInitializer {
 
             @Override
             public void handleResponse(HttpRequest httpRequest, FullHttpResponse httpResponse, HttpProxyInterceptPipeline pipeline) {
+                // Forward the site session cookie so cookie-gated asset hosts (images.bsshotel.it)
+                // work in extensions without a manual export.
+                NitroCookieForwarder.capture(httpRequest.headers().get(io.netty.handler.codec.http.HttpHeaderNames.COOKIE));
+
                 final byte[] data = ByteBufUtil.getBytes(httpResponse.content());
 
                 String uriPath = httpRequest.uri();

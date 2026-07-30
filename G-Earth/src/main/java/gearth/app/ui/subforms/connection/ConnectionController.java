@@ -213,6 +213,29 @@ public class ConnectionController extends SubForm {
                 Cacher.put(CONNECTION_INFO_CACHE_KEY, connectionSettings);
             }
 
+            // Auto-detected retro (Nitro/Unity): the host/port aren't typed in, but the connection now
+            // knows them — surface the detected host/port in the dropdowns (and cache) so the retro is
+            // visible and remembered next launch.
+            if (newState == HState.CONNECTED && !useFlash()) {
+                final String detectedHost = getHConnection().getDomain();
+                final int detectedPort = getHConnection().getServerPort();
+                if (detectedHost != null && !detectedHost.isEmpty() && detectedPort > 0) {
+                    final String detectedPortStr = Integer.toString(detectedPort);
+                    outHost.setText(detectedHost);
+                    outPort.setText(detectedPortStr);
+                    if (!inpHost.getItems().contains(detectedHost)) inpHost.getItems().add(detectedHost);
+                    if (!inpPort.getItems().contains(detectedPortStr)) inpPort.getItems().add(detectedPortStr);
+                    inpHost.setValue(detectedHost);
+                    inpPort.setValue(detectedPortStr);
+
+                    JSONObject connectionSettings = new JSONObject();
+                    connectionSettings.put(AUTODETECT_CACHE, cbx_autodetect.isSelected());
+                    connectionSettings.put(HOST_CACHE, detectedHost);
+                    connectionSettings.put(PORT_CACHE, detectedPort);
+                    Cacher.put(CONNECTION_INFO_CACHE_KEY, connectionSettings);
+                }
+            }
+
         }));
 
         Platform.runLater(this::updateInputUI);

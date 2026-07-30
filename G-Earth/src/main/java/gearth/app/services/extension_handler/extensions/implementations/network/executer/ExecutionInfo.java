@@ -46,8 +46,12 @@ public final class ExecutionInfo {
         EXTENSION_TYPE_TO_EXECUTION_COMMAND.put("*.py", new String[]{"python", "{path}"});
         EXTENSION_TYPE_TO_EXECUTION_COMMAND.put("*.py3", new String[]{"python3", "{path}"});
         EXTENSION_TYPE_TO_EXECUTION_COMMAND.put("*.sh", new String[]{"{path}"});
+        // Native executables: covers Rust (cargo build) and self-contained .NET
+        // (dotnet publish -r <rid> --self-contained -p:PublishSingleFile=true).
         EXTENSION_TYPE_TO_EXECUTION_COMMAND.put("*.exe", new String[]{"{path}"});
         EXTENSION_TYPE_TO_EXECUTION_COMMAND.put("*.js", new String[]{"node", "{path}"});
+        // C# / .NET framework-dependent extensions distributed as a managed DLL.
+        EXTENSION_TYPE_TO_EXECUTION_COMMAND.put("*.dll", new String[]{"dotnet", "{path}"});
 
         final String[] extraArgs = {"-p", "{port}", "-f", "{filename}", "-c", "{cookie}"};
 

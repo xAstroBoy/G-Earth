@@ -15,6 +15,10 @@ public class HMessage implements StringifyAble {
 
     private boolean isBlocked;
 
+    // The extension that injected/spoofed this packet, if any — set only for packets an extension sent
+    // (so the logger can show WHICH one). Purely in-memory: never serialized over the extension protocol.
+    private String injectedBy = null;
+
     public HMessage(HPacketFormat format, String fromString) {
         // A little bit hacky to get the correct packet class inside constructFromString.
         this.hPacket = format.createPacket(0);
@@ -48,6 +52,17 @@ public class HMessage implements StringifyAble {
     }
     public Direction getDestination() {
         return direction;
+    }
+
+    /** The extension that injected this packet, or null for ordinary captured traffic. */
+    public String getInjectedBy() {
+        return injectedBy;
+    }
+    public void setInjectedBy(String injectedBy) {
+        this.injectedBy = injectedBy;
+    }
+    public boolean isInjected() {
+        return injectedBy != null;
     }
 
     public boolean isCorrupted() {

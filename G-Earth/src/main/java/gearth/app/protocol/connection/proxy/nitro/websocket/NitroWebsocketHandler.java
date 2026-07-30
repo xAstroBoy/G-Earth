@@ -57,7 +57,7 @@ public class NitroWebsocketHandler implements NitroWebsocketCallback, StateChang
 
     @Override
     public void onConnected(String websocketUrl, Channel client, Channel server) {
-        logger.info("Nitro websocket connected");
+        logger.info("Nitro websocket connected: {}", websocketUrl);
 
         // Setup sessions.
         final NitroNettySession clientSession = new NitroNettySession(client);
@@ -85,8 +85,20 @@ public class NitroWebsocketHandler implements NitroWebsocketCallback, StateChang
         this.clientSessionProvider.setSession(clientSession);
         this.serverSessionProvider.setSession(serverSession);
 
-        // Setup proxy.
-        final HProxy proxy = new HProxy(HClient.NITRO, "", "", -1, -1, "");
+        // Setup proxy. Carry the real host (and port) from the websocket URL so G-Earth actually
+        // forwards the hotel to extensions — connectionStart sends getDomain()/getServerPort(), which
+        // read the proxy's input_domain/intercept_port. Without this the Nitro connection reported an
+        // empty host and every extension (Xabbo included) saw "unknown hotel".
+        String wsHost = "";
+        int wsPort = -1;
+        try {
+            final java.net.URI wsUri = java.net.URI.create(websocketUrl);
+            if (wsUri.getHost() != null) wsHost = wsUri.getHost();
+            wsPort = wsUri.getPort();
+        } catch (Exception ignored) { }
+        if (wsPort <= 0) wsPort = websocketUrl.toLowerCase().startsWith("wss") ? 443 : 80;
+
+        final HProxy proxy = new HProxy(HClient.NITRO, wsHost, wsHost, wsPort, wsPort, "");
 
         proxy.verifyProxy(
                 this.clientPacketHandler,

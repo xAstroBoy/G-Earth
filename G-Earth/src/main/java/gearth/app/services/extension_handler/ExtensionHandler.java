@@ -213,6 +213,12 @@ public class ExtensionHandler {
                             success = hConnection.sendToServer(packet);
                         }
 
+                        // Show the injection in the packet logger, tagged with this extension — injections go
+                        // straight to the socket otherwise and never appear in the log.
+                        if (success) {
+                            hConnection.logInjectedPacket(direction, packet, extension.getTitle());
+                        }
+
                         if (!success && hConnection.isPacketSendingAllowed(direction, packet) && !hConnection.isPacketSendingSafe(direction, packet)) {
                             extension.getExtensionObservable().fireEvent(extensionListener ->
                                     extensionListener.log(String.format("Extension %s attempted to send an unsafe packet, but had no permission",

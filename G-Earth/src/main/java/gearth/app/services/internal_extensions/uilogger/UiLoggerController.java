@@ -26,7 +26,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class UiLoggerController implements Initializable {
@@ -47,6 +50,7 @@ public class UiLoggerController implements Initializable {
     public CheckMenuItem chkMessageName;
     public CheckMenuItem chkMessageHash;
     public CheckMenuItem chkMessageId;
+    public CheckMenuItem chkInjectedBy;
     public Label lblPacketInfo;
     public CheckMenuItem chkAlwaysOnTop;
 
@@ -72,9 +76,25 @@ public class UiLoggerController implements Initializable {
     public CheckMenuItem chkReprLegacy;
     public CheckMenuItem chkReprHex;
     public CheckMenuItem chkReprRawHex;
-    public MenuItem menuItem_clear, menuItem_exportAll;
+    public MenuItem menuItem_clear, menuItem_exportAll, menuItem_exportNames;
 
     private Map<Integer, LinkedList<Long>> filterTimestamps = new HashMap<>();
+
+    // Buffer of the packets actually shown in the window, kept so they can be exported later together
+    // with their resolved message names (independent of the current display toggles).
+    private final List<LoggedPacket> loggedPackets = new ArrayList<>();
+
+    private static final class LoggedPacket {
+        final HPacket packet;
+        final boolean incoming;
+        final long timestamp;
+
+        LoggedPacket(HPacket packet, boolean incoming, long timestamp) {
+            this.packet = packet;
+            this.incoming = incoming;
+            this.timestamp = timestamp;
+        }
+    }
 
     private StyleClassedTextArea area;
 
@@ -84,6 +104,13 @@ public class UiLoggerController implements Initializable {
 
     private volatile boolean initialized = false;
     private final List<Element> appendLater = new ArrayList<>();
+
+    // Packets are coalesced: instead of one Platform.runLater per packet (which drowns the FX
+    // thread under a flood and freezes the window), incoming elements are queued and a single
+    // flush drains them per frame. The document is also capped so it can't grow without bound.
+    private final ConcurrentLinkedQueue<Element> pendingElements = new ConcurrentLinkedQueue<>();
+    private final AtomicBoolean flushScheduled = new AtomicBoolean(false);
+    private static final int MAX_DOCUMENT_LENGTH = 400_000;
 
     private List<MenuItem> allMenuItems = new ArrayList<>();
     private UiLogger uiLogger;
@@ -190,6 +217,36 @@ public class UiLoggerController implements Initializable {
         return text.trim();
     }
 
+    /**
+     * Re-decodes a string that was built from raw packet bytes (each byte one ISO-8859-1 char) as
+     * UTF-8, so multi-byte characters the client actually sent (accents, emoji, …) read correctly.
+     * ASCII is untouched; a byte run that is not valid UTF-8 falls back to the original text.
+     */
+    private static String reinterpretAsUtf8(String text) {
+        try {
+            byte[] bytes = text.getBytes(StandardCharsets.ISO_8859_1);
+            java.nio.charset.CharsetDecoder decoder = StandardCharsets.UTF_8.newDecoder()
+                    .onMalformedInput(java.nio.charset.CodingErrorAction.REPORT)
+                    .onUnmappableCharacter(java.nio.charset.CodingErrorAction.REPORT);
+            return decoder.decode(java.nio.ByteBuffer.wrap(bytes)).toString();
+        } catch (Exception e) {
+            // Not valid UTF-8 (e.g. binary stuff data) — keep the byte-accurate view.
+            return text;
+        }
+    }
+
+    /**
+     * The packet's message name for its header + direction, or null if none is known. Used to show
+     * the name inline in the packet line (e.g. Incoming[RoomModel:2434]) instead of just the header.
+     * Backed by a HashMap lookup, so it's cheap enough to call per packet.
+     */
+    private String headerName(boolean isIncoming, int headerId) {
+        if (uiLogger.getPacketInfoManager().getPacketInfoList().isEmpty()) return null;
+        return uiLogger.getPacketInfoManager().getAllPacketInfoFromHeaderId(
+                        isIncoming ? HMessage.Direction.TOCLIENT : HMessage.Direction.TOSERVER, headerId)
+                .stream().map(PacketInfo::getName).filter(Objects::nonNull).findFirst().orElse(null);
+    }
+
 
     private boolean checkFilter(HPacket packet) {
         int headerId = packet.headerId();
@@ -216,7 +273,7 @@ public class UiLoggerController implements Initializable {
         return list.size() >= threshold;
     }
 
-    public void appendMessage(HPacket packet, int types) {
+    public void appendMessage(HPacket packet, int types, String injectedBy) {
         boolean isBlocked = (types & PacketLogger.MESSAGE_TYPE.BLOCKED.getValue()) != 0;
         boolean isReplaced = (types & PacketLogger.MESSAGE_TYPE.REPLACED.getValue()) != 0;
         boolean isIncoming = (types & PacketLogger.MESSAGE_TYPE.INCOMING.getValue()) != 0;
@@ -232,6 +289,11 @@ public class UiLoggerController implements Initializable {
 
         if (isIncoming && !chkViewIncoming.isSelected()) return;
         if (!isIncoming && !chkViewOutgoing.isSelected()) return;
+
+        // Keep a copy of every packet that makes it into the window so it can be exported with names.
+        synchronized (loggedPackets) {
+            loggedPackets.add(new LoggedPacket(new HPacket(packet), isIncoming, System.currentTimeMillis()));
+        }
 
         ArrayList<Element> elements = new ArrayList<>();
 
@@ -274,6 +336,11 @@ public class UiLoggerController implements Initializable {
             elements.add(new Element("\n", ""));
         }
 
+        // Injected/spoofed by an extension — show WHICH one, so extension traffic is distinguishable from
+        // the client's own. Toggled by the "Injected by (extension)" menu item; messageinfo colour.
+        if (injectedBy != null && !injectedBy.isEmpty() && chkInjectedBy.isSelected())
+            elements.add(new Element(String.format("[injected by %s]\n", injectedBy), "messageinfo"));
+
         if (isBlocked) elements.add(new Element(String.format("[%s]\n", LanguageBundle.get("ext.logger.element.blocked")), "blocked"));
         else if (isReplaced) elements.add(new Element(String.format("[%s]\n", LanguageBundle.get("ext.logger.element.replaced")), "replaced"));
 
@@ -292,7 +359,13 @@ public class UiLoggerController implements Initializable {
                         LanguageBundle.get("ext.logger.element.direction.outgoing");
 
                 elements.add(new Element(String.format("%s[", type), packetType));
-                elements.add(new Element(String.valueOf(packet.headerId()), ""));
+                String hdrName = headerName(isIncoming, packet.headerId());
+                if (hdrName != null) {
+                    elements.add(new Element(hdrName, packetType));
+                    elements.add(new Element(":" + packet.headerId(), ""));
+                } else {
+                    elements.add(new Element(String.valueOf(packet.headerId()), ""));
+                }
                 elements.add(new Element("]", packetType));
 
                 elements.add(new Element(" -> ", ""));
@@ -320,7 +393,11 @@ public class UiLoggerController implements Initializable {
                 String cleaned = cleanTextContent(expr);
                 if (cleaned.equals(expr)) {
                     if (!expr.equals("") && chkDisplayStructure.isSelected()) {
-                        elements.add(new Element(cleanTextContent(expr), "structure"));
+                        // Nitro sends strings as UTF-8, but packets are handled byte-for-byte as
+                        // ISO-8859-1 (so injection stays lossless). Re-decode the readable structure
+                        // as UTF-8 here — ASCII (the {i:}{s:} scaffolding) is unchanged, only the
+                        // multi-byte string content is fixed, so "Ã" becomes "È" etc.
+                        elements.add(new Element(reinterpretAsUtf8(cleanTextContent(expr)), "structure"));
                         elements.add(new Element("\n", ""));
                     }
                 }
@@ -346,26 +423,48 @@ public class UiLoggerController implements Initializable {
 
     }
 
-    private synchronized void appendLog(List<Element> elements) {
-        Platform.runLater(() -> {
-            StringBuilder sb = new StringBuilder();
-            StyleSpansBuilder<Collection<String>> styleSpansBuilder = new StyleSpansBuilder<>(0);
+    private void appendLog(List<Element> elements) {
+        // Queue the work and schedule at most ONE flush; further packets ride the same flush.
+        pendingElements.addAll(elements);
+        if (flushScheduled.compareAndSet(false, true)) {
+            Platform.runLater(this::flushPendingElements);
+        }
+    }
 
-            for (Element element : elements) {
-                sb.append(element.text);
+    private void flushPendingElements() {
+        flushScheduled.set(false);
 
-                styleSpansBuilder.add(Collections.singleton(element.className), element.text.length());
-            }
+        StringBuilder sb = new StringBuilder();
+        StyleSpansBuilder<Collection<String>> styleSpansBuilder = new StyleSpansBuilder<>(0);
 
-            int oldLen = area.getLength();
+        Element element;
+        int count = 0;
+        while ((element = pendingElements.poll()) != null) {
+            sb.append(element.text);
+            styleSpansBuilder.add(Collections.singleton(element.className), element.text.length());
+            count++;
+        }
+        if (count == 0) {
+            return;
+        }
 
-            area.appendText(sb.toString());
-            area.setStyleSpans(oldLen, styleSpansBuilder.create());
+        int oldLen = area.getLength();
+        area.appendText(sb.toString());
+        area.setStyleSpans(oldLen, styleSpansBuilder.create());
 
-            if (chkAutoscroll.isSelected()) {
-                area.requestFollowCaret();
-            }
-        });
+        // Cap the document: a logger left running fills memory and every append then walks a
+        // huge document, which is the other half of the freeze. Trim the oldest text off the top.
+        int length = area.getLength();
+        if (length > MAX_DOCUMENT_LENGTH) {
+            area.deleteText(0, length - MAX_DOCUMENT_LENGTH);
+        }
+
+        if (chkAutoscroll.isSelected()) {
+            // appendText doesn't move the caret, so the caret sits at position 0 and following it
+            // would pin the view to the TOP. Move it to the end first so we follow to the bottom.
+            area.moveTo(area.getLength());
+            area.requestFollowCaret();
+        }
     }
 
     public void setStage(Stage stage) {
@@ -390,6 +489,9 @@ public class UiLoggerController implements Initializable {
 
     public void clearText(ActionEvent actionEvent) {
         area.clear();
+        synchronized (loggedPackets) {
+            loggedPackets.clear();
+        }
         System.gc();
     }
 
@@ -442,6 +544,63 @@ public class UiLoggerController implements Initializable {
                 ex.printStackTrace();
             }
 
+        }
+    }
+
+    public void exportWithNames(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+
+        FileChooser.ExtensionFilter extFilter =
+                new FileChooser.ExtensionFilter(String.format("%s (*.txt)", LanguageBundle.get("ext.logger.menu.packets.exportall.filetype")), "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
+        fileChooser.setTitle(LanguageBundle.get("ext.logger.menu.packets.exportall.windowtitle"));
+
+        File file = fileChooser.showSaveDialog(stage);
+        if (file == null) {
+            return;
+        }
+
+        List<LoggedPacket> snapshot;
+        synchronized (loggedPackets) {
+            snapshot = new ArrayList<>(loggedPackets);
+        }
+
+        java.text.SimpleDateFormat timeFormat = new java.text.SimpleDateFormat("HH:mm:ss.SSS");
+
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
+            out.write(String.format("# G-Earth packet export - %d packet(s)%n%n", snapshot.size()));
+
+            for (LoggedPacket logged : snapshot) {
+                HMessage.Direction direction = logged.incoming ? HMessage.Direction.TOCLIENT : HMessage.Direction.TOSERVER;
+                HPacket packet = logged.packet;
+
+                // Resolve the real message name(s) for this header id (same source the window uses).
+                List<PacketInfo> infos = uiLogger.getPacketInfoManager()
+                        .getAllPacketInfoFromHeaderId(direction, packet.headerId());
+                String name = infos.stream().map(PacketInfo::getName)
+                        .filter(Objects::nonNull).distinct().collect(Collectors.joining(", "));
+                if (name.isEmpty()) {
+                    name = "?";
+                }
+
+                String expression;
+                try {
+                    expression = packet.toExpression(direction, uiLogger.getPacketInfoManager(), true);
+                } catch (Exception e) {
+                    expression = "";
+                }
+
+                out.write(String.format("[%s] %s[%d] %s %s%n",
+                        timeFormat.format(new java.util.Date(logged.timestamp)),
+                        logged.incoming ? "TOCLIENT" : "TOSERVER",
+                        packet.headerId(),
+                        name,
+                        expression));
+            }
+
+            out.flush();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 

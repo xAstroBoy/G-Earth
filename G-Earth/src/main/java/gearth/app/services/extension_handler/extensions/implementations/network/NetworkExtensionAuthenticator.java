@@ -59,46 +59,8 @@ public final class NetworkExtensionAuthenticator {
      * @return {@code true} if permission is granted, {@code false} if not.
      */
     private static boolean askForPermission(NetworkExtensionClient extension) {
-        boolean[] allowConnection = {true};
-
-        final String connectExtensionKey = "allow_extension_connection";
-
-        if (ConfirmationDialog.showDialog(connectExtensionKey)) {
-
-            final CountDownLatch countDownLatch = new CountDownLatch(0);
-
-            Platform.runLater(() -> {
-                Alert alert = ConfirmationDialog.createAlertWithOptOut(Alert.AlertType.WARNING, connectExtensionKey
-                        , LanguageBundle.get("alert.confirmation.windowtitle"), null,
-                        "", LanguageBundle.get("alert.confirmation.button.remember"),
-                        ButtonType.YES, ButtonType.NO
-                );
-
-                alert.getDialogPane().setContent(new Label(String.format(LanguageBundle.get("alert.extconnection.content"), extension.getTitle()).replaceAll("\\\\n", System.lineSeparator())));
-
-                try {
-                    if (!(TitleBarAlert.create(alert).showAlertAndWait()
-                            .filter(t -> t == ButtonType.YES).isPresent())) {
-                        allowConnection[0] = false;
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                countDownLatch.countDown();
-                if (!ConfirmationDialog.showDialog(connectExtensionKey)) {
-                    rememberOption = allowConnection[0];
-                }
-            });
-
-            try {
-                countDownLatch.await();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return allowConnection[0];
-        }
-
-        return rememberOption;
+        // Auto-approve new extension connections instead of showing a confirmation dialog.
+        return true;
     }
 
     public static String generateCookieForExtension(String filename) {

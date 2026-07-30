@@ -23,9 +23,13 @@ public class PacketInfoManagerRemote {
         final AtomicReference<String> version = new AtomicReference<>(hotelversion);
         final List<PacketInfo> result = new ArrayList<>();
 
-        if (clientType == HClient.UNITY) {
+        if (clientType == HClient.UNITY || clientType == HClient.NITRO) {
+            // Nitro servers (e.g. BSS) resolve packet names from the local messages.json shipped next
+            // to the jar, generated from the client's own message config. The remote providers don't
+            // cover private Nitro servers, so without this every packet would show only its numeric
+            // header instead of its name.
             result.addAll(new GEarthUnityPacketInfoProvider(hotelversion).provide());
-        } else if (clientType == HClient.FLASH || clientType == HClient.NITRO || clientType == HClient.SHOCKWAVE) {
+        } else if (clientType == HClient.FLASH || clientType == HClient.SHOCKWAVE) {
             try {
                 List<RemotePacketInfoProvider> providers = new ArrayList<>();
                 //if (clientType != HClient.SHOCKWAVE) {
