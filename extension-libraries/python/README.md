@@ -11,11 +11,17 @@ helpers.
 
 ## Why replace the official one?
 
-* **Latin-1 strings, everywhere.** Habbo strings are ISO-8859-1. The official
-  library defaulted `append_string` / `replace_string` to **UTF-8**, which
-  silently corrupts any accented byte (mottos, figure strings, room names …)
-  and desyncs every subsequent read. This library uses Latin-1 by default and
-  keeps an `encoding=` parameter for the two spots that genuinely need UTF-8.
+* **Consistent string encoding.** The official library defaulted
+  `append_string` to **UTF-8** but read with **Latin-1** — the *mismatch*
+  silently corrupted accented bytes (mottos, figures, room names) and desynced
+  every subsequent read. Here read and write agree. Packet **field** strings
+  default to **UTF-8**, which is what this Nitro server uses on the wire (the
+  Nitro client reads/writes with `TextEncoder`/`TextDecoder("utf-8")`), so
+  `read_string()` gives you real text and `append_string()` writes it back
+  correctly. The **transport** layer (`HPacket.stringify()`/`from_string()` and
+  the G-Earth intercept `longString`) stays byte-preserving ISO-8859-1 so
+  arbitrary/binary packet bytes survive the trip through G-Earth intact. Every
+  field method still takes an `encoding=` override for the rare exception.
 * **`HScoreBoard` is included.** Many scripts do
   `from g_python.hparsers import HScoreBoard`; it was missing upstream.
 * **Name-based interception** resolved at runtime from G-Earth's
@@ -127,5 +133,5 @@ python tests/test_packets.py
 ```
 
 Decodes real captured packets (G-Earth stringify format) through `HPacket` and
-asserts every field reads back correctly, validating Latin-1 handling and
-big-endian framing, plus writer-API round-trips.
+asserts every field reads back correctly, validating UTF-8 field decoding,
+byte-preserving transport, and big-endian framing, plus writer-API round-trips.

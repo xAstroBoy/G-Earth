@@ -23,7 +23,16 @@ from typing import TYPE_CHECKING, Any, List, Optional, Tuple, Union
 if TYPE_CHECKING:  # pragma: no cover - typing only, avoids an import cycle
     from .hmessage import Direction
 
-# Charset used for every Habbo string unless explicitly overridden.
+# Encoding for packet FIELD strings (read_string/append_string/replace_string and
+# the 's'/'S' structure chars). This Nitro server is UTF-8 on the wire: the Nitro
+# client reads/writes strings with TextEncoder/TextDecoder("utf-8"). Length prefixes
+# are byte counts, which UTF-8 preserves, so this round-trips correctly.
+DEFAULT_ENCODING = "utf-8"
+
+# Byte-preserving charset for the TRANSPORT only: HPacket.stringify()/from_string()
+# and the G-Earth intercept longString (in gextension.py). It maps each raw byte
+# 1:1 to a char so arbitrary/binary packet bytes survive the trip through G-Earth
+# unchanged. Never use this for field content.
 LATIN1 = "iso-8859-1"
 
 # Mapping used by :meth:`HPacket.read` / :meth:`HPacket.peek` / :meth:`HPacket.skip`.
@@ -276,7 +285,7 @@ class HPacket:
             self.read_index += length
         return self.bytearray[index:index + length]
 
-    def read_string(self, index: Optional[int] = None, head: int = 2, encoding: str = LATIN1) -> str:
+    def read_string(self, index: Optional[int] = None, head: int = 2, encoding: str = DEFAULT_ENCODING) -> str:
         if index is None:
             index = self.read_index
             self.read_index += head + int.from_bytes(
@@ -284,7 +293,7 @@ class HPacket:
         length = int.from_bytes(self.bytearray[index:index + head], "big", signed=False)
         return self.bytearray[index + head:index + head + length].decode(encoding)
 
-    def read_long_string(self, index: Optional[int] = None, encoding: str = LATIN1) -> str:
+    def read_long_string(self, index: Optional[int] = None, encoding: str = DEFAULT_ENCODING) -> str:
         """Read a string prefixed by a 4-byte length (G-Earth ``longString``)."""
         return self.read_string(index, head=4, encoding=encoding)
 
@@ -386,7 +395,7 @@ class HPacket:
         self.is_edited = True
         return self
 
-    def replace_string(self, index: int, value: str, encoding: str = LATIN1) -> "HPacket":
+    def replace_string(self, index: int, value: str, encoding: str = DEFAULT_ENCODING) -> "HPacket":
         old_len = self.read_ushort(index)
         part1 = self.bytearray[0:index]
         part3 = self.bytearray[index + 2 + old_len:]
@@ -460,13 +469,13 @@ class HPacket:
         self.bytearray.append(1 if value else 0)
         return self.fix_length()._mark_edited()
 
-    def append_string(self, value: str, head: int = 2, encoding: str = LATIN1) -> "HPacket":
+    def append_string(self, value: str, head: int = 2, encoding: str = DEFAULT_ENCODING) -> "HPacket":
         encoded = value.encode(encoding)
         self.bytearray.extend(len(encoded).to_bytes(head, "big", signed=False))
         self.bytearray.extend(encoded)
         return self.fix_length()._mark_edited()
 
-    def append_long_string(self, value: str, encoding: str = LATIN1) -> "HPacket":
+    def append_long_string(self, value: str, encoding: str = DEFAULT_ENCODING) -> "HPacket":
         """Append a string prefixed by a 4-byte length (G-Earth ``longString``)."""
         return self.append_string(value, head=4, encoding=encoding)
 

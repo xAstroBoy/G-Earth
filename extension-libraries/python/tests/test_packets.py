@@ -193,15 +193,18 @@ def main():
 
 
 def _api_round_trip_tests():
-    """Build packets with the writer API and read them back (Latin-1 + framing)."""
-    # Latin-1 string round trip (accented motto).
+    """Build packets with the writer API and read them back (UTF-8 fields + framing)."""
+    # UTF-8 field string round trip (accented motto): this Nitro server is UTF-8,
+    # the client uses TextEncoder/TextDecoder('utf-8').
     p = HPacket(2198)
     p.append_string("Sicilianò")  # 'Sicilianò'
     assert not p.is_corrupted()
     p.reset()
     assert p.read_string() == "Sicilianò"
-    # The accented char must be a single 0xF2 byte, not two UTF-8 bytes.
-    assert bytes(p.bytearray)[-1] == 0xF2
+    # 'ò' is its 2-byte UTF-8 encoding (0xC3 0xB2), and the u16 length prefix is
+    # the UTF-8 byte count (10), not the char count (9).
+    assert bytes(p.bytearray)[-2:] == b"\xc3\xb2"
+    assert bytes(p.bytearray[6:8]) == b"\x00\x0a"
 
     # Mixed structured round trip.
     p = HPacket(1234, 10, "hi", True, -5)
