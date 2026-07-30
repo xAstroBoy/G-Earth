@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "g-python"
+version = "1.0.0"
+description = "Enhanced, drop-in compatible G-Earth extension interface for Python."
+readme = "README.md"
+requires-python = ">=3.7"
+authors = [{ name = "sirjonasxx" }]
+license = { text = "MIT" }
+keywords = ["g-earth", "habbo", "extension", "packets", "gearth"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Topic :: Games/Entertainment",
+]
+# Zero mandatory third-party dependencies: stdlib sockets/threading only.
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/sirjonasxx/G-Python"
+
+[tool.setuptools]
+packages = ["g_python"]
