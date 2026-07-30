@@ -25,8 +25,14 @@ public class GEarthUnityPacketInfoProvider extends PacketInfoProvider {
     @Override
     protected File getFile() {
         try {
-            return new File(new File(GEarth.class.getProtectionDomain().getCodeSource().getLocation().toURI())
-                    .getParentFile(), "messages.json");
+            // Prefer the explicit data dir (set e.g. by an in-process/jpackage launcher
+            // whose jar no longer sits next to the app data); fall back to the code-source
+            // parent for the classic launcher layout.
+            final String dataDir = System.getProperty("gearth.data.dir");
+            final File base = (dataDir != null && !dataDir.isEmpty())
+                    ? new File(dataDir)
+                    : new File(GEarth.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile();
+            return new File(base, "messages.json");
         } catch (URISyntaxException e) {
             LOG.error("Could not find messages.json file", e);
             return null;
