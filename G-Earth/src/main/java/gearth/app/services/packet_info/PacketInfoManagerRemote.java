@@ -20,15 +20,19 @@ public class PacketInfoManagerRemote {
     private static final Logger LOG = LoggerFactory.getLogger(PacketInfoManagerRemote.class);
 
     public static PacketInfoManager fromHotelVersion(String hotelversion, HClient clientType) {
+        return fromHotelVersion(hotelversion, clientType, null);
+    }
+
+    public static PacketInfoManager fromHotelVersion(String hotelversion, HClient clientType, String host) {
         final AtomicReference<String> version = new AtomicReference<>(hotelversion);
         final List<PacketInfo> result = new ArrayList<>();
 
         if (clientType == HClient.UNITY || clientType == HClient.NITRO) {
-            // Nitro servers (e.g. BSS) resolve packet names from the local messages.json shipped next
-            // to the jar, generated from the client's own message config. The remote providers don't
-            // cover private Nitro servers, so without this every packet would show only its numeric
-            // header instead of its name.
-            result.addAll(new GEarthUnityPacketInfoProvider(hotelversion).provide());
+            // Nitro servers (e.g. BSS) resolve packet names from a local messages.json (per-retro
+            // <dataDir>/messages/<host>.json, else the shared messages.json), generated from the
+            // client's own message config. The remote providers don't cover private Nitro servers,
+            // so without this every packet would show only its numeric header instead of its name.
+            result.addAll(new GEarthUnityPacketInfoProvider(hotelversion, host).provide());
         } else if (clientType == HClient.FLASH || clientType == HClient.SHOCKWAVE) {
             try {
                 List<RemotePacketInfoProvider> providers = new ArrayList<>();

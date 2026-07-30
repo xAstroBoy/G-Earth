@@ -49,7 +49,7 @@ public class HProxy {
         this.inHandler = incomingHandler;
         this.outHandler = outgoingHandler;
         this.clientIdentifier = clientIdentifier;
-        this.packetInfoManager = PacketInfoManagerRemote.fromHotelVersion(hotelVersion, hClient);
+        this.packetInfoManager = PacketInfoManagerRemote.fromHotelVersion(hotelVersion, hClient, input_domain);
 
         SafePacketsContainer packetsContainer = PacketSafetyManager.PACKET_SAFETY_MANAGER.getPacketContainer(hotelVersion);
         for (PacketInfo packetInfo : packetInfoManager.getPacketInfoList()) {
