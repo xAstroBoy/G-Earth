@@ -170,14 +170,14 @@ public class HttpProxyManager {
                     .ciphers(new HashSet<>(Arrays.asList(NitroConstants.CIPHER_SUITES)))
                     .build());
         } catch (SSLException e) {
-            proxyServer.close();
+            proxyServer.closeAndWait();
 
             log.error("Failed to create proxy SSL context", e);
             return false;
         }
 
         if (!registerProxy(httpPort)) {
-            proxyServer.close();
+            proxyServer.closeAndWait();
 
             log.error("Failed to register system proxy");
             return false;
@@ -192,14 +192,14 @@ public class HttpProxyManager {
         }
     }
 
-    public void stop() {
+    public synchronized void stop() {
         pause();
 
         if (proxyServer == null) {
             return;
         }
 
-        proxyServer.close();
+        proxyServer.closeAndWait();
         proxyServer = null;
     }
 

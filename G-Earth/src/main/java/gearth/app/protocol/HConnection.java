@@ -34,7 +34,8 @@ public class HConnection {
     private volatile HProxy proxy = null;
 
     private ProxyProviderFactory proxyProviderFactory;
-    private ProxyProvider proxyProvider = null;
+    private volatile ProxyProvider proxyProvider = null;
+    private volatile ProxyProvider shuttingDownProvider = null;
 
     private volatile boolean developerMode = false;
 
@@ -103,9 +104,43 @@ public class HConnection {
     }
 
     public void abort()	{
-        if (proxyProvider != null) {
-            proxyProvider.abort();
-            proxyProvider = null;
+        final ProxyProvider currentProvider;
+        synchronized (this) {
+            currentProvider = proxyProvider;
+            if (currentProvider != null) {
+                proxyProvider = null;
+                shuttingDownProvider = currentProvider;
+            }
+        }
+
+        if (currentProvider != null) {
+            currentProvider.abort();
+        }
+    }
+
+    public void abortAndWait() {
+        final ProxyProvider currentProvider;
+        final ProxyProvider previousProvider;
+        synchronized (this) {
+            currentProvider = proxyProvider;
+            previousProvider = shuttingDownProvider;
+            if (currentProvider != null) {
+                proxyProvider = null;
+                shuttingDownProvider = currentProvider;
+            }
+        }
+
+        if (currentProvider != null) {
+            currentProvider.abortAndWait();
+        }
+        if (previousProvider != null && previousProvider != currentProvider) {
+            previousProvider.abortAndWait();
+        }
+
+        synchronized (this) {
+            if (shuttingDownProvider == currentProvider || shuttingDownProvider == previousProvider) {
+                shuttingDownProvider = null;
+            }
         }
     }
 

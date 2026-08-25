@@ -116,8 +116,8 @@ public class GEarthController {
     }
 
     public void exit() {
+        hConnection.abortAndWait();
         tabs.forEach(SubForm::exit);
-        hConnection.abort();
     }
 
     private void initLanguageBinding() {

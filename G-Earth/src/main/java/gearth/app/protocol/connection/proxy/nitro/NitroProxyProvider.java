@@ -14,6 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class NitroProxyProvider implements ProxyProvider, StateChangeListener {
@@ -26,6 +30,7 @@ public class NitroProxyProvider implements ProxyProvider, StateChangeListener {
     private final NitroWebsocketHandler nitroWebsocketHandler;
     private final HttpProxyManager nitroHttpProxy;
     private final AtomicBoolean abortLock;
+    private final CompletableFuture<Void> abortComplete;
 
     public NitroProxyProvider(HProxySetter proxySetter, HStateSetter stateSetter, HConnection connection) {
         this.stateSetter = stateSetter;
@@ -34,6 +39,7 @@ public class NitroProxyProvider implements ProxyProvider, StateChangeListener {
         this.nitroWebsocketHandler = new NitroWebsocketHandler(this.nitroHotelManager, proxySetter, stateSetter, connection);
         this.nitroHttpProxy = new HttpProxyManager();
         this.abortLock = new AtomicBoolean();
+        this.abortComplete = new CompletableFuture<>();
     }
 
     @Override
@@ -67,21 +73,41 @@ public class NitroProxyProvider implements ProxyProvider, StateChangeListener {
 
         stateSetter.setState(HState.ABORTING);
 
-        new Thread(() -> {
+        Thread shutdownThread = new Thread(() -> {
             logger.info("Stopping nitro http proxy");
 
             try {
                 nitroHttpProxy.stop();
             } catch (Exception e) {
                 logger.error("Failed to stop nitro http proxy", e);
+            } finally {
+                try {
+                    stateSetter.setState(HState.NOT_CONNECTED);
+                    connection.getStateObservable().removeListener(this);
+                } finally {
+                    abortComplete.complete(null);
+                }
             }
 
-            stateSetter.setState(HState.NOT_CONNECTED);
-
-            connection.getStateObservable().removeListener(this);
-
             logger.info("Nitro proxy stopped");
-        }).start();
+        }, "Nitro Proxy Shutdown");
+        shutdownThread.start();
+    }
+
+    @Override
+    public void abortAndWait() {
+        abort();
+
+        try {
+            abortComplete.get(10, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            logger.warn("Interrupted while waiting for the nitro proxy to stop");
+        } catch (ExecutionException e) {
+            logger.error("Failed while waiting for the nitro proxy to stop", e.getCause());
+        } catch (TimeoutException e) {
+            logger.error("Timed out waiting for the nitro proxy to stop");
+        }
     }
 
     @Override

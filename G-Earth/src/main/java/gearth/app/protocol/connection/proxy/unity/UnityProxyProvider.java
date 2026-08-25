@@ -12,6 +12,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class UnityProxyProvider implements ProxyProvider, StateChangeListener {
 
@@ -21,12 +26,16 @@ public class UnityProxyProvider implements ProxyProvider, StateChangeListener {
     private final HConnection hConnection;
     private final UnityWebsocketServer websocketServer;
     private final HttpProxyManager httpProxy;
+    private final AtomicBoolean abortStarted;
+    private final CompletableFuture<Void> abortComplete;
 
     public UnityProxyProvider(HProxySetter proxySetter, HStateSetter stateSetter, HConnection hConnection) {
         this.stateSetter = stateSetter;
         this.hConnection = hConnection;
         this.websocketServer = new UnityWebsocketServer(new UnityCommunicatorConfig(proxySetter, stateSetter, hConnection, this));
         this.httpProxy = new HttpProxyManager();
+        this.abortStarted = new AtomicBoolean();
+        this.abortComplete = new CompletableFuture<>();
     }
 
     @Override
@@ -63,34 +72,61 @@ public class UnityProxyProvider implements ProxyProvider, StateChangeListener {
     }
 
     @Override
-    public synchronized void abort() {
+    public void abort() {
+        if (!abortStarted.compareAndSet(false, true)) {
+            return;
+        }
+
         stateSetter.setState(HState.ABORTING);
 
-        new Thread(() -> {
-            hConnection.getStateObservable().removeListener(this);
-
-            LOG.info("Stopping unity websocket server");
-
+        Thread shutdownThread = new Thread(() -> {
             try {
-                websocketServer.stop();
-            } catch (Exception ex) {
-                LOG.error("Failed to stop unity websocket server", ex);
+                hConnection.getStateObservable().removeListener(this);
+
+                LOG.info("Stopping unity websocket server");
+
+                try {
+                    websocketServer.stop();
+                } catch (Exception ex) {
+                    LOG.error("Failed to stop unity websocket server", ex);
+                } finally {
+                    LOG.info("Unity websocket server stopped");
+                }
+
+                LOG.info("Stopping unity http proxy");
+
+                try {
+                    httpProxy.stop();
+                } catch (Exception e) {
+                    LOG.error("Failed to stop unity http proxy", e);
+                } finally {
+                    LOG.info("Unity http proxy stopped");
+                }
             } finally {
-                LOG.info("Unity websocket server stopped");
+                try {
+                    stateSetter.setState(HState.NOT_CONNECTED);
+                } finally {
+                    abortComplete.complete(null);
+                }
             }
+        }, "Unity Proxy Shutdown");
+        shutdownThread.start();
+    }
 
-            LOG.info("Stopping unity http proxy");
+    @Override
+    public void abortAndWait() {
+        abort();
 
-            try {
-                httpProxy.stop();
-            } catch (Exception e) {
-                LOG.error("Failed to stop unity http proxy", e);
-            } finally {
-                LOG.info("Unity http proxy stopped");
-            }
-
-            stateSetter.setState(HState.NOT_CONNECTED);
-        }).start();
+        try {
+            abortComplete.get(10, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            LOG.warn("Interrupted while waiting for the unity proxy to stop");
+        } catch (ExecutionException e) {
+            LOG.error("Failed while waiting for the unity proxy to stop", e.getCause());
+        } catch (TimeoutException e) {
+            LOG.error("Timed out waiting for the unity proxy to stop");
+        }
     }
 
     @Override
