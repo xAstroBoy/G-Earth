@@ -52,8 +52,8 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
-                    <Label text="Packet size limit:"/>
-                    <TextField fx:id="txtPacketLimit" text="8000" GridPane.rowIndex="1">
+                    <Label text="Packet limit (0 = all):"/>
+                    <TextField fx:id="txtPacketLimit" text="0" GridPane.rowIndex="1">
                         <GridPane.margin>
                             <Insets right="8.0"/>
                         </GridPane.margin>

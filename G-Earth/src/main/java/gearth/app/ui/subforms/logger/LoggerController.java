@@ -11,11 +11,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import gearth.protocol.HMessage;
+import gearth.protocol.HPacket;
 import gearth.app.ui.SubForm;
 import gearth.app.ui.subforms.logger.loggerdisplays.PacketLogger;
 import gearth.app.ui.subforms.logger.loggerdisplays.PacketLoggerFactory;
 
 import java.util.Calendar;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class LoggerController extends SubForm {
 
@@ -30,7 +33,36 @@ public class LoggerController extends SubForm {
     public Button btnUpdate;
     public CheckBox cbx_showstruct;
 
-    private int packetLimit = 8000;
+    private int packetLimit = 0;
+
+    /*
+     * Traffic listeners run in the packet forwarding path. Never format packets or enqueue one
+     * JavaFX callback per packet there: a single large packet or a traffic burst would otherwise
+     * monopolize the FX event queue. The queue is intentionally lossless; the FX thread consumes
+     * it in short time slices and UiLogger performs the expensive formatting on its own worker.
+     */
+    private static final int MAX_MESSAGES_PER_FX_SLICE = 32;
+    private static final long FX_SLICE_BUDGET_NANOS = 4_000_000L;
+    private final ConcurrentLinkedQueue<PendingLogMessage> pendingLogMessages = new ConcurrentLinkedQueue<>();
+    private final AtomicBoolean logDrainScheduled = new AtomicBoolean(false);
+
+    private static final class PendingLogMessage {
+        final HPacket packet;
+        final HMessage.Direction destination;
+        final boolean blocked;
+        final boolean replaced;
+        final boolean injected;
+        final String injectedBy;
+
+        PendingLogMessage(HMessage message) {
+            packet = message.getPacket();
+            destination = message.getDestination();
+            blocked = message.isBlocked();
+            replaced = packet.isReplaced();
+            injected = message.isInjected();
+            injectedBy = message.getInjectedBy();
+        }
+    }
 
     private PacketLoggerFactory packetLoggerFactory;
     private PacketLogger packetLogger;
@@ -53,30 +85,66 @@ public class LoggerController extends SubForm {
             }
         }));
 
-        getHConnection().addTrafficListener(2, message -> { Platform.runLater(() -> {
-            if (message.getDestination() == HMessage.Direction.TOCLIENT && cbx_blockIn.isSelected() ||
-                    message.getDestination() == HMessage.Direction.TOSERVER && cbx_blockOut.isSelected()) return;
+        getHConnection().addTrafficListener(2, this::enqueueLogMessage);
+    }
 
-            if (cbx_splitPackets.isSelected()) {
-                packetLogger.appendSplitLine();
-            }
+    private void enqueueLogMessage(HMessage message) {
+        pendingLogMessages.add(new PendingLogMessage(message));
+        scheduleLogDrain();
+    }
 
-            int types = 0;
-            if (message.getDestination() == HMessage.Direction.TOCLIENT) types |= PacketLogger.MESSAGE_TYPE.INCOMING.getValue();
-            else if (message.getDestination() == HMessage.Direction.TOSERVER) types |= PacketLogger.MESSAGE_TYPE.OUTGOING.getValue();
-            if (message.getPacket().length() >= packetLimit) types |= PacketLogger.MESSAGE_TYPE.SKIPPED.getValue();
-            if (message.isBlocked()) types |= PacketLogger.MESSAGE_TYPE.BLOCKED.getValue();
-            if (message.getPacket().isReplaced()) types |= PacketLogger.MESSAGE_TYPE.REPLACED.getValue();
-            if (message.isInjected()) types |= PacketLogger.MESSAGE_TYPE.INJECTED.getValue();
-            if (cbx_showAdditional.isSelected()) types |= PacketLogger.MESSAGE_TYPE.SHOW_ADDITIONAL_DATA.getValue();
+    private void scheduleLogDrain() {
+        if (logDrainScheduled.compareAndSet(false, true)) {
+            Platform.runLater(this::drainLogMessages);
+        }
+    }
 
-            packetLogger.appendMessage(message.getPacket(), types, message.getInjectedBy());
+    private void drainLogMessages() {
+        final long deadline = System.nanoTime() + FX_SLICE_BUDGET_NANOS;
+        int processed = 0;
+        PendingLogMessage message;
 
-            if (cbx_showstruct.isSelected() && message.getPacket().length() < packetLimit) {
-                packetLogger.appendStructure(message.getPacket(), message.getDestination());
-            }
-        });
-        });
+        while (processed < MAX_MESSAGES_PER_FX_SLICE
+                && System.nanoTime() < deadline
+                && (message = pendingLogMessages.poll()) != null) {
+            appendLogMessage(message);
+            processed++;
+        }
+
+        if (!pendingLogMessages.isEmpty()) {
+            Platform.runLater(this::drainLogMessages);
+            return;
+        }
+
+        logDrainScheduled.set(false);
+        // Close the race where traffic arrived between isEmpty() and resetting the flag.
+        if (!pendingLogMessages.isEmpty()) {
+            scheduleLogDrain();
+        }
+    }
+
+    private void appendLogMessage(PendingLogMessage message) {
+        if (message.destination == HMessage.Direction.TOCLIENT && cbx_blockIn.isSelected() ||
+                message.destination == HMessage.Direction.TOSERVER && cbx_blockOut.isSelected()) return;
+
+        if (cbx_splitPackets.isSelected()) {
+            packetLogger.appendSplitLine();
+        }
+
+        int types = 0;
+        if (message.destination == HMessage.Direction.TOCLIENT) types |= PacketLogger.MESSAGE_TYPE.INCOMING.getValue();
+        else if (message.destination == HMessage.Direction.TOSERVER) types |= PacketLogger.MESSAGE_TYPE.OUTGOING.getValue();
+        if (packetLimit > 0 && message.packet.length() >= packetLimit) types |= PacketLogger.MESSAGE_TYPE.SKIPPED.getValue();
+        if (message.blocked) types |= PacketLogger.MESSAGE_TYPE.BLOCKED.getValue();
+        if (message.replaced) types |= PacketLogger.MESSAGE_TYPE.REPLACED.getValue();
+        if (message.injected) types |= PacketLogger.MESSAGE_TYPE.INJECTED.getValue();
+        if (cbx_showAdditional.isSelected()) types |= PacketLogger.MESSAGE_TYPE.SHOW_ADDITIONAL_DATA.getValue();
+
+        packetLogger.appendMessage(message.packet, types, message.injectedBy);
+
+        if (cbx_showstruct.isSelected() && (packetLimit <= 0 || message.packet.length() < packetLimit)) {
+            packetLogger.appendStructure(message.packet, message.destination);
+        }
     }
 
     public void updatePacketLimit(ActionEvent actionEvent) {

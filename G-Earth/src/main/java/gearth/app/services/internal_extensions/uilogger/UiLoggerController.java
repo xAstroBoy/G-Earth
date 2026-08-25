@@ -28,8 +28,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 public class UiLoggerController implements Initializable {
@@ -81,7 +87,8 @@ public class UiLoggerController implements Initializable {
     private Map<Integer, LinkedList<Long>> filterTimestamps = new HashMap<>();
 
     // Buffer of the packets actually shown in the window, kept so they can be exported later together
-    // with their resolved message names (independent of the current display toggles).
+    // with their resolved message names (independent of the current display toggles). Packet copies are
+    // made on the formatter worker, never on the JavaFX or packet-forwarding threads.
     private final List<LoggedPacket> loggedPackets = new ArrayList<>();
 
     private static final class LoggedPacket {
@@ -105,12 +112,68 @@ public class UiLoggerController implements Initializable {
     private volatile boolean initialized = false;
     private final List<Element> appendLater = new ArrayList<>();
 
-    // Packets are coalesced: instead of one Platform.runLater per packet (which drowns the FX
-    // thread under a flood and freezes the window), incoming elements are queued and a single
-    // flush drains them per frame. The document is also capped so it can't grow without bound.
-    private final ConcurrentLinkedQueue<Element> pendingElements = new ConcurrentLinkedQueue<>();
+    // Full packet formatting is serialized away from JavaFX. This queue is deliberately unbounded:
+    // logger output is lossless and packets are never dropped or truncated just to protect the UI.
+    private final ThreadPoolExecutor formatterExecutor = new ThreadPoolExecutor(
+            1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), runnable -> {
+        Thread thread = new Thread(runnable, "G-Earth packet logger formatter");
+        thread.setDaemon(true);
+        return thread;
+    });
+    private final ExecutorService exportExecutor = Executors.newSingleThreadExecutor(runnable -> {
+        Thread thread = new Thread(runnable, "G-Earth packet logger export");
+        thread.setDaemon(true);
+        return thread;
+    });
+    private final AtomicLong logGeneration = new AtomicLong();
+    private final AtomicBoolean loggerInfoUpdateScheduled = new AtomicBoolean(false);
+
+    // Formatted output is streamed into RichTextFX in small slices. PendingElement keeps an offset
+    // into the original string, avoiding repeated giant substring copies while a huge packet drains.
+    private static final class PendingElement {
+        final Element element;
+        final long generation;
+        int offset;
+
+        PendingElement(Element element, long generation) {
+            this.element = element;
+            this.generation = generation;
+        }
+    }
+
+    private final ConcurrentLinkedDeque<PendingElement> pendingElements = new ConcurrentLinkedDeque<>();
     private final AtomicBoolean flushScheduled = new AtomicBoolean(false);
-    private static final int MAX_DOCUMENT_LENGTH = 400_000;
+    private static final int MAX_CHARS_PER_FX_SLICE = 16_384;
+    private static final int MAX_ELEMENTS_PER_FX_SLICE = 128;
+    private static final long FX_RENDER_BUDGET_NANOS = 5_000_000L;
+    private static final int MAX_DISPLAY_PARAGRAPH_CHARS = 4_096;
+    private static final int EXPORT_UI_CHUNK_CHARS = 65_536;
+
+    private static final class RenderOptions {
+        final boolean timestamp;
+        final boolean messageName;
+        final boolean messageHash;
+        final boolean messageId;
+        final boolean injectedBy;
+        final boolean reprLegacy;
+        final boolean reprHex;
+        final boolean reprRawHex;
+        final boolean displayStructure;
+        final boolean skipBigPackets;
+
+        RenderOptions(UiLoggerController controller) {
+            timestamp = controller.chkTimestamp.isSelected();
+            messageName = controller.chkMessageName.isSelected();
+            messageHash = controller.chkMessageHash.isSelected();
+            messageId = controller.chkMessageId.isSelected();
+            injectedBy = controller.chkInjectedBy.isSelected();
+            reprLegacy = controller.chkReprLegacy.isSelected();
+            reprHex = controller.chkReprHex.isSelected();
+            reprRawHex = controller.chkReprRawHex.isSelected();
+            displayStructure = controller.chkDisplayStructure.isSelected();
+            skipBigPackets = controller.chkSkipBigPackets.isSelected();
+        }
+    }
 
     private List<MenuItem> allMenuItems = new ArrayList<>();
     private UiLogger uiLogger;
@@ -172,6 +235,7 @@ public class UiLoggerController implements Initializable {
         allMenuItems.addAll(Arrays.asList(
                 chkViewIncoming, chkViewOutgoing, chkDisplayStructure, chkAutoscroll,
                 chkSkipBigPackets, chkMessageName, chkMessageHash, chkMessageId,
+                chkInjectedBy,
                 chkOpenOnConnect, chkResetOnConnect, chkHideOnDisconnect, chkResetOnDisconnect,
                 chkAntiSpam_none, chkAntiSpam_low, chkAntiSpam_medium, chkAntiSpam_high, chkAntiSpam_ultra,
                 chkTimestamp, chkReprHex, chkReprLegacy, chkReprRawHex
@@ -290,24 +354,54 @@ public class UiLoggerController implements Initializable {
         if (isIncoming && !chkViewIncoming.isSelected()) return;
         if (!isIncoming && !chkViewOutgoing.isSelected()) return;
 
-        // Keep a copy of every packet that makes it into the window so it can be exported with names.
+        // Snapshot JavaFX-owned settings here, then leave the UI thread immediately. The packet is
+        // cloned and fully rendered by a single ordered worker so even multi-megabyte packets cannot
+        // block the game, the proxy, or this window.
+        RenderOptions options = new RenderOptions(this);
+        long timestamp = System.currentTimeMillis();
+        long generation = logGeneration.get();
+        formatterExecutor.execute(() -> formatPacket(packet, types, injectedBy, isIncoming,
+                isBlocked, isReplaced, timestamp, options, generation));
+    }
+
+    /**
+     * Breaks very long single-line representations into virtualizable paragraphs without removing
+     * any payload characters. This prevents RichTextFX from repeatedly laying out one enormous
+     * wrapped paragraph while a packet is streamed into the document.
+     */
+    static void addChunkedDisplay(List<Element> elements, String text, String className) {
+        if (text.isEmpty()) return;
+        for (int start = 0; start < text.length(); start += MAX_DISPLAY_PARAGRAPH_CHARS) {
+            int end = Math.min(text.length(), start + MAX_DISPLAY_PARAGRAPH_CHARS);
+            elements.add(new Element(text.substring(start, end), className));
+            if (end < text.length()) {
+                elements.add(new Element("\n", ""));
+            }
+        }
+    }
+
+    private void formatPacket(HPacket sourcePacket, int types, String injectedBy, boolean isIncoming,
+                              boolean isBlocked, boolean isReplaced, long timestamp,
+                              RenderOptions options, long generation) {
+        HPacket packet = new HPacket(sourcePacket);
+        if (generation != logGeneration.get()) return;
+
+        // Keep every accepted packet in full for the existing named/expression export.
         synchronized (loggedPackets) {
-            loggedPackets.add(new LoggedPacket(new HPacket(packet), isIncoming, System.currentTimeMillis()));
+            if (generation != logGeneration.get()) return;
+            loggedPackets.add(new LoggedPacket(packet, isIncoming, timestamp));
         }
 
         ArrayList<Element> elements = new ArrayList<>();
 
-
-        if (chkTimestamp.isSelected()) {
-            elements.add(new Element(String.format("(%s: %d)\n", LanguageBundle.get("ext.logger.element.timestamp"), System.currentTimeMillis()), "timestamp"));
+        if (options.timestamp) {
+            elements.add(new Element(String.format("(%s: %d)\n", LanguageBundle.get("ext.logger.element.timestamp"), timestamp), "timestamp"));
         }
 
         boolean packetInfoAvailable = uiLogger.getPacketInfoManager().getPacketInfoList().size() > 0;
-
-
         boolean addedSomeMessageInfo = false;
 
-        if ((chkMessageName.isSelected() || chkMessageHash.isSelected()) && packetInfoAvailable) {
+        if ((options.messageName || options.messageHash) && packetInfoAvailable) {
             List<PacketInfo> messages = uiLogger.getPacketInfoManager().getAllPacketInfoFromHeaderId(
                     (isIncoming ? HMessage.Direction.TOCLIENT : HMessage.Direction.TOSERVER),
                     packet.headerId()
@@ -317,17 +411,17 @@ public class UiLoggerController implements Initializable {
             List<String> hashes = messages.stream().map(PacketInfo::getHash)
                     .filter(Objects::nonNull).distinct().collect(Collectors.toList());
 
-            if (chkMessageName.isSelected() && names.size() > 0) {
+            if (options.messageName && names.size() > 0) {
                 for (String name : names) {elements.add(new Element("["+name+"]", "messageinfo")); }
                 addedSomeMessageInfo = true;
             }
-            if (chkMessageHash.isSelected() && hashes.size() > 0) {
+            if (options.messageHash && hashes.size() > 0) {
                 for (String hash : hashes) {elements.add(new Element("["+hash+"]", "messageinfo")); }
                 addedSomeMessageInfo = true;
             }
         }
 
-        if (chkMessageId.isSelected()) {
+        if (options.messageId) {
             elements.add(new Element(String.format("[%d]", packet.headerId()), "messageinfo"));
             addedSomeMessageInfo = true;
         }
@@ -338,18 +432,16 @@ public class UiLoggerController implements Initializable {
 
         // Injected/spoofed by an extension — show WHICH one, so extension traffic is distinguishable from
         // the client's own. Toggled by the "Injected by (extension)" menu item; messageinfo colour.
-        if (injectedBy != null && !injectedBy.isEmpty() && chkInjectedBy.isSelected())
+        if (injectedBy != null && !injectedBy.isEmpty() && options.injectedBy)
             elements.add(new Element(String.format("[injected by %s]\n", injectedBy), "messageinfo"));
 
         if (isBlocked) elements.add(new Element(String.format("[%s]\n", LanguageBundle.get("ext.logger.element.blocked")), "blocked"));
         else if (isReplaced) elements.add(new Element(String.format("[%s]\n", LanguageBundle.get("ext.logger.element.replaced")), "replaced"));
 
-        boolean reprLegacy = chkReprLegacy.isSelected();
-        boolean reprHex = chkReprHex.isSelected();
-        boolean reprRawHex = chkReprRawHex.isSelected();
-
-        if (reprLegacy || reprHex || reprRawHex) {
-            boolean isSkipped = chkSkipBigPackets.isSelected() && (packet.length() > 4000 || (packet.length() > 1000 && reprHex));
+        if (options.reprLegacy || options.reprHex || options.reprRawHex) {
+            boolean isSkipped = (types & PacketLogger.MESSAGE_TYPE.SKIPPED.getValue()) != 0
+                    || options.skipBigPackets && (packet.length() > 4000
+                    || (packet.length() > 1000 && options.reprHex));
             if (isSkipped) {
                 elements.add(new Element(String.format("<%s>", LanguageBundle.get("ext.logger.element.skipped")), "skipped"));
             } else {
@@ -370,100 +462,122 @@ public class UiLoggerController implements Initializable {
 
                 elements.add(new Element(" -> ", ""));
 
-                if (reprLegacy) {
-                    elements.add(new Element(packet.toString(), packetType));
+                if (options.reprLegacy) {
+                    addChunkedDisplay(elements, packet.toString(), packetType);
                     elements.add(new Element("\n", ""));
                 }
 
-                if (reprHex) {
+                if (options.reprHex) {
                     elements.add(new Element(Hexdump.hexdump(packet.toBytes()), String.format("%sHex", packetType)));
                     elements.add(new Element("\n", ""));
                 }
 
-                if (reprRawHex) {
-                    elements.add(new Element(Hex.toHexString(packet.toBytes()), String.format("%sHex", packetType)));
+                if (options.reprRawHex) {
+                    addChunkedDisplay(elements, Hex.toHexString(packet.toBytes()), String.format("%sHex", packetType));
                     elements.add(new Element("\n", ""));
                 }
             }
         }
 
-        if (packet.length() <= 2000) {
+        boolean packetWasSkipped = (types & PacketLogger.MESSAGE_TYPE.SKIPPED.getValue()) != 0;
+        if (options.displayStructure && !packetWasSkipped) {
             try {
                 String expr = packet.toExpression(isIncoming ? HMessage.Direction.TOCLIENT : HMessage.Direction.TOSERVER, uiLogger.getPacketInfoManager(), true);
                 String cleaned = cleanTextContent(expr);
-                if (cleaned.equals(expr)) {
-                    if (!expr.equals("") && chkDisplayStructure.isSelected()) {
-                        // Nitro sends strings as UTF-8, but packets are handled byte-for-byte as
-                        // ISO-8859-1 (so injection stays lossless). Re-decode the readable structure
-                        // as UTF-8 here — ASCII (the {i:}{s:} scaffolding) is unchanged, only the
-                        // multi-byte string content is fixed, so "Ã" becomes "È" etc.
-                        elements.add(new Element(reinterpretAsUtf8(cleanTextContent(expr)), "structure"));
-                        elements.add(new Element("\n", ""));
-                    }
+                if (cleaned.equals(expr) && !expr.isEmpty()) {
+                    // Nitro sends strings as UTF-8, but packets are handled byte-for-byte as
+                    // ISO-8859-1 (so injection stays lossless). Re-decode only the readable view.
+                    addChunkedDisplay(elements, reinterpretAsUtf8(cleaned), "structure");
+                    elements.add(new Element("\n", ""));
                 }
             }
             catch (Exception e) {
-                System.out.println(packet.toString());
-                System.out.println("if you see this message pls report it");
+                System.err.printf("Packet logger structure failed for header %d (%d bytes): %s%n",
+                        packet.headerId(), packet.getBytesLength(), e.getMessage());
             }
-
         }
-
 
         elements.add(new Element("--------------------\n", ""));
 
+        if (generation != logGeneration.get()) return;
         synchronized (appendLater) {
             if (initialized) {
-                appendLog(elements);
+                appendLog(elements, generation);
             }
             else {
                 appendLater.addAll(elements);
             }
         }
-
     }
 
     private void appendLog(List<Element> elements) {
-        // Queue the work and schedule at most ONE flush; further packets ride the same flush.
-        pendingElements.addAll(elements);
+        appendLog(elements, logGeneration.get());
+    }
+
+    private void appendLog(List<Element> elements, long generation) {
+        // Queue the work and schedule at most one lossless, time-sliced FX drain.
+        for (Element element : elements) {
+            pendingElements.addLast(new PendingElement(element, generation));
+        }
         if (flushScheduled.compareAndSet(false, true)) {
             Platform.runLater(this::flushPendingElements);
         }
     }
 
     private void flushPendingElements() {
-        flushScheduled.set(false);
-
         StringBuilder sb = new StringBuilder();
         StyleSpansBuilder<Collection<String>> styleSpansBuilder = new StyleSpansBuilder<>(0);
-
-        Element element;
+        final long deadline = System.nanoTime() + FX_RENDER_BUDGET_NANOS;
         int count = 0;
-        while ((element = pendingElements.poll()) != null) {
-            sb.append(element.text);
-            styleSpansBuilder.add(Collections.singleton(element.className), element.text.length());
+
+        while (count < MAX_ELEMENTS_PER_FX_SLICE
+                && sb.length() < MAX_CHARS_PER_FX_SLICE
+                && System.nanoTime() < deadline) {
+            PendingElement pending = pendingElements.peekFirst();
+            if (pending == null) break;
+            if (pending.generation != logGeneration.get()) {
+                pendingElements.pollFirst();
+                continue;
+            }
+
+            int remaining = pending.element.text.length() - pending.offset;
+            if (remaining <= 0) {
+                pendingElements.pollFirst();
+                continue;
+            }
+
+            int amount = Math.min(remaining, MAX_CHARS_PER_FX_SLICE - sb.length());
+            String chunk = pending.element.text.substring(pending.offset, pending.offset + amount);
+            sb.append(chunk);
+            styleSpansBuilder.add(Collections.singleton(pending.element.className), amount);
+            pending.offset += amount;
+            if (pending.offset == pending.element.text.length()) {
+                pendingElements.pollFirst();
+            }
             count++;
         }
-        if (count == 0) {
+
+        if (count > 0) {
+            int oldLen = area.getLength();
+            area.appendText(sb.toString());
+            area.setStyleSpans(oldLen, styleSpansBuilder.create());
+
+            if (chkAutoscroll.isSelected()) {
+                // appendText doesn't move the caret, so move it before following the viewport.
+                area.moveTo(area.getLength());
+                area.requestFollowCaret();
+            }
+        }
+
+        if (!pendingElements.isEmpty()) {
+            Platform.runLater(this::flushPendingElements);
             return;
         }
 
-        int oldLen = area.getLength();
-        area.appendText(sb.toString());
-        area.setStyleSpans(oldLen, styleSpansBuilder.create());
-
-        // Cap the document: a logger left running fills memory and every append then walks a
-        // huge document, which is the other half of the freeze. Trim the oldest text off the top.
-        int length = area.getLength();
-        if (length > MAX_DOCUMENT_LENGTH) {
-            area.deleteText(0, length - MAX_DOCUMENT_LENGTH);
-        }
-
-        if (chkAutoscroll.isSelected()) {
-            // appendText doesn't move the caret, so the caret sits at position 0 and following it
-            // would pin the view to the TOP. Move it to the end first so we follow to the bottom.
-            area.moveTo(area.getLength());
-            area.requestFollowCaret();
+        flushScheduled.set(false);
+        // Close the race where the formatter appended after isEmpty() but before the flag reset.
+        if (!pendingElements.isEmpty() && flushScheduled.compareAndSet(false, true)) {
+            Platform.runLater(this::flushPendingElements);
         }
     }
 
@@ -472,15 +586,18 @@ public class UiLoggerController implements Initializable {
     }
 
     public void updateLoggerInfo() {
-        Platform.runLater(() -> {
-            viewIncoming.setKey(1, "ext.logger.state." + (chkViewIncoming.isSelected() ? "true" : "false"));
-            viewOutgoing.setKey(1, "ext.logger.state." + (chkViewOutgoing.isSelected() ? "true" : "false"));
-            autoScroll.setKey(1, "ext.logger.state." + (chkAutoscroll.isSelected() ? "true" : "false"));
-            filtered.setFormat("%s: " + filteredAmount);
+        if (loggerInfoUpdateScheduled.compareAndSet(false, true)) {
+            Platform.runLater(() -> {
+                loggerInfoUpdateScheduled.set(false);
+                viewIncoming.setKey(1, "ext.logger.state." + (chkViewIncoming.isSelected() ? "true" : "false"));
+                viewOutgoing.setKey(1, "ext.logger.state." + (chkViewOutgoing.isSelected() ? "true" : "false"));
+                autoScroll.setKey(1, "ext.logger.state." + (chkAutoscroll.isSelected() ? "true" : "false"));
+                filtered.setFormat("%s: " + filteredAmount);
 
-            boolean packetInfoAvailable = uiLogger.getPacketInfoManager().getPacketInfoList().size() > 0;
-            packetInfo.setKey(1, "ext.logger.state." + (packetInfoAvailable ? "true" : "false"));
-        });
+                boolean packetInfoAvailable = uiLogger.getPacketInfoManager().getPacketInfoList().size() > 0;
+                packetInfo.setKey(1, "ext.logger.state." + (packetInfoAvailable ? "true" : "false"));
+            });
+        }
     }
 
     public void toggleAlwaysOnTop(ActionEvent actionEvent) {
@@ -488,11 +605,16 @@ public class UiLoggerController implements Initializable {
     }
 
     public void clearText(ActionEvent actionEvent) {
+        logGeneration.incrementAndGet();
+        formatterExecutor.getQueue().clear();
+        pendingElements.clear();
+        synchronized (appendLater) {
+            appendLater.clear();
+        }
         area.clear();
         synchronized (loggedPackets) {
             loggedPackets.clear();
         }
-        System.gc();
     }
 
     public void onDisconnect() {
@@ -530,20 +652,65 @@ public class UiLoggerController implements Initializable {
         //Show save file dialog
         File file = fileChooser.showSaveDialog(stage);
 
-        if(file != null){
-            try {
-                FileWriter fileWriter = new FileWriter(file);
-                BufferedWriter out = new BufferedWriter(fileWriter);
+        if (file != null) {
+            // Read the RichTextFX document in bounded FX slices and write those slices on a worker.
+            // This preserves the complete visible log without copying a potentially huge document
+            // in one UI-thread operation.
+            new AreaExportTask(file, area.getLength()).start();
+        }
+    }
 
-                out.write(area.getText());
+    private final class AreaExportTask {
+        private final File file;
+        private final int snapshotLength;
+        private int position;
+        private BufferedWriter writer;
 
-                out.flush();
-                out.close();
-                fileWriter.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
+        AreaExportTask(File file, int snapshotLength) {
+            this.file = file;
+            this.snapshotLength = snapshotLength;
+        }
+
+        void start() {
+            exportExecutor.execute(() -> {
+                try {
+                    writer = new BufferedWriter(new FileWriter(file));
+                    Platform.runLater(this::readNextChunk);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+
+        private void readNextChunk() {
+            int availableEnd = Math.min(snapshotLength, area.getLength());
+            if (position >= availableEnd) {
+                closeWriter();
+                return;
             }
 
+            int end = Math.min(availableEnd, position + EXPORT_UI_CHUNK_CHARS);
+            String chunk = area.getText(position, end);
+            position = end;
+            exportExecutor.execute(() -> {
+                try {
+                    writer.write(chunk);
+                    Platform.runLater(this::readNextChunk);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    closeWriter();
+                }
+            });
+        }
+
+        private void closeWriter() {
+            exportExecutor.execute(() -> {
+                try {
+                    if (writer != null) writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 
@@ -560,6 +727,10 @@ public class UiLoggerController implements Initializable {
             return;
         }
 
+        exportExecutor.execute(() -> exportWithNames(file));
+    }
+
+    private void exportWithNames(File file) {
         List<LoggedPacket> snapshot;
         synchronized (loggedPackets) {
             snapshot = new ArrayList<>(loggedPackets);
