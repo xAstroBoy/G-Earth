@@ -1,1109 +1,3590 @@
-{"Incoming":[
-	{"Id":1, "Name":"LegacyBannerPublicKey"},
-	{"Id":2, "Name":"ClubAndSecurityLevels"},
-	{"Id":3, "Name":"Ok"},
-	{"Id":4, "Name":"Film"},
-	{"Id":5, "Name":"UserObject"},
-	{"Id":6, "Name":"WalletBalance"},
-	{"Id":7, "Name":"ScrSendUserInfo"},
-	{"Id":8, "Name":"IsFirstLoginOfDay"},
-	{"Id":9, "Name":"ScrSendKickbackInfo"},
-	{"Id":11, "Name":"Token"},
-	{"Id":12, "Name":"MessengerInit"},
-	{"Id":13, "Name":"FriendListUpdate"},
-	{"Id":14, "Name":"FriendListFragment"},
-	{"Id":18, "Name":"CloseConnection"},
-	{"Id":19, "Name":"OpenConnectionConfirmation"},
-	{"Id":20, "Name":"NoLoginPermission"},
-	{"Id":21, "Name":"RoomExitReason"},
-	{"Id":23, "Name":"DeleteFlatResult"},
-	{"Id":24, "Name":"Chat"},
-	{"Id":25, "Name":"Whisper"},
-	{"Id":26, "Name":"Shout"},
-	{"Id":27, "Name":"FloodControl"},
-	{"Id":28, "Name":"UsersInRoom"},
-	{"Id":29, "Name":"UserLoggedOut"},
-	{"Id":31, "Name":"StackingHeightmap"},
-	{"Id":32, "Name":"ActiveObjects"},
-	{"Id":33, "Name":"Error"},
-	{"Id":34, "Name":"Status"},
-	{"Id":35, "Name":"UserBanned"},
-	{"Id":36, "Name":"PetNameApproved"},
-	{"Id":37, "Name":"PetStatusUpdate"},
-	{"Id":38, "Name":"PetLevelUpdate"},
-	{"Id":42, "Name":"YouAreController"},
-	{"Id":43, "Name":"YouAreNotController"},
-	{"Id":44, "Name":"NoSuchFlat"},
-	{"Id":45, "Name":"Items"},
-	{"Id":46, "Name":"FlatProperty"},
-	{"Id":47, "Name":"YouAreOwner"},
-	{"Id":48, "Name":"ItemData"},
-	{"Id":49, "Name":"ServiceIsClosed"},
-	{"Id":50, "Name":"Ping"},
-	{"Id":51, "Name":"RegOk"},
-	{"Id":58, "Name":"PickedUpPetFromRoom"},
-	{"Id":59, "Name":"FlatCreated"},
-	{"Id":60, "Name":"SubFlatCreated"},
-	{"Id":61, "Name":"PickedUpAllItems"},
-	{"Id":62, "Name":"DoorFlat"},
-	{"Id":63, "Name":"DoorOtherEndDeleted"},
-	{"Id":64, "Name":"DoorNotInstalled"},
-	{"Id":65, "Name":"PurchaseError"},
-	{"Id":66, "Name":"CatalogUrl"},
-	{"Id":67, "Name":"PurchaseOk"},
-	{"Id":68, "Name":"NotEnoughBalance"},
-	{"Id":69, "Name":"RoomReady"},
-	{"Id":70, "Name":"YouAreModerator"},
-	{"Id":72, "Name":"PhTickets"},
-	{"Id":73, "Name":"PhNoTickets"},
-	{"Id":74, "Name":"JumpData"},
-	{"Id":75, "Name":"JumpDataSaved"},
-	{"Id":76, "Name":"UserNotFound"},
-	{"Id":77, "Name":"JumpsForUser"},
-	{"Id":78, "Name":"GotoJumpingPlace"},
-	{"Id":82, "Name":"OwnerPresence"},
-	{"Id":83, "Name":"AddItem"},
-	{"Id":84, "Name":"RemoveItem"},
-	{"Id":85, "Name":"UpdateItem"},
-	{"Id":88, "Name":"StuffDataUpdate"},
-	{"Id":89, "Name":"DoorOut"},
-	{"Id":90, "Name":"DiceValue"},
-	{"Id":91, "Name":"DoorbellRinging"},
-	{"Id":92, "Name":"DoorIn"},
-	{"Id":93, "Name":"ActiveObjectAdd"},
-	{"Id":94, "Name":"ActiveObjectRemove"},
-	{"Id":95, "Name":"ActiveObjectUpdate"},
-	{"Id":98, "Name":"InventoryAddOrUpdateFurni"},
-	{"Id":99, "Name":"InventoryRemoveFurni"},
-	{"Id":101, "Name":"InventoryInvalidate"},
-	{"Id":102, "Name":"TradeYouAreNotAllowed"},
-	{"Id":103, "Name":"TradeOtherNotAllowed"},
-	{"Id":104, "Name":"TradeOpen"},
-	{"Id":105, "Name":"TradeOpenFail"},
-	{"Id":106, "Name":"TradeNoTradeOpen"},
-	{"Id":107, "Name":"TradeNoSuchItem"},
-	{"Id":108, "Name":"TradeItems"},
-	{"Id":109, "Name":"TradeAccept"},
-	{"Id":110, "Name":"TradeClose"},
-	{"Id":111, "Name":"TradeConfirmation"},
-	{"Id":112, "Name":"TradeCompleted"},
-	{"Id":113, "Name":"Trigger"},
-	{"Id":114, "Name":"TeleportRelinkResponse"},
-	{"Id":115, "Name":"FurniRentOrBuyoutOffer"},
-	{"Id":117, "Name":"DonationSettings"},
-	{"Id":118, "Name":"DonateResult"},
-	{"Id":122, "Name":"PhLiftDoorOpen"},
-	{"Id":123, "Name":"PhLiftDoorClose"},
-	{"Id":124, "Name":"PhTicketsBuy"},
-	{"Id":125, "Name":"PhJumpingPlaceOk"},
-	{"Id":126, "Name":"CatalogIndex"},
-	{"Id":127, "Name":"CatalogPage"},
-	{"Id":128, "Name":"MemberInfo"},
-	{"Id":129, "Name":"PresentOpen"},
-	{"Id":130, "Name":"FlatPasswordOk"},
-	{"Id":132, "Name":"NewBuddyRequest"},
-	{"Id":134, "Name":"MessengerNewConsoleMessage"},
-	{"Id":135, "Name":"MessengerRoomInvite"},
-	{"Id":139, "Name":"SystemBroadcast"},
-	{"Id":140, "Name":"InventoryPush"},
-	{"Id":145, "Name":"PostItPlaced"},
-	{"Id":150, "Name":"MemberRoom"},
-	{"Id":151, "Name":"ServiceClosed"},
-	{"Id":152, "Name":"RoomUsers"},
-	{"Id":153, "Name":"NewUnit"},
-	{"Id":154, "Name":"UnitRemove"},
-	{"Id":155, "Name":"UnitUpdated"},
-	{"Id":156, "Name":"SystemDown"},
-	{"Id":157, "Name":"SystemOpened"},
-	{"Id":158, "Name":"UserProfile"},
-	{"Id":159, "Name":"UserMatch"},
-	{"Id":160, "Name":"CloseVotingDialog"},
-	{"Id":161, "Name":"ModeratorCaution"},
-	{"Id":162, "Name":"UnitClosed"},
-	{"Id":163, "Name":"ModeratorMessage"},
-	{"Id":164, "Name":"AgeCheckResult"},
-	{"Id":166, "Name":"TrackingRequest"},
-	{"Id":167, "Name":"ReregistrationRequired"},
-	{"Id":169, "Name":"AccountUpdateStatus"},
-	{"Id":208, "Name":"RoomAd"},
-	{"Id":209, "Name":"UserCreditTransactions"},
-	{"Id":211, "Name":"UpdateOk"},
-	{"Id":212, "Name":"VoucherRedeemOk"},
-	{"Id":213, "Name":"VoucherRedeemError"},
-	{"Id":219, "Name":"StackingHeightmapDiff"},
-	{"Id":221, "Name":"UserFlatCategories"},
-	{"Id":222, "Name":"EventFlatCategories"},
-	{"Id":224, "Name":"CanNotConnect"},
-	{"Id":228, "Name":"SelectedBadges"},
-	{"Id":229, "Name":"AvailableBadges"},
-	{"Id":230, "Name":"QueueMoveUpdate"},
-	{"Id":243, "Name":"FullGameStatus"},
-	{"Id":244, "Name":"GameStatus"},
-	{"Id":254, "Name":"YouAreSpectator"},
-	{"Id":255, "Name":"LevelEditorNotification"},
-	{"Id":257, "Name":"SessionParams"},
-	{"Id":258, "Name":"Interstitial"},
-	{"Id":259, "Name":"RoomQueueStatus"},
-	{"Id":260, "Name":"MessengerError"},
-	{"Id":261, "Name":"InstantMessageError"},
-	{"Id":262, "Name":"RoomInviteError"},
-	{"Id":263, "Name":"BuddyList"},
-	{"Id":265, "Name":"EmailChangeResult"},
-	{"Id":266, "Name":"UpdateAvatar"},
-	{"Id":267, "Name":"UserWardrobe"},
-	{"Id":268, "Name":"AccountSafetyLockStatus"},
-	{"Id":269, "Name":"EmailStatus"},
-	{"Id":270, "Name":"HotLooks"},
-	{"Id":273, "Name":"CallDeleted"},
-	{"Id":274, "Name":"CallReply"},
-	{"Id":275, "Name":"RegUpdateRequest"},
-	{"Id":276, "Name":"PartnerStatus"},
-	{"Id":277, "Name":"LegacyBannerHandshake"},
-	{"Id":278, "Name":"DhInitHandshake"},
-	{"Id":279, "Name":"DhCompleteHandshake"},
-	{"Id":280, "Name":"CSubscriptionUserGifts"},
-	{"Id":281, "Name":"AccountSafetyLockQuestions"},
-	{"Id":283, "Name":"SpectatingEnded"},
-	{"Id":286, "Name":"RoomForward"},
-	{"Id":290, "Name":"AvailabilityStatus"},
-	{"Id":291, "Name":"InfoHotelClosing"},
-	{"Id":292, "Name":"InfoHotelClosed"},
-	{"Id":293, "Name":"AvailabilityTime"},
-	{"Id":294, "Name":"LoginFailedHotelClosed"},
-	{"Id":296, "Name":"PurchaseNotAllowed"},
-	{"Id":297, "Name":"FurniAliases"},
-	{"Id":298, "Name":"SpectatorAmount"},
-	{"Id":299, "Name":"ErrorReport"},
-	{"Id":300, "Name":"SongInfo"},
-	{"Id":301, "Name":"MachineSoundPackages"},
-	{"Id":302, "Name":"UserSoundPackages"},
-	{"Id":303, "Name":"SongId"},
-	{"Id":308, "Name":"AccountPreferences"},
-	{"Id":309, "Name":"HabboGroupBadge"},
-	{"Id":310, "Name":"FavoriteMembershipUpdate"},
-	{"Id":311, "Name":"HabboGroupDetails"},
-	{"Id":312, "Name":"OneWayDoorStatusChange"},
-	{"Id":313, "Name":"MessengerConsoleMessages"},
-	{"Id":314, "Name":"BuddyRequests"},
-	{"Id":315, "Name":"AcceptFriendResult"},
-	{"Id":316, "Name":"PollOffer"},
-	{"Id":317, "Name":"PollContents"},
-	{"Id":318, "Name":"PollError"},
-	{"Id":319, "Name":"PendingCallsForHelp"},
-	{"Id":320, "Name":"PendingCallsForHelpDeleted"},
-	{"Id":321, "Name":"CallForHelpResult"},
-	{"Id":322, "Name":"SongList"},
-	{"Id":323, "Name":"SoundMachinePlayList"},
-	{"Id":324, "Name":"SongMissingPackages"},
-	{"Id":325, "Name":"PlayListInvalid"},
-	{"Id":326, "Name":"SongListFull"},
-	{"Id":327, "Name":"NowPlaying"},
-	{"Id":328, "Name":"CallForHelpDisabled"},
-	{"Id":329, "Name":"HabboGroupDeactivated"},
-	{"Id":331, "Name":"SongAdded"},
-	{"Id":332, "Name":"InvalidSongName"},
-	{"Id":333, "Name":"UserSongDiscs"},
-	{"Id":334, "Name":"JukeboxDiscs"},
-	{"Id":336, "Name":"SongLocked"},
-	{"Id":337, "Name":"JukeboxPlayListFull"},
-	{"Id":338, "Name":"InvalidSongData"},
-	{"Id":339, "Name":"SongSaved"},
-	{"Id":344, "Name":"MuteAllInRoomResponse"},
-	{"Id":345, "Name":"RoomRating"},
-	{"Id":347, "Name":"UpdateFigure"},
-	{"Id":349, "Name":"FollowFriendFailed"},
-	{"Id":354, "Name":"ClientLatencyPingResponse"},
-	{"Id":355, "Name":"ShowMysteryBoxWait"},
-	{"Id":356, "Name":"CancelMysteryBoxWait"},
-	{"Id":357, "Name":"GotMysteryBoxPrize"},
-	{"Id":358, "Name":"FriendFurniStartConfirmLock"},
-	{"Id":359, "Name":"FriendFurniCancelLock"},
-	{"Id":360, "Name":"FriendFurniLockConfirmedOther"},
-	{"Id":361, "Name":"UserTypingStatusChange"},
-	{"Id":362, "Name":"HighlightUser"},
-	{"Id":363, "Name":"MiniMailArrived"},
-	{"Id":364, "Name":"MiniMailUnreadCount"},
-	{"Id":365, "Name":"RoomDimmerPresets"},
-	{"Id":367, "Name":"RoomEventCanCreateEvent"},
-	{"Id":368, "Name":"RoomEventEventTypes"},
-	{"Id":369, "Name":"RoomEventEventsByEventType"},
-	{"Id":370, "Name":"RoomEventEventInfo"},
-	{"Id":371, "Name":"RoomAdAllowedRooms"},
-	{"Id":372, "Name":"RoomAdListAds"},
-	{"Id":373, "Name":"RoomAdUpdated"},
-	{"Id":374, "Name":"RoomAdError"},
-	{"Id":375, "Name":"RoomAdCancelled"},
-	{"Id":419, "Name":"IgnoreUserResult"},
-	{"Id":420, "Name":"RequestIgnoreList"},
-	{"Id":435, "Name":"HabboSearchResult"},
-	{"Id":436, "Name":"PossibleUserAchievements"},
-	{"Id":437, "Name":"AchievementNotification"},
-	{"Id":438, "Name":"ActivityPointNotification"},
-	{"Id":439, "Name":"UniqueMachineId"},
-	{"Id":440, "Name":"RespectNotification"},
-	{"Id":441, "Name":"CatalogExpired"},
-	{"Id":443, "Name":"AchievementScore"},
-	{"Id":446, "Name":"ResolutionCompleted"},
-	{"Id":450, "Name":"OfficialRooms"},
-	{"Id":451, "Name":"GuestRoomSearchResult"},
-	{"Id":452, "Name":"PopularRoomTagsResult"},
-	{"Id":454, "Name":"GetGuestRoomResult"},
-	{"Id":455, "Name":"NavigatorSettings"},
-	{"Id":456, "Name":"RoomInfoUpdatedNotification"},
-	{"Id":457, "Name":"RoomThumbnailUpdateResult"},
-	{"Id":458, "Name":"Favourites"},
-	{"Id":459, "Name":"FavouriteChanged"},
-	{"Id":460, "Name":"AvatarEffects"},
-	{"Id":461, "Name":"AvatarEffectAdded"},
-	{"Id":462, "Name":"AvatarEffectActivated"},
-	{"Id":463, "Name":"AvatarEffectExpired"},
-	{"Id":464, "Name":"AvatarEffectSelected"},
-	{"Id":465, "Name":"RoomSettingsData"},
-	{"Id":466, "Name":"RoomSettingsError"},
-	{"Id":467, "Name":"RoomSettingsSaved"},
-	{"Id":468, "Name":"RoomSettingsSaveError"},
-	{"Id":470, "Name":"FloorHeightmap"},
-	{"Id":471, "Name":"RoomEntryInfo"},
-	{"Id":472, "Name":"RoomVisualizationSettings"},
-	{"Id":473, "Name":"MultipleStuffDataUpdate"},
-	{"Id":474, "Name":"RoomChatSettings"},
-	{"Id":475, "Name":"RoomFilterSettings"},
-	{"Id":476, "Name":"EnforceRoomCategorySelect"},
-	{"Id":477, "Name":"SpecialRoomEffect"},
-	{"Id":478, "Name":"RoomTypes"},
-	{"Id":480, "Name":"RoomDance"},
-	{"Id":481, "Name":"RoomExpression"},
-	{"Id":482, "Name":"RoomCarryObject"},
-	{"Id":483, "Name":"RoomJoiningGame"},
-	{"Id":484, "Name":"RoomNotJoiningGame"},
-	{"Id":485, "Name":"RoomAvatarEffect"},
-	{"Id":486, "Name":"RoomAvatarSleeping"},
-	{"Id":488, "Name":"RoomUseObject"},
-	{"Id":490, "Name":"JudgeGuiStatus"},
-	{"Id":491, "Name":"StageOpenPerformerGui"},
-	{"Id":492, "Name":"StageClosePerformerGui"},
-	{"Id":493, "Name":"StageStartPlayingSong"},
-	{"Id":494, "Name":"StageStopPlayingSong"},
-	{"Id":500, "Name":"FlatCategoriesWithVisitorData"},
-	{"Id":509, "Name":"TradingAllowed"},
-	{"Id":510, "Name":"FlatControllerAdded"},
-	{"Id":511, "Name":"FlatControllerRemoved"},
-	{"Id":512, "Name":"CanCreateRoom"},
-	{"Id":513, "Name":"ConvertedRoomId"},
-	{"Id":515, "Name":"StripItemNotTradeable"},
-	{"Id":517, "Name":"ClientInfoFeedEnabled"},
-	{"Id":518, "Name":"FaqClientFaqs"},
-	{"Id":519, "Name":"FaqCategories"},
-	{"Id":520, "Name":"FaqText"},
-	{"Id":521, "Name":"FaqSearchResults"},
-	{"Id":522, "Name":"FaqCategory"},
-	{"Id":530, "Name":"IssueInfo"},
-	{"Id":531, "Name":"ModeratorInit"},
-	{"Id":532, "Name":"IssuePickFailed"},
-	{"Id":533, "Name":"ModeratorUserInfo"},
-	{"Id":534, "Name":"CfhChatLog"},
-	{"Id":535, "Name":"RoomChatLog"},
-	{"Id":536, "Name":"UserChatLog"},
-	{"Id":537, "Name":"RoomVisits"},
-	{"Id":538, "Name":"ModeratorRoomInfo"},
-	{"Id":539, "Name":"ModeratorActionResult"},
-	{"Id":540, "Name":"IssueCloseNotification"},
-	{"Id":541, "Name":"HelpRequestSessionAttached"},
-	{"Id":542, "Name":"HelpRequestSessionStarted"},
-	{"Id":543, "Name":"HelpRequestSessionEnded"},
-	{"Id":544, "Name":"HelpRequestSessionDetached"},
-	{"Id":545, "Name":"GuideTicketSessionError"},
-	{"Id":546, "Name":"HelpRequestSessionMessage"},
-	{"Id":547, "Name":"HelpRequestSessionRequesterRoom"},
-	{"Id":548, "Name":"HelpRequestSessionRequesterInvitedToGuideRoom"},
-	{"Id":549, "Name":"HelpRequestSessionTyping"},
-	{"Id":550, "Name":"GuideOnDutyStatus"},
-	{"Id":551, "Name":"ModeratorToolPreferences"},
-	{"Id":552, "Name":"CfhTopicsInit"},
-	{"Id":553, "Name":"CfhNextSanction"},
-	{"Id":554, "Name":"CfhSanctionStatus"},
-	{"Id":555, "Name":"UpdateRoomFloorPropertiesResponse"},
-	{"Id":560, "Name":"QuizData"},
-	{"Id":561, "Name":"QuizResult"},
-	{"Id":565, "Name":"TalentTrack"},
-	{"Id":566, "Name":"TalentTrackLevelUp"},
-	{"Id":567, "Name":"TalentTrackLevel"},
-	{"Id":570, "Name":"ChangeUserNameResult"},
-	{"Id":571, "Name":"CheckUserNameResult"},
-	{"Id":572, "Name":"UserNameChanged"},
-	{"Id":573, "Name":"HotelMergeNameChange"},
-	{"Id":596, "Name":"ChangePetNameResult"},
-	{"Id":597, "Name":"GetPetConfigurationsResult"},
-	{"Id":598, "Name":"PetSupplementedNotification"},
-	{"Id":599, "Name":"PetBreeding"},
-	{"Id":600, "Name":"PetInventory"},
-	{"Id":601, "Name":"PetInfo"},
-	{"Id":602, "Name":"PetLevelNotification"},
-	{"Id":603, "Name":"PetAddedToInventory"},
-	{"Id":604, "Name":"PetRemovedFromInventory"},
-	{"Id":605, "Name":"PetCommands"},
-	{"Id":606, "Name":"PetRespectNotification"},
-	{"Id":607, "Name":"PetReceivedNotification"},
-	{"Id":608, "Name":"PetPlacingFailed"},
-	{"Id":609, "Name":"PetExperience"},
-	{"Id":610, "Name":"MarketplaceMakeOfferResult"},
-	{"Id":611, "Name":"MarketplaceCanMakeOfferResult"},
-	{"Id":612, "Name":"MarketplaceConfiguration"},
-	{"Id":613, "Name":"MarketplaceBuyOfferResult"},
-	{"Id":614, "Name":"MarketplaceCancelOfferResult"},
-	{"Id":615, "Name":"MarketplaceOpenOfferList"},
-	{"Id":616, "Name":"MarketplaceOwnOfferList"},
-	{"Id":617, "Name":"MarketplaceItemStats"},
-	{"Id":620, "Name":"GiftWrappingConfiguration"},
-	{"Id":621, "Name":"PetRespectFailed"},
-	{"Id":622, "Name":"IsOfferGiftable"},
-	{"Id":623, "Name":"SelectableClubGiftInfo"},
-	{"Id":624, "Name":"ClubGiftSelected"},
-	{"Id":625, "Name":"HabboClubOffers"},
-	{"Id":626, "Name":"LoginWithPasswordAccountsDEPRECATED"},
-	{"Id":627, "Name":"BadgePointLimits"},
-	{"Id":628, "Name":"ActivityPoints"},
-	{"Id":629, "Name":"BonusRareInfo"},
-	{"Id":630, "Name":"HabboClubExtendOffer"},
-	{"Id":631, "Name":"DirectClubBuyAllowed"},
-	{"Id":632, "Name":"XmasCalendarDailyOffer"},
-	{"Id":633, "Name":"BadgeReceived"},
-	{"Id":634, "Name":"HabboSnowWarGameTokensOffer"},
-	{"Id":635, "Name":"BundleDiscountRuleset"},
-	{"Id":636, "Name":"LimitedEditionSoldOut"},
-	{"Id":637, "Name":"ProductOffer"},
-	{"Id":638, "Name":"CatalogPageWithEarliestExpiry"},
-	{"Id":639, "Name":"LimitedFurniTimingInfo"},
-	{"Id":640, "Name":"EarnedCommunityGoalPrizes"},
-	{"Id":642, "Name":"CatalogPageExpirationData"},
-	{"Id":643, "Name":"CompetitionEntrySubmitResult"},
-	{"Id":644, "Name":"CompetitionVotingInfo"},
-	{"Id":645, "Name":"SecondsUntil"},
-	{"Id":646, "Name":"CommunityGoalHallOfFame"},
-	{"Id":647, "Name":"IsUserPartOfCompetition"},
-	{"Id":648, "Name":"IsBadgeRequestFulfilled"},
-	{"Id":649, "Name":"CurrentTimingCode"},
-	{"Id":650, "Name":"UserDefinedRoomEventsTrigger"},
-	{"Id":651, "Name":"UserDefinedRoomEventsAction"},
-	{"Id":652, "Name":"UserDefinedRoomEventsCondition"},
-	{"Id":653, "Name":"UserDefinedRoomEventsOpen"},
-	{"Id":654, "Name":"UserDefinedRoomEventsRewardResult"},
-	{"Id":655, "Name":"UserDefinedRoomEventsValidationError"},
-	{"Id":656, "Name":"UserDefinedRoomEventsSaveSuccess"},
-	{"Id":670, "Name":"ConcurrentUsersGoalProgress"},
-	{"Id":671, "Name":"PromoArticles"},
-	{"Id":672, "Name":"CommunityGoalVoteAcknowledged"},
-	{"Id":680, "Name":"Notification"},
-	{"Id":685, "Name":"OfferRewardDelivered"},
-	{"Id":700, "Name":"GameYouArePlayer"},
-	{"Id":701, "Name":"GameNumberValue"},
-	{"Id":750, "Name":"PerkAllowances"},
-	{"Id":754, "Name":"ChangePassword"},
-	{"Id":760, "Name":"CitizenshipVipPromoEnable"},
-	{"Id":761, "Name":"CaptchaResponse"},
-	{"Id":790, "Name":"CommunityGoalProgress"},
-	{"Id":791, "Name":"EpicPopup"},
-	{"Id":792, "Name":"CompetitionRoomsData"},
-	{"Id":793, "Name":"NoOwnedRoomsAlert"},
-	{"Id":800, "Name":"Quests"},
-	{"Id":801, "Name":"QuestCompleted"},
-	{"Id":802, "Name":"Quest"},
-	{"Id":803, "Name":"QuestCancelled"},
-	{"Id":804, "Name":"QuestDaily"},
-	{"Id":805, "Name":"QuestsSeasonal"},
-	{"Id":809, "Name":"HandItemReceived"},
-	{"Id":810, "Name":"MotdResponse"},
-	{"Id":811, "Name":"MuteTimeRemaining"},
-	{"Id":812, "Name":"GetDeviceTokensResponse"},
-	{"Id":813, "Name":"LoginTokensCleared"},
-	{"Id":815, "Name":"RestoreClientFromMinimizedState"},
-	{"Id":825, "Name":"OpenPetPackageRequested"},
-	{"Id":826, "Name":"OpenPetPackageResult"},
-	{"Id":827, "Name":"SellablePetPalettes"},
-	{"Id":828, "Name":"PetBreedingResult"},
-	{"Id":831, "Name":"FriendBarFindFriendsResult"},
-	{"Id":832, "Name":"UnseenElements"},
-	{"Id":833, "Name":"FriendBarEventNotification"},
-	{"Id":898, "Name":"AccountProgressedInfo"},
-	{"Id":899, "Name":"AccountProgressionInfo"},
-	{"Id":901, "Name":"AvatarList"},
-	{"Id":902, "Name":"NewAvatarInfo"},
-	{"Id":903, "Name":"DeactivateAvatarInfo"},
-	{"Id":904, "Name":"InitialRooms"},
-	{"Id":905, "Name":"InitialRoomSelected"},
-	{"Id":911, "Name":"RequestSpamWallPostItMessage"},
-	{"Id":912, "Name":"RoomMessageNotification"},
-	{"Id":913, "Name":"PossibleAchievement"},
-	{"Id":914, "Name":"RelationshipStatusInfo"},
-	{"Id":915, "Name":"ExtendedProfile"},
-	{"Id":916, "Name":"HabboGroupJoinFailed"},
-	{"Id":917, "Name":"GuildCreationInfo"},
-	{"Id":918, "Name":"GuildEditInfo"},
-	{"Id":919, "Name":"GuildEditorData"},
-	{"Id":921, "Name":"GuildMembershipUpdated"},
-	{"Id":922, "Name":"GuildMembershipRejected"},
-	{"Id":923, "Name":"GuildEditFailed"},
-	{"Id":924, "Name":"ExtendedProfileChanged"},
-	{"Id":925, "Name":"GuildMemberMgmtFailed"},
-	{"Id":926, "Name":"GuildMembers"},
-	{"Id":927, "Name":"GuildMemberships"},
-	{"Id":928, "Name":"GuildCreated"},
-	{"Id":929, "Name":"GuildMemberFurniCountInHq"},
-	{"Id":930, "Name":"FlatControllers"},
-	{"Id":931, "Name":"GroupMembershipRequested"},
-	{"Id":932, "Name":"GroupDetailsChanged"},
-	{"Id":943, "Name":"UsersBannedFromRoom"},
-	{"Id":944, "Name":"UserUnbannedFromRoom"},
-	{"Id":945, "Name":"MuteAllInRoom"},
-	{"Id":960, "Name":"UpdatePetFigure"},
-	{"Id":970, "Name":"GuildFurniContextmenuInfo"},
-	{"Id":980, "Name":"MaintenanceStatus"},
-	{"Id":988, "Name":"AvailableResolutionAchievements"},
-	{"Id":989, "Name":"ResolutionProgress"},
-	{"Id":990, "Name":"ConfirmBreedingRequest"},
-	{"Id":991, "Name":"GoToBreedingNestFailure"},
-	{"Id":992, "Name":"ConfirmBreedingResult"},
-	{"Id":993, "Name":"NestBreedingSuccess"},
-	{"Id":1001, "Name":"CustomUserNotification"},
-	{"Id":1002, "Name":"MysteryBoxKeys"},
-	{"Id":1003, "Name":"BuildersClubMembershipStatus"},
-	{"Id":1004, "Name":"BuildersClubFurniCount"},
-	{"Id":1020, "Name":"Navigator2MetaData"},
-	{"Id":1021, "Name":"Navigator2SearchResultBlocks"},
-	{"Id":1022, "Name":"Navigator2LiftArea"},
-	{"Id":1023, "Name":"Navigator2UserPreferences"},
-	{"Id":1024, "Name":"Navigator2UserSavedSearches"},
-	{"Id":1025, "Name":"Navigator2UserCollapsedCategories"},
-	{"Id":1300, "Name":"CraftableProducts"},
-	{"Id":1301, "Name":"CraftingRecipe"},
-	{"Id":1302, "Name":"CraftingResult"},
-	{"Id":1304, "Name":"CraftingRecipesAvailable"},
-	{"Id":1310, "Name":"ProductOffers"},
-	{"Id":1400, "Name":"CampaignCalendarData"},
-	{"Id":1401, "Name":"CampaignCalendarDoorOpened"},
-	{"Id":1469, "Name":"PickUpAllFurniAndResetHeightmap"},
-	{"Id":1471, "Name":"StackingHelperHeightUpdate"},
-	{"Id":1472, "Name":"RoomEntryTile"},
-	{"Id":1473, "Name":"RoomOccupiedTiles"},
-	{"Id":1480, "Name":"YoutubeDisplayVideo"},
-	{"Id":1481, "Name":"YoutubePlayLists"},
-	{"Id":1482, "Name":"YoutubeControlVideo"},
-	{"Id":1490, "Name":"RentableSpaceInfo"},
-	{"Id":1491, "Name":"RentableSpaceRentOk"},
-	{"Id":1492, "Name":"RentableSpaceRentFailed"},
-	{"Id":1500, "Name":"TryPhoneNumberResult"},
-	{"Id":1501, "Name":"VerifyCodeResult"},
-	{"Id":1502, "Name":"VerificationState"},
-	{"Id":1520, "Name":"NuxNotComplete"},
-	{"Id":1521, "Name":"NuxGiftOffer"},
-	{"Id":1530, "Name":"TargetedOffer"},
-	{"Id":1531, "Name":"TargetedOfferNotFound"},
-	{"Id":1532, "Name":"TargetedOfferList"},
-	{"Id":1540, "Name":"GuideReportingStatus"},
-	{"Id":1542, "Name":"ChatReviewSessionOfferedToGuide"},
-	{"Id":1543, "Name":"ChatReviewSessionStarted"},
-	{"Id":1544, "Name":"ChatReviewSessionResults"},
-	{"Id":1545, "Name":"ChatReviewTicketCreationResult"},
-	{"Id":1546, "Name":"ChatReviewSessionDetached"},
-	{"Id":1547, "Name":"ChatReviewSessionVotingStatus"},
-	{"Id":1548, "Name":"ChatReviewTicketResolution"},
-	{"Id":1552, "Name":"AccountSafetyLock"},
-	{"Id":1560, "Name":"PointElement"},
-	{"Id":1561, "Name":"InClientLink"},
-	{"Id":1562, "Name":"NoobnessLevel"},
-	{"Id":1570, "Name":"SubmitGdprRequestResult"},
-	{"Id":1571, "Name":"CancelGdprRequestResult"},
-	{"Id":1572, "Name":"GetGdprRequestResult"},
-	{"Id":1600, "Name":"ForumStats"},
-	{"Id":1601, "Name":"ForumThreads"},
-	{"Id":1602, "Name":"ForumThreadMessages"},
-	{"Id":1604, "Name":"ForumThread"},
-	{"Id":1605, "Name":"ForumMessage"},
-	{"Id":1606, "Name":"ForumsList"},
-	{"Id":1607, "Name":"UnreadForumsCount"},
-	{"Id":1610, "Name":"PostForumThreadOk"},
-	{"Id":1611, "Name":"PostForumMessageOk"},
-	{"Id":1700, "Name":"UserClassifications"},
-	{"Id":1701, "Name":"CameraToken"},
-	{"Id":1702, "Name":"PhotoPurchaseSuccess"},
-	{"Id":1703, "Name":"CameraPictureUrl"},
-	{"Id":1704, "Name":"CameraPhotoPrice"},
-	{"Id":1705, "Name":"PhotoPublishStatus"},
-	{"Id":1706, "Name":"PhotoCompetitionEntryStatus"},
-	{"Id":1720, "Name":"RoomThumbnailStatus"},
-	{"Id":1750, "Name":"Question"},
-	{"Id":1751, "Name":"QuestionAnswered"},
-	{"Id":1752, "Name":"QuestionFinished"},
-	{"Id":2550, "Name":"Reputation"},
-	{"Id":2998, "Name":"InventoryFurniByRoomResult"},
-	{"Id":3028, "Name":"BotInventory"},
-	{"Id":3029, "Name":"BotAddedToInventory"},
-	{"Id":3030, "Name":"BotRemovedFromInventory"},
-	{"Id":3031, "Name":"BotReceived"},
-	{"Id":3032, "Name":"BotError"},
-	{"Id":3033, "Name":"BotCommandConfigurationData"},
-	{"Id":3034, "Name":"BotUpdateSkillList"},
-	{"Id":3035, "Name":"BotForceOpenContextMenu"},
-	{"Id":3036, "Name":"FigureSetIds"},
-	{"Id":3048, "Name":"MarketplaceCancelAllOffersResult"},
-	{"Id":3049, "Name":"SendPetToHolidayResult"},
-	{"Id":3240, "Name":"AgreementTypesResult"},
-	{"Id":3242, "Name":"IdentityAgreements"},
-	{"Id":3266, "Name":"GuildMembershipRequests"},
-	{"Id":3299, "Name":"FlatFavouriteCount"},
-	{"Id":3303, "Name":"StartCreateGuildResponse"},
-	{"Id":3304, "Name":"CommitCreateGuildResponse"},
-	{"Id":3600, "Name":"MeltdownWatchVerify"},
-	{"Id":3700, "Name":"EarningStatus"},
-	{"Id":3701, "Name":"ClaimEarningResult"},
-	{"Id":3702, "Name":"VaultStatus"},
-	{"Id":3800, "Name":"UpdateAccountPreferencesResult"},
-	{"Id":3850, "Name":"LinkIdentificationMethodResult"},
-	{"Id":3990, "Name":"BanInfo"},
-	{"Id":3998, "Name":"AntiSpamTriggered"},
-	{"Id":3999, "Name":"ServerDebugPong"},
-	{"Id":4000, "Name":"DisconnectionReason"},
-	{"Id":4001, "Name":"ProxyId"}
-],"Outgoing":[
-	{"Id":7, "Name":"InfoRetrieve"},
-	{"Id":8, "Name":"GetCredits"},
-	{"Id":12, "Name":"MessengerInit"},
-	{"Id":15, "Name":"FriendListUpdate"},
-	{"Id":19, "Name":"AddYourFavouriteRoom"},
-	{"Id":20, "Name":"DeleteYourFavouriteRoom"},
-	{"Id":23, "Name":"DeleteFlat"},
-	{"Id":26, "Name":"SubscriptionGetUserInfo"},
-	{"Id":27, "Name":"SubscriptionGetKickbackInfo"},
-	{"Id":29, "Name":"CreateNewFlat"},
-	{"Id":33, "Name":"SendMessage"},
-	{"Id":34, "Name":"SendRoomInvite"},
-	{"Id":37, "Name":"AcceptFriend"},
-	{"Id":38, "Name":"DeclineFriend"},
-	{"Id":39, "Name":"RequestFriend"},
-	{"Id":40, "Name":"RemoveFriend"},
-	{"Id":41, "Name":"HabboSearch"},
-	{"Id":42, "Name":"ApprovePetName"},
-	{"Id":44, "Name":"UpdateAvatar"},
-	{"Id":45, "Name":"CustomizeAvatarWithFurni"},
-	{"Id":52, "Name":"Chat"},
-	{"Id":53, "Name":"Quit"},
-	{"Id":55, "Name":"Shout"},
-	{"Id":56, "Name":"Whisper"},
-	{"Id":58, "Name":"PickUpPetFromRoom"},
-	{"Id":59, "Name":"GoToFlat"},
-	{"Id":61, "Name":"PickUpAllItemsFromRoom"},
-	{"Id":66, "Name":"FlatPropertyByItem"},
-	{"Id":67, "Name":"PickItemUpFromRoom"},
-	{"Id":68, "Name":"TradeUnaccept"},
-	{"Id":69, "Name":"TradeAccept"},
-	{"Id":70, "Name":"TradeClose"},
-	{"Id":71, "Name":"TradeOpen"},
-	{"Id":72, "Name":"TradeAddItem"},
-	{"Id":73, "Name":"MoveRoomItem"},
-	{"Id":74, "Name":"SetStuffData"},
-	{"Id":75, "Name":"Move"},
-	{"Id":76, "Name":"ThrowDice"},
-	{"Id":77, "Name":"DiceOff"},
-	{"Id":78, "Name":"PresentOpen"},
-	{"Id":79, "Name":"LookTo"},
-	{"Id":80, "Name":"PassHandItem"},
-	{"Id":81, "Name":"DropHandItem"},
-	{"Id":82, "Name":"PassHandItemToPet"},
-	{"Id":83, "Name":"GetItemData"},
-	{"Id":84, "Name":"SetStickyData"},
-	{"Id":85, "Name":"RemoveItem"},
-	{"Id":86, "Name":"Posture"},
-	{"Id":87, "Name":"GiveSupplementToPet"},
-	{"Id":89, "Name":"TradeAddItems"},
-	{"Id":90, "Name":"PlaceStuffFromStripDEPRECATED"},
-	{"Id":91, "Name":"MoveItemDEPRECATED"},
-	{"Id":92, "Name":"AmbassadorAlert"},
-	{"Id":93, "Name":"Dance"},
-	{"Id":94, "Name":"Expression"},
-	{"Id":95, "Name":"KickUser"},
-	{"Id":96, "Name":"AssignRights"},
-	{"Id":97, "Name":"RemoveRights"},
-	{"Id":99, "Name":"RemoveOwnRights"},
-	{"Id":100, "Name":"PurchaseFromCatalog"},
-	{"Id":101, "Name":"GetCatalogIndex"},
-	{"Id":102, "Name":"GetCatalogPage"},
-	{"Id":104, "Name":"ShowSign"},
-	{"Id":105, "Name":"PlaceRoomItem"},
-	{"Id":106, "Name":"PlaceWallItem"},
-	{"Id":108, "Name":"MoveWallItem"},
-	{"Id":114, "Name":"RelinkTeleports"},
-	{"Id":115, "Name":"Goaway"},
-	{"Id":117, "Name":"GetDonationSettings"},
-	{"Id":118, "Name":"Donate"},
-	{"Id":120, "Name":"GetRentOrBuyoutOffer"},
-	{"Id":121, "Name":"ExtendRentOrBuyoutFurniInRoom"},
-	{"Id":122, "Name":"ExtendRentOrBuyoutFurniInInventory"},
-	{"Id":129, "Name":"RedeemVoucherCode"},
-	{"Id":130, "Name":"RedeemVoucherCodeWithHc"},
-	{"Id":151, "Name":"GetUserFlatCategories"},
-	{"Id":152, "Name":"GetEventFlatCats"},
-	{"Id":155, "Name":"RemoveAllRights"},
-	{"Id":157, "Name":"GetAvailableBadges"},
-	{"Id":158, "Name":"SetSelectedBadges"},
-	{"Id":159, "Name":"GetSelectedBadges"},
-	{"Id":181, "Name":"InterstitialShown"},
-	{"Id":182, "Name":"GetInterstitial"},
-	{"Id":183, "Name":"ConvertFurniToCredits"},
-	{"Id":196, "Name":"Pong"},
-	{"Id":197, "Name":"ClientSuspended"},
-	{"Id":198, "Name":"ClientResumed"},
-	{"Id":200, "Name":"ModerationAction"},
-	{"Id":207, "Name":"InitDhHandshake"},
-	{"Id":208, "Name":"CompleteDhHandshake"},
-	{"Id":211, "Name":"RoomQueueChange"},
-	{"Id":212, "Name":"GetOpeningHours"},
-	{"Id":214, "Name":"SetWallItemAnimationState"},
-	{"Id":215, "Name":"GetFurniAliases"},
-	{"Id":216, "Name":"GetSpectatorAmount"},
-	{"Id":221, "Name":"GetSongInfo"},
-	{"Id":222, "Name":"GetSongId"},
-	{"Id":227, "Name":"SetChatPreferences"},
-	{"Id":228, "Name":"GetAccountPreferences"},
-	{"Id":229, "Name":"SetSoundSettings"},
-	{"Id":230, "Name":"GetHabboGroupBadges"},
-	{"Id":231, "Name":"GetHabboGroupDetails"},
-	{"Id":232, "Name":"EnterOneWayDoor"},
-	{"Id":233, "Name":"GetFriendRequests"},
-	{"Id":234, "Name":"StartPoll"},
-	{"Id":235, "Name":"RejectPoll"},
-	{"Id":236, "Name":"PollAnswer"},
-	{"Id":237, "Name":"GetPendingCallsForHelp"},
-	{"Id":238, "Name":"DeletePendingCallsForHelp"},
-	{"Id":240, "Name":"SetRoomInvitePreferences"},
-	{"Id":241, "Name":"SetRoomCameraPreferences"},
-	{"Id":242, "Name":"SetNewNavigatorPreferences"},
-	{"Id":243, "Name":"SetUiFlags"},
-	{"Id":244, "Name":"SetChatStylePreference"},
-	{"Id":245, "Name":"GetSoundMachinePlayList"},
-	{"Id":247, "Name":"SpinWheelOfFortune"},
-	{"Id":249, "Name":"GetNowPlaying"},
-	{"Id":255, "Name":"AddJukeboxDisc"},
-	{"Id":256, "Name":"RemoveJukeboxDisc"},
-	{"Id":258, "Name":"GetJukeboxDiscs"},
-	{"Id":259, "Name":"GetUserSongDiscs"},
-	{"Id":260, "Name":"RemoveAllJukeboxDiscs"},
-	{"Id":261, "Name":"RateFlat"},
-	{"Id":262, "Name":"FollowFriend"},
-	{"Id":264, "Name":"VisitUser"},
-	{"Id":314, "Name":"SetFurniRandomState"},
-	{"Id":315, "Name":"ClientLatencyPingRequest"},
-	{"Id":316, "Name":"ClientLatencyPingReport"},
-	{"Id":317, "Name":"UserStartTyping"},
-	{"Id":318, "Name":"UserCancelTyping"},
-	{"Id":319, "Name":"IgnoreUser"},
-	{"Id":320, "Name":"IgnoreAvatarId"},
-	{"Id":321, "Name":"GetIgnoreList"},
-	{"Id":322, "Name":"UnignoreUser"},
-	{"Id":330, "Name":"RoomBanWithDuration"},
-	{"Id":331, "Name":"RoomMuteUser"},
-	{"Id":332, "Name":"RoomMuteUnmuteAll"},
-	{"Id":333, "Name":"RoomUnmuteUser"},
-	{"Id":341, "Name":"RoomDimmerEditPresets"},
-	{"Id":342, "Name":"RoomDimmerSavePreset"},
-	{"Id":343, "Name":"RoomDimmerChangeState"},
-	{"Id":344, "Name":"RoomMuteAll"},
-	{"Id":347, "Name":"RoomAdCancelAd"},
-	{"Id":348, "Name":"RoomAdEditAd"},
-	{"Id":349, "Name":"PurchaseRoomAd"},
-	{"Id":352, "Name":"RoomAdGetRooms"},
-	{"Id":353, "Name":"RoomAdListAds"},
-	{"Id":354, "Name":"RoomAdEventTabViewed"},
-	{"Id":356, "Name":"RoomAdEventTabAdClicked"},
-	{"Id":357, "Name":"RoomAdPurchaseInitiated"},
-	{"Id":370, "Name":"GetUserAchievements"},
-	{"Id":371, "Name":"RespectUser"},
-	{"Id":372, "Name":"UseAvatarEffect"},
-	{"Id":373, "Name":"ActivateAvatarEffect"},
-	{"Id":374, "Name":"PurchaseAndActivateAvatarEffect"},
-	{"Id":375, "Name":"GetWardrobe"},
-	{"Id":376, "Name":"SaveWardrobeOutfit"},
-	{"Id":377, "Name":"MysteryBoxWaitingCanceled"},
-	{"Id":378, "Name":"ResetResolutionAchievement"},
-	{"Id":379, "Name":"GetUserAchievementsForAResolution"},
-	{"Id":380, "Name":"GetOfficialRooms"},
-	{"Id":381, "Name":"FriendFurnitureLockConfirm"},
-	{"Id":382, "Name":"GetPopularRoomTags"},
-	{"Id":383, "Name":"GetCategoriesWithVisitorCount"},
-	{"Id":384, "Name":"UpdateNavigatorSettings"},
-	{"Id":385, "Name":"GetGuestRoom"},
-	{"Id":386, "Name":"UpdateRoomThumbnail"},
-	{"Id":387, "Name":"CanCreateRoom"},
-	{"Id":388, "Name":"ConvertGlobalRoomId"},
-	{"Id":390, "Name":"GetRoomEntryData"},
-	{"Id":391, "Name":"FlatOpc"},
-	{"Id":392, "Name":"UseStuff"},
-	{"Id":393, "Name":"UseWallItem"},
-	{"Id":400, "Name":"GetRoomSettings"},
-	{"Id":401, "Name":"SaveRoomSettings"},
-	{"Id":402, "Name":"TradeConfirmAccept"},
-	{"Id":403, "Name":"TradeConfirmDecline"},
-	{"Id":404, "Name":"GetInventory"},
-	{"Id":405, "Name":"TradeRemoveItem"},
-	{"Id":406, "Name":"GetInventoryPeer"},
-	{"Id":407, "Name":"UpdateRoomFilter"},
-	{"Id":408, "Name":"GetRoomFilter"},
-	{"Id":409, "Name":"UpdateRoomCategoryAndTrade"},
-	{"Id":410, "Name":"StageStartPerformance"},
-	{"Id":411, "Name":"StageVotePerformance"},
-	{"Id":415, "Name":"LoginWithTicket"},
-	{"Id":416, "Name":"GetClientFaqs"},
-	{"Id":417, "Name":"GetFaqCategories"},
-	{"Id":418, "Name":"GetFaqText"},
-	{"Id":419, "Name":"SearchFaqs"},
-	{"Id":420, "Name":"GetFaqCategory"},
-	{"Id":421, "Name":"LogFlashPerformance"},
-	{"Id":422, "Name":"LogLagWarning"},
-	{"Id":423, "Name":"LogAirPerformance"},
-	{"Id":430, "Name":"PopularRoomsSearch"},
-	{"Id":431, "Name":"RoomsWithHighestScoreSearch"},
-	{"Id":432, "Name":"MyFriendsRoomsSearch"},
-	{"Id":433, "Name":"RoomsWhereMyFriendsAreSearch"},
-	{"Id":434, "Name":"MyRoomsSearch"},
-	{"Id":435, "Name":"MyFavouriteRoomsSearch"},
-	{"Id":436, "Name":"MyRoomHistorySearch"},
-	{"Id":437, "Name":"RoomTextSearch"},
-	{"Id":438, "Name":"RoomTagSearch"},
-	{"Id":440, "Name":"MyFrequentlyVisitedRoomsSearch"},
-	{"Id":442, "Name":"GuildBaseSearch"},
-	{"Id":443, "Name":"RoomAdSearch"},
-	{"Id":444, "Name":"MyRoomRightsSearch"},
-	{"Id":445, "Name":"MyGuildBasesSearch"},
-	{"Id":446, "Name":"MyRecommendedRoomsSearch"},
-	{"Id":449, "Name":"CloseIssueDefaultAction"},
-	{"Id":450, "Name":"PickIssues"},
-	{"Id":451, "Name":"ReleaseIssues"},
-	{"Id":452, "Name":"CloseIssues"},
-	{"Id":453, "Name":"CreateIssue"},
-	{"Id":454, "Name":"GetModeratorUserInfo"},
-	{"Id":455, "Name":"GetUserChatLog"},
-	{"Id":456, "Name":"GetRoomChatLog"},
-	{"Id":457, "Name":"GetCfhChatLog"},
-	{"Id":458, "Name":"GetRoomVisits"},
-	{"Id":459, "Name":"GetModeratorRoomInfo"},
-	{"Id":460, "Name":"ModerateRoom"},
-	{"Id":461, "Name":"ModAlert"},
-	{"Id":462, "Name":"ModMessage"},
-	{"Id":463, "Name":"ModKick"},
-	{"Id":464, "Name":"ModBan"},
-	{"Id":465, "Name":"ModMute"},
-	{"Id":466, "Name":"ModToolPreferences"},
-	{"Id":467, "Name":"ModToolNextSanction"},
-	{"Id":468, "Name":"ModTradingLock"},
-	{"Id":469, "Name":"CreateImIssue"},
-	{"Id":470, "Name":"ChangeAvatarNameInRoom"},
-	{"Id":471, "Name":"CheckAvatarName"},
-	{"Id":472, "Name":"PurchaseFromCatalogAsGift"},
-	{"Id":473, "Name":"GetGiftWrappingConfiguration"},
-	{"Id":474, "Name":"GetSelectableClubGiftInfo"},
-	{"Id":475, "Name":"SelectClubGift"},
-	{"Id":476, "Name":"ChangeAvatarName"},
-	{"Id":477, "Name":"DefaultSanction"},
-	{"Id":478, "Name":"GetRoomTypes"},
-	{"Id":480, "Name":"SetClothingChangeFurnitureData"},
-	{"Id":482, "Name":"LogToEventLog"},
-	{"Id":483, "Name":"ToggleRoomStaffPick"},
-	{"Id":484, "Name":"ChangeAvatarMotto"},
-	{"Id":485, "Name":"ForwardToARandomPromotedRoom"},
-	{"Id":486, "Name":"ForwardToSomeRoom"},
-	{"Id":490, "Name":"FriendBarHelperFindFriends"},
-	{"Id":491, "Name":"SetRelationshipStatus"},
-	{"Id":492, "Name":"GetRelationshipStatusInfo"},
-	{"Id":500, "Name":"GetEventStream"},
-	{"Id":501, "Name":"SetEventStreamPublishingAllowed"},
-	{"Id":502, "Name":"StreamLike"},
-	{"Id":503, "Name":"StreamStatus"},
-	{"Id":504, "Name":"GetEventStreamForAccount"},
-	{"Id":505, "Name":"StreamComment"},
-	{"Id":506, "Name":"GetStreamNotificationCount"},
-	{"Id":507, "Name":"GetStreamNotifications"},
-	{"Id":512, "Name":"Disconnect"},
-	{"Id":520, "Name":"GetCommunityGoalProgress"},
-	{"Id":521, "Name":"SubmitRoomToCompetition"},
-	{"Id":522, "Name":"RoomCompetitionInit"},
-	{"Id":523, "Name":"VoteForRoom"},
-	{"Id":524, "Name":"GetSecondsUntil"},
-	{"Id":525, "Name":"ForwardToRandomCompetitionRoom"},
-	{"Id":526, "Name":"CompetitionRoomsSearch"},
-	{"Id":527, "Name":"GetCommunityGoalHallOfFame"},
-	{"Id":528, "Name":"ForwardToACompetitionRoom"},
-	{"Id":529, "Name":"IsUserPartOfCompetition"},
-	{"Id":530, "Name":"GetCurrentTimingCode"},
-	{"Id":531, "Name":"ForwardToASubmittableRoom"},
-	{"Id":532, "Name":"GetConcurrentUsersGoalProgress"},
-	{"Id":533, "Name":"RequestConcurrentUsersGoalReward"},
-	{"Id":541, "Name":"HelpRequestSessionCreate"},
-	{"Id":542, "Name":"HelpRequestSessionGuideDecides"},
-	{"Id":543, "Name":"HelpRequestSessionRequesterCancels"},
-	{"Id":544, "Name":"HelpRequestSessionResolved"},
-	{"Id":545, "Name":"HelpRequestSessionFeedback"},
-	{"Id":546, "Name":"GuideOnDutyUpdate"},
-	{"Id":547, "Name":"HelpRequestSessionMessage"},
-	{"Id":548, "Name":"HelpRequestSessionGetRequesterRoom"},
-	{"Id":550, "Name":"HelpRequestSessionReported"},
-	{"Id":551, "Name":"HelpRequestSessionInviteRequester"},
-	{"Id":552, "Name":"HelpRequestSessionTyping"},
-	{"Id":560, "Name":"QuizGetQuestions"},
-	{"Id":561, "Name":"QuizPostAnswers"},
-	{"Id":565, "Name":"GetTalentTrack"},
-	{"Id":566, "Name":"GetTalentTrackLevel"},
-	{"Id":567, "Name":"GuideAdvertisementRead"},
-	{"Id":596, "Name":"ChangePetName"},
-	{"Id":597, "Name":"GetPetConfigurations"},
-	{"Id":754, "Name":"ChangePassword"},
-	{"Id":755, "Name":"LoginWithPassword"},
-	{"Id":756, "Name":"LoginWithPasswordDEPRECATED"},
-	{"Id":757, "Name":"LoginWithFacebookToken"},
-	{"Id":758, "Name":"LoginWithToken"},
-	{"Id":759, "Name":"CreateAccount"},
-	{"Id":761, "Name":"CaptchaRequest"},
-	{"Id":811, "Name":"ClearDeviceLoginToken"},
-	{"Id":812, "Name":"GetDeviceLoginTokens"},
-	{"Id":813, "Name":"UniqueMachineId"},
-	{"Id":815, "Name":"ClientStatistics"},
-	{"Id":899, "Name":"GetAccountProgressionInfo"},
-	{"Id":900, "Name":"GetHotlooks"},
-	{"Id":901, "Name":"GetAvatarList"},
-	{"Id":902, "Name":"CreateNewAvatar"},
-	{"Id":903, "Name":"DeactivateAvatar"},
-	{"Id":904, "Name":"GetInitialRooms"},
-	{"Id":905, "Name":"SelectInitialRoom"},
-	{"Id":1000, "Name":"GetCfhStatus"},
-	{"Id":1010, "Name":"RoomNetworkForward"},
-	{"Id":1020, "Name":"Navigator2Init"},
-	{"Id":1021, "Name":"Navigator2Search"},
-	{"Id":1023, "Name":"Navigator2AddSavedSearch"},
-	{"Id":1024, "Name":"Navigator2DeleteSavedSearch"},
-	{"Id":1025, "Name":"Navigator2AddCollapsedCategory"},
-	{"Id":1026, "Name":"Navigator2RemoveCollapsedCategory"},
-	{"Id":1027, "Name":"Navigator2SetSearchCodeViewMode"},
-	{"Id":1170, "Name":"VersionCheck"},
-	{"Id":1300, "Name":"GetCraftableProducts"},
-	{"Id":1301, "Name":"GetCraftingRecipe"},
-	{"Id":1302, "Name":"Craft"},
-	{"Id":1303, "Name":"CraftSecret"},
-	{"Id":1304, "Name":"GetCraftingRecipesAvailable"},
-	{"Id":1310, "Name":"GetProductOffers"},
-	{"Id":1401, "Name":"OpenCampaignCalendarDoor"},
-	{"Id":1402, "Name":"StaffOpenCampaignCalendarDoor"},
-	{"Id":1469, "Name":"PickUpAllFurniAndResetHeightmap"},
-	{"Id":1470, "Name":"UpdateRoomFloorProperties"},
-	{"Id":1471, "Name":"StackingHelperSetCaretHeight"},
-	{"Id":1473, "Name":"GetRoomEntryTile"},
-	{"Id":1474, "Name":"GetRoomOccupiedTiles"},
-	{"Id":1480, "Name":"YoutubeDisplayGetStatus"},
-	{"Id":1481, "Name":"YoutubeDisplaySetPlaylist"},
-	{"Id":1482, "Name":"YoutubeDisplayControlPlayback"},
-	{"Id":1490, "Name":"RentableSpaceGetInfo"},
-	{"Id":1491, "Name":"RentableSpaceRentSpace"},
-	{"Id":1492, "Name":"RentableSpaceExtendRent"},
-	{"Id":1493, "Name":"RentableSpaceCancel"},
-	{"Id":1494, "Name":"BuildersClubPlaceRoomItem"},
-	{"Id":1495, "Name":"BuildersClubPlaceWallItem"},
-	{"Id":1496, "Name":"BuildersClubQueryFurniCount"},
-	{"Id":1500, "Name":"TryPhoneNumber"},
-	{"Id":1501, "Name":"VerifyCode"},
-	{"Id":1502, "Name":"SetPhoneNumberCollectionStatus"},
-	{"Id":1503, "Name":"GiveGift"},
-	{"Id":1504, "Name":"RestartPhoneNumberCollection"},
-	{"Id":1505, "Name":"GiveStarGems"},
-	{"Id":1522, "Name":"NuxGetGifts"},
-	{"Id":1523, "Name":"ScriptProceed"},
-	{"Id":1530, "Name":"GetNextTargetedOffer"},
-	{"Id":1531, "Name":"PurchaseTargetedOffer"},
-	{"Id":1532, "Name":"SetTargetedOfferState"},
-	{"Id":1533, "Name":"ShopTargetedOfferViewed"},
-	{"Id":1534, "Name":"GetTargetedOffer"},
-	{"Id":1535, "Name":"GetTargetedOfferList"},
-	{"Id":1540, "Name":"GetGuideReportingStatus"},
-	{"Id":1541, "Name":"ChatReviewSessionCreate"},
-	{"Id":1542, "Name":"ChatReviewSessionGuideDecidesOnOffer"},
-	{"Id":1544, "Name":"ChatReviewSessionGuideVote"},
-	{"Id":1546, "Name":"ChatReviewSessionGuideDetached"},
-	{"Id":1550, "Name":"AccountSafetylockGetQuestions"},
-	{"Id":1551, "Name":"AccountSafetylockUnlock"},
-	{"Id":1552, "Name":"AccountSafetyLock"},
-	{"Id":1570, "Name":"SubmitGdprRequest"},
-	{"Id":1571, "Name":"CancelGdprRequest"},
-	{"Id":1572, "Name":"GetGdprRequest"},
-	{"Id":1600, "Name":"GetForumStats"},
-	{"Id":1601, "Name":"GetForumThreads"},
-	{"Id":1602, "Name":"GetForumThreadMessages"},
-	{"Id":1603, "Name":"UpdateForumReadMarkers"},
-	{"Id":1604, "Name":"GetForumThread"},
-	{"Id":1605, "Name":"GetForumsList"},
-	{"Id":1606, "Name":"UpdateForumSettings"},
-	{"Id":1607, "Name":"GetUnreadForumsCount"},
-	{"Id":1610, "Name":"PostForumMessage"},
-	{"Id":1612, "Name":"ModerateForumThread"},
-	{"Id":1613, "Name":"ModerateForumMessage"},
-	{"Id":1614, "Name":"ReportForumThread"},
-	{"Id":1615, "Name":"ReportForumMessage"},
-	{"Id":1616, "Name":"UpdateForumThread"},
-	{"Id":1700, "Name":"GetRoomUsersClassification"},
-	{"Id":1701, "Name":"GetPeerUsersClassification"},
-	{"Id":1800, "Name":"ReportSelfie"},
-	{"Id":1801, "Name":"ReportPhoto"},
-	{"Id":1900, "Name":"UserFeedback"},
-	{"Id":2550, "Name":"GetReputation"},
-	{"Id":2998, "Name":"GetFurniByRoomInventory"},
-	{"Id":2999, "Name":"GetInventoryForDebugging"},
-	{"Id":3000, "Name":"GetPetInventory"},
-	{"Id":3001, "Name":"GetNewPetInfo"},
-	{"Id":3002, "Name":"PlacePetToFlat"},
-	{"Id":3003, "Name":"RemovePetFromFlat"},
-	{"Id":3004, "Name":"GetAvailablePetCommands"},
-	{"Id":3005, "Name":"RespectPet"},
-	{"Id":3006, "Name":"OpenPetPackage"},
-	{"Id":3007, "Name":"GetSellablePetPalettes"},
-	{"Id":3008, "Name":"CustomizePetWithFurni"},
-	{"Id":3009, "Name":"RemoveSaddle"},
-	{"Id":3010, "Name":"MarketplaceMakeOffer"},
-	{"Id":3011, "Name":"MarketplaceGetConfiguration"},
-	{"Id":3012, "Name":"MarketplaceCanMakeOffer"},
-	{"Id":3013, "Name":"MarketplaceBuyTokens"},
-	{"Id":3014, "Name":"MarketplaceBuyOffer"},
-	{"Id":3015, "Name":"MarketplaceCancelOffer"},
-	{"Id":3016, "Name":"MarketplaceRedeemOfferCredits"},
-	{"Id":3017, "Name":"MountPet"},
-	{"Id":3018, "Name":"MarketplaceSearchOffers"},
-	{"Id":3019, "Name":"MarketplaceListOwnOffers"},
-	{"Id":3020, "Name":"MarketplaceGetItemStats"},
-	{"Id":3021, "Name":"TogglePetRidingAccessRights"},
-	{"Id":3022, "Name":"PetSelected"},
-	{"Id":3023, "Name":"MovePetInFlat"},
-	{"Id":3024, "Name":"BreedPets"},
-	{"Id":3025, "Name":"HarvestPet"},
-	{"Id":3026, "Name":"TogglePetBreedingRights"},
-	{"Id":3027, "Name":"PlaceBotToFlat"},
-	{"Id":3028, "Name":"GetBotInventory"},
-	{"Id":3029, "Name":"CommandBot"},
-	{"Id":3030, "Name":"GetIsOfferGiftable"},
-	{"Id":3031, "Name":"GetHabboClubOffers"},
-	{"Id":3032, "Name":"GetBadgePointLimits"},
-	{"Id":3033, "Name":"ChargeStuff"},
-	{"Id":3034, "Name":"MarkCatalogNewAdditionsPageOpened"},
-	{"Id":3035, "Name":"GetHabboVipMembershipExtendOffer"},
-	{"Id":3036, "Name":"PurchaseDiscountedVipMembershipExtension"},
-	{"Id":3037, "Name":"PurchaseDiscountedBasicMembershipExtension"},
-	{"Id":3038, "Name":"GetHabboBasicMembershipExtendOffer"},
-	{"Id":3039, "Name":"GetSnowWarGameTokensOffer"},
-	{"Id":3040, "Name":"PurchaseSnowWarGameTokens"},
-	{"Id":3041, "Name":"GetBundleDiscountRuleset"},
-	{"Id":3042, "Name":"GetProductOffer"},
-	{"Id":3043, "Name":"RequestBadge"},
-	{"Id":3044, "Name":"GetIsBadgeRequestFulfilled"},
-	{"Id":3045, "Name":"ConfirmPetBreeding"},
-	{"Id":3046, "Name":"CancelPetBreeding"},
-	{"Id":3047, "Name":"CompostPlant"},
-	{"Id":3048, "Name":"MarketplaceCancelAllOffers"},
-	{"Id":3049, "Name":"SendPetToHoliday"},
-	{"Id":3050, "Name":"UserDefinedRoomEventsUpdateTrigger"},
-	{"Id":3051, "Name":"UserDefinedRoomEventsUpdateAction"},
-	{"Id":3052, "Name":"UserDefinedRoomEventsUpdateCondition"},
-	{"Id":3053, "Name":"UserDefinedRoomEventsOpen"},
-	{"Id":3054, "Name":"UserDefinedRoomEventsApplySnapshot"},
-	{"Id":3060, "Name":"RemoveBotFromFlat"},
-	{"Id":3101, "Name":"GetQuests"},
-	{"Id":3102, "Name":"AcceptQuest"},
-	{"Id":3106, "Name":"RejectQuest"},
-	{"Id":3107, "Name":"OpenQuestTracker"},
-	{"Id":3108, "Name":"StartCampaign"},
-	{"Id":3109, "Name":"GetDailyQuest"},
-	{"Id":3110, "Name":"GetMessageOfTheDay"},
-	{"Id":3111, "Name":"ResetUnseenCounter"},
-	{"Id":3112, "Name":"ActivateQuest"},
-	{"Id":3113, "Name":"CancelQuest"},
-	{"Id":3114, "Name":"GetSeasonalQuests"},
-	{"Id":3210, "Name":"FriendRequestQuestComplete"},
-	{"Id":3240, "Name":"GetIdentityAgreementTypes"},
-	{"Id":3241, "Name":"SaveAgreements"},
-	{"Id":3242, "Name":"GetIdentityAgreements"},
-	{"Id":3250, "Name":"GetEmailStatus"},
-	{"Id":3251, "Name":"ChangeEmail"},
-	{"Id":3254, "Name":"PlacePostIt"},
-	{"Id":3255, "Name":"AddSpamWallPostIt"},
-	{"Id":3256, "Name":"SetMannequinFigure"},
-	{"Id":3257, "Name":"JoinHabboGroup"},
-	{"Id":3258, "Name":"SelectFavouriteHabboGroup"},
-	{"Id":3259, "Name":"DeselectFavouriteHabboGroup"},
-	{"Id":3260, "Name":"GetExtendedProfile"},
-	{"Id":3261, "Name":"GetGuildCreationInfo"},
-	{"Id":3262, "Name":"CreateGuild"},
-	{"Id":3263, "Name":"GetGuildEditInfo"},
-	{"Id":3264, "Name":"UpdateGuildIdentity"},
-	{"Id":3265, "Name":"GetGuildEditorData"},
-	{"Id":3266, "Name":"GetGuildMembershipRequests"},
-	{"Id":3267, "Name":"ApproveMembershipRequest"},
-	{"Id":3268, "Name":"RejectMembershipRequest"},
-	{"Id":3269, "Name":"ApproveAllMembershipRequests"},
-	{"Id":3270, "Name":"RemoveAdminRightsFromMember"},
-	{"Id":3271, "Name":"AddAdminRightsToMember"},
-	{"Id":3272, "Name":"KickMember"},
-	{"Id":3273, "Name":"UpdateGuildSettings"},
-	{"Id":3274, "Name":"GetFlatControllers"},
-	{"Id":3275, "Name":"UpdateGuildBadge"},
-	{"Id":3276, "Name":"UpdateGuildColors"},
-	{"Id":3277, "Name":"GetGuildMembers"},
-	{"Id":3278, "Name":"GetGuildMemberships"},
-	{"Id":3279, "Name":"GuildMemberHqFurniCount"},
-	{"Id":3280, "Name":"SetMannequinName"},
-	{"Id":3281, "Name":"GetGuildFurniContextMenuInfo"},
-	{"Id":3282, "Name":"GetDirectClubBuyAllowed"},
-	{"Id":3283, "Name":"GetExtendedProfileByUsername"},
-	{"Id":3284, "Name":"GetSeasonalCalendarDailyOffer"},
-	{"Id":3285, "Name":"SetRoomSessionTags"},
-	{"Id":3286, "Name":"GetCatalogPageWithEarliestExpiry"},
-	{"Id":3287, "Name":"GetLimitedFurniTimingInfo"},
-	{"Id":3288, "Name":"GetCommunityGoalEarnedPrizes"},
-	{"Id":3289, "Name":"RedeemCommunityGoalPrize"},
-	{"Id":3290, "Name":"DeactivateGuild"},
-	{"Id":3291, "Name":"GetCatalogPageExpiration"},
-	{"Id":3292, "Name":"SetRoomBackgroundColorData"},
-	{"Id":3293, "Name":"GetBannedUsers"},
-	{"Id":3294, "Name":"RoomUnbanUser"},
-	{"Id":3295, "Name":"GetPromoArticles"},
-	{"Id":3296, "Name":"GetBonusRareInfo"},
-	{"Id":3297, "Name":"OpenMysteryTrophy"},
-	{"Id":3298, "Name":"CommunityGoalVote"},
-	{"Id":3299, "Name":"GetFlatFavouriteCount"},
-	{"Id":3302, "Name":"GetExternalImageFurniData"},
-	{"Id":3303, "Name":"StartCreateGuild"},
-	{"Id":3304, "Name":"CommitCreateGuild"},
-	{"Id":3330, "Name":"GetBotCommandConfigurationData"},
-	{"Id":3420, "Name":"RemoveUnseenElements"},
-	{"Id":3421, "Name":"RemoveUnseenElement"},
-	{"Id":3501, "Name":"RequestCameraToken"},
-	{"Id":3502, "Name":"RenderRoom"},
-	{"Id":3503, "Name":"PurchasePhoto"},
-	{"Id":3504, "Name":"PublishPhoto"},
-	{"Id":3505, "Name":"InitCamera"},
-	{"Id":3506, "Name":"CompetitionPhoto"},
-	{"Id":3520, "Name":"RenderAndSaveRoomThumbnailPhoto"},
-	{"Id":3600, "Name":"MeltdownWatchVerify"},
-	{"Id":3700, "Name":"EarningStatus"},
-	{"Id":3701, "Name":"ClaimEarning"},
-	{"Id":3702, "Name":"VaultStatus"},
-	{"Id":3703, "Name":"WithdrawVault"},
-	{"Id":3800, "Name":"UpdateAccountPreferences"},
-	{"Id":3850, "Name":"UnlinkIdentificationMethod"},
-	{"Id":3851, "Name":"LinkIdentificationMethod"},
-	{"Id":3900, "Name":"ClientDebugPingPeerSlow"},
-	{"Id":3901, "Name":"ClientDebugPingPeerFast"},
-	{"Id":3902, "Name":"ClientDebugPingRoomSlow"},
-	{"Id":3903, "Name":"ClientDebugPingRoomFast"},
-	{"Id":3908, "Name":"ClientDebugPingMessengerSlow"},
-	{"Id":3909, "Name":"ClientDebugPingMessengerFast"},
-	{"Id":3910, "Name":"ClientDebugPingNavigatorSlow"},
-	{"Id":3911, "Name":"ClientDebugPingNavigatorFast"},
-	{"Id":3912, "Name":"ClientDebugPingRoomDirectorySlow"},
-	{"Id":3913, "Name":"ClientDebugPingRoomDirectoryFast"},
-	{"Id":3914, "Name":"ClientDebugPingProxySlow"},
-	{"Id":3915, "Name":"ClientDebugPingProxyFast"},
-	{"Id":4000, "Name":"Hello"},
-	{"Id":4001, "Name":"GetProxyId"}
-]}
+{
+  "Incoming": [
+    {
+      "Id": 918,
+      "Name": "InterstitialMessage"
+    },
+    {
+      "Id": 139,
+      "Name": "ItemWallRemove"
+    },
+    {
+      "Id": 3120,
+      "Name": "ItemWall"
+    },
+    {
+      "Id": 3864,
+      "Name": "ItemWallAdd"
+    },
+    {
+      "Id": 174,
+      "Name": "FurnitureFloorUpdate"
+    },
+    {
+      "Id": 1096,
+      "Name": "FurnitureFloorRemove"
+    },
+    {
+      "Id": 473,
+      "Name": "FurnitureFloor"
+    },
+    {
+      "Id": 2057,
+      "Name": "FurnitureFloorAdd"
+    },
+    {
+      "Id": 3371,
+      "Name": "RoomRolling"
+    },
+    {
+      "Id": 1798,
+      "Name": "RoomScore"
+    },
+    {
+      "Id": 3277,
+      "Name": "RoomInfoOwner"
+    },
+    {
+      "Id": 2494,
+      "Name": "RoomSettingsChat"
+    },
+    {
+      "Id": 3123,
+      "Name": "BotForceOpenContextMenu"
+    },
+    {
+      "Id": 735,
+      "Name": "BotSkillListUpdate"
+    },
+    {
+      "Id": 1831,
+      "Name": "BotCommandConfiguration"
+    },
+    {
+      "Id": 2613,
+      "Name": "RoomRights"
+    },
+    {
+      "Id": 1031,
+      "Name": "RoomRightsOwner"
+    },
+    {
+      "Id": 2407,
+      "Name": "RoomRightsClear"
+    },
+    {
+      "Id": 1915,
+      "Name": "RoomDoorbellAccepted"
+    },
+    {
+      "Id": 732,
+      "Name": "RoomForward"
+    },
+    {
+      "Id": 1464,
+      "Name": "RoomEnter"
+    },
+    {
+      "Id": 1703,
+      "Name": "RoomEnterError"
+    },
+    {
+      "Id": 1195,
+      "Name": "Quest"
+    },
+    {
+      "Id": 3532,
+      "Name": "Quests"
+    },
+    {
+      "Id": 1052,
+      "Name": "ItemWallUpdate"
+    },
+    {
+      "Id": 2274,
+      "Name": "FurnitureAliases"
+    },
+    {
+      "Id": 2120,
+      "Name": "FurnitureData"
+    },
+    {
+      "Id": 2490,
+      "Name": "FurnitureItemdata"
+    },
+    {
+      "Id": 2839,
+      "Name": "RoomBanRemove"
+    },
+    {
+      "Id": 3374,
+      "Name": "ShowEnforceRoomCategory"
+    },
+    {
+      "Id": 3978,
+      "Name": "RoomSettingsError"
+    },
+    {
+      "Id": 2758,
+      "Name": "RoomSettingsSave"
+    },
+    {
+      "Id": 911,
+      "Name": "RoomSettings"
+    },
+    {
+      "Id": 3462,
+      "Name": "RoomSettingsSaveError"
+    },
+    {
+      "Id": 3863,
+      "Name": "RoomBanList"
+    },
+    {
+      "Id": 3,
+      "Name": "RoomRightsListRemove"
+    },
+    {
+      "Id": 3288,
+      "Name": "RoomRightsListAdd"
+    },
+    {
+      "Id": 2269,
+      "Name": "RoomRightsList"
+    },
+    {
+      "Id": 3566,
+      "Name": "RoomPopularTagsResult"
+    },
+    {
+      "Id": 279,
+      "Name": "SeasonalQuests"
+    },
+    {
+      "Id": 723,
+      "Name": "RoomMessageNotification"
+    },
+    {
+      "Id": 1223,
+      "Name": "RoomSpectator"
+    },
+    {
+      "Id": 1112,
+      "Name": "FurniturePostitStickyPoleOpen"
+    },
+    {
+      "Id": 1215,
+      "Name": "FurnitureGroupContextMenuInfo"
+    },
+    {
+      "Id": 339,
+      "Name": "ObjectsDataUpdate"
+    },
+    {
+      "Id": 1749,
+      "Name": "LovelockFurniStart"
+    },
+    {
+      "Id": 2534,
+      "Name": "LovelockFurniFriendComfirmed"
+    },
+    {
+      "Id": 2139,
+      "Name": "LovelockFurniFinished"
+    },
+    {
+      "Id": 2596,
+      "Name": "FurnitureState2"
+    },
+    {
+      "Id": 444,
+      "Name": "ItemDimmerSettings"
+    },
+    {
+      "Id": 2042,
+      "Name": "FurnitureState"
+    },
+    {
+      "Id": 1190,
+      "Name": "ItemStackHelper"
+    },
+    {
+      "Id": 3257,
+      "Name": "CustomUserNotification"
+    },
+    {
+      "Id": 1765,
+      "Name": "EpicPopup"
+    },
+    {
+      "Id": 1140,
+      "Name": "CommunityGoalHallOfFame"
+    },
+    {
+      "Id": 1880,
+      "Name": "QuestCompleted"
+    },
+    {
+      "Id": 3346,
+      "Name": "GenericAlert"
+    },
+    {
+      "Id": 1288,
+      "Name": "GenericAlertLegacy"
+    },
+    {
+      "Id": 2981,
+      "Name": "NavigatorSettings"
+    },
+    {
+      "Id": 813,
+      "Name": "NavigatorSearch"
+    },
+    {
+      "Id": 2393,
+      "Name": "NavigatorSearches"
+    },
+    {
+      "Id": 1302,
+      "Name": "NavigatorMetadata"
+    },
+    {
+      "Id": 1392,
+      "Name": "NavigatorLifted"
+    },
+    {
+      "Id": 3984,
+      "Name": "NavigatorCollapsed"
+    },
+    {
+      "Id": 462,
+      "Name": "NavigatorCategories"
+    },
+    {
+      "Id": 745,
+      "Name": "NavigatorEventCategories"
+    },
+    {
+      "Id": 1328,
+      "Name": "RoomInfoUpdated"
+    },
+    {
+      "Id": 2606,
+      "Name": "MotdMessages"
+    },
+    {
+      "Id": 1845,
+      "Name": "RoomEvent"
+    },
+    {
+      "Id": 3323,
+      "Name": "UserHomeRoom"
+    },
+    {
+      "Id": 3187,
+      "Name": "GuestRoomSearchResult"
+    },
+    {
+      "Id": 2974,
+      "Name": "RoomInfo"
+    },
+    {
+      "Id": 776,
+      "Name": "RoomCreated"
+    },
+    {
+      "Id": 2384,
+      "Name": "RoomDoorbellRejected"
+    },
+    {
+      "Id": 2761,
+      "Name": "UserFavoriteRoomCount"
+    },
+    {
+      "Id": 67,
+      "Name": "UserFavoriteRoom"
+    },
+    {
+      "Id": 2660,
+      "Name": "RoomDoorbell"
+    },
+    {
+      "Id": 320,
+      "Name": "ConvertedRoomId"
+    },
+    {
+      "Id": 255,
+      "Name": "CompetitionRoomsData"
+    },
+    {
+      "Id": 3271,
+      "Name": "CategoriesWithVisitorCount"
+    },
+    {
+      "Id": 1559,
+      "Name": "RoomEventCancel"
+    },
+    {
+      "Id": 3471,
+      "Name": "RoomMuted"
+    },
+    {
+      "Id": 1900,
+      "Name": "NotificationList"
+    },
+    {
+      "Id": 2324,
+      "Name": "AchievementNotification"
+    },
+    {
+      "Id": 3397,
+      "Name": "QuestCancelled"
+    },
+    {
+      "Id": 142,
+      "Name": "QuestDaily"
+    },
+    {
+      "Id": 1722,
+      "Name": "ConcurrentUsersGoalProgress"
+    },
+    {
+      "Id": 3411,
+      "Name": "CommunityGoalProgress"
+    },
+    {
+      "Id": 1931,
+      "Name": "CommunityGoalEarnedPrizes"
+    },
+    {
+      "Id": 1632,
+      "Name": "QuestionFinished"
+    },
+    {
+      "Id": 2775,
+      "Name": "QuestionAnswered"
+    },
+    {
+      "Id": 2774,
+      "Name": "PollOffer"
+    },
+    {
+      "Id": 242,
+      "Name": "PollError"
+    },
+    {
+      "Id": 3389,
+      "Name": "PollContents"
+    },
+    {
+      "Id": 1901,
+      "Name": "Question"
+    },
+    {
+      "Id": 2050,
+      "Name": "UnseenItems"
+    },
+    {
+      "Id": 2313,
+      "Name": "PetBreedingResult"
+    },
+    {
+      "Id": 1360,
+      "Name": "PetOpenPackageRequested"
+    },
+    {
+      "Id": 116,
+      "Name": "PetScratchFailed"
+    },
+    {
+      "Id": 205,
+      "Name": "PetLevelUpdate"
+    },
+    {
+      "Id": 149,
+      "Name": "PetTrainingPanel"
+    },
+    {
+      "Id": 3067,
+      "Name": "UserPerks"
+    },
+    {
+      "Id": 573,
+      "Name": "NotificationElementPointer"
+    },
+    {
+      "Id": 3205,
+      "Name": "PetLevelNotification"
+    },
+    {
+      "Id": 1670,
+      "Name": "BotError"
+    },
+    {
+      "Id": 48,
+      "Name": "ActivityPointNotification"
+    },
+    {
+      "Id": 1073,
+      "Name": "ClubGiftNotification"
+    },
+    {
+      "Id": 893,
+      "Name": "InfoFeedEnable"
+    },
+    {
+      "Id": 21,
+      "Name": "PetOpenPackageResult"
+    },
+    {
+      "Id": 2226,
+      "Name": "CanCreateRoomEvent"
+    },
+    {
+      "Id": 1160,
+      "Name": "NoSuchFlat"
+    },
+    {
+      "Id": 885,
+      "Name": "RoomModelDoor"
+    },
+    {
+      "Id": 4,
+      "Name": "DisconnectReason"
+    },
+    {
+      "Id": 2893,
+      "Name": "NoobnessLevel"
+    },
+    {
+      "Id": 942,
+      "Name": "ExtendedProfileChanged"
+    },
+    {
+      "Id": 3933,
+      "Name": "GuildMemberMgmtFailed"
+    },
+    {
+      "Id": 3081,
+      "Name": "GuildEditFailed"
+    },
+    {
+      "Id": 2992,
+      "Name": "ConnectionError"
+    },
+    {
+      "Id": 2918,
+      "Name": "CatalogApproveNameResult"
+    },
+    {
+      "Id": 708,
+      "Name": "GroupList"
+    },
+    {
+      "Id": 1321,
+      "Name": "GenericError"
+    },
+    {
+      "Id": 274,
+      "Name": "AccountSafetyLockStatusChange"
+    },
+    {
+      "Id": 705,
+      "Name": "PetSupplement"
+    },
+    {
+      "Id": 1098,
+      "Name": "PetRespected"
+    },
+    {
+      "Id": 38,
+      "Name": "ScrSendKickbackInfo"
+    },
+    {
+      "Id": 1853,
+      "Name": "GetUserTags"
+    },
+    {
+      "Id": 3617,
+      "Name": "UserClassification"
+    },
+    {
+      "Id": 3531,
+      "Name": "UserSubscription"
+    },
+    {
+      "Id": 2791,
+      "Name": "UserCurrency"
+    },
+    {
+      "Id": 1860,
+      "Name": "UserCredits"
+    },
+    {
+      "Id": 3166,
+      "Name": "GiftOpened"
+    },
+    {
+      "Id": 3871,
+      "Name": "MessengerRelationships"
+    },
+    {
+      "Id": 2505,
+      "Name": "UserProfile"
+    },
+    {
+      "Id": 2468,
+      "Name": "UserSettings"
+    },
+    {
+      "Id": 1232,
+      "Name": "UnitChangeName"
+    },
+    {
+      "Id": 1895,
+      "Name": "HandshakeInitDiffie"
+    },
+    {
+      "Id": 156,
+      "Name": "HandshakeCompleteDiffie"
+    },
+    {
+      "Id": 243,
+      "Name": "HandshakeIdentityAccount"
+    },
+    {
+      "Id": 230,
+      "Name": "NewUserExperienceGiftOffer"
+    },
+    {
+      "Id": 1283,
+      "Name": "RecyclerPrizes"
+    },
+    {
+      "Id": 2155,
+      "Name": "PetConfirmBreedingRequest"
+    },
+    {
+      "Id": 1067,
+      "Name": "PetNestBreedingSuccess"
+    },
+    {
+      "Id": 3040,
+      "Name": "PetGoToBreedingNestFailure"
+    },
+    {
+      "Id": 2444,
+      "Name": "PetConfirmBreedingResult"
+    },
+    {
+      "Id": 3390,
+      "Name": "PetBreeding"
+    },
+    {
+      "Id": 3160,
+      "Name": "GroupMembersRefresh"
+    },
+    {
+      "Id": 2666,
+      "Name": "GroupMember"
+    },
+    {
+      "Id": 3915,
+      "Name": "FirstLoginOfDay"
+    },
+    {
+      "Id": 3831,
+      "Name": "ClientLatency"
+    },
+    {
+      "Id": 3783,
+      "Name": "RentableFurniRentOrBuyoutOffer"
+    },
+    {
+      "Id": 1950,
+      "Name": "UserInfo"
+    },
+    {
+      "Id": 1844,
+      "Name": "ChangeEmailResult"
+    },
+    {
+      "Id": 2442,
+      "Name": "RecyclerFinished"
+    },
+    {
+      "Id": 3240,
+      "Name": "RecyclerStatus"
+    },
+    {
+      "Id": 783,
+      "Name": "RentableSpaceRentFailed"
+    },
+    {
+      "Id": 1317,
+      "Name": "RentableSpaceStatus"
+    },
+    {
+      "Id": 1658,
+      "Name": "RentableSpaceRentOk"
+    },
+    {
+      "Id": 1955,
+      "Name": "WelcomeGiftStatus"
+    },
+    {
+      "Id": 2146,
+      "Name": "WelcomeGiftChangeEmailResult"
+    },
+    {
+      "Id": 2903,
+      "Name": "PhoneTryVerificationCodeResult"
+    },
+    {
+      "Id": 247,
+      "Name": "PhoneTryNumberResult"
+    },
+    {
+      "Id": 795,
+      "Name": "PhoneCollectionState"
+    },
+    {
+      "Id": 726,
+      "Name": "NewUserExperienceNotComplete"
+    },
+    {
+      "Id": 898,
+      "Name": "EmailStatus"
+    },
+    {
+      "Id": 1978,
+      "Name": "UserBadgesCurrent"
+    },
+    {
+      "Id": 3918,
+      "Name": "UserPermissions"
+    },
+    {
+      "Id": 3419,
+      "Name": "UserRespect"
+    },
+    {
+      "Id": 618,
+      "Name": "HandItemReceived"
+    },
+    {
+      "Id": 2658,
+      "Name": "UnitStatus"
+    },
+    {
+      "Id": 2198,
+      "Name": "UnitRemove"
+    },
+    {
+      "Id": 379,
+      "Name": "UnitNumber"
+    },
+    {
+      "Id": 3606,
+      "Name": "UnitInfo"
+    },
+    {
+      "Id": 1021,
+      "Name": "UnitIdle"
+    },
+    {
+      "Id": 3138,
+      "Name": "UnitHandItem"
+    },
+    {
+      "Id": 2783,
+      "Name": "UnitExpression"
+    },
+    {
+      "Id": 3315,
+      "Name": "Unit"
+    },
+    {
+      "Id": 692,
+      "Name": "UnitEffect"
+    },
+    {
+      "Id": 3427,
+      "Name": "UnitDance"
+    },
+    {
+      "Id": 3327,
+      "Name": "FloodControl"
+    },
+    {
+      "Id": 232,
+      "Name": "PlayingGame"
+    },
+    {
+      "Id": 3297,
+      "Name": "PetStatus"
+    },
+    {
+      "Id": 756,
+      "Name": "PetInfo"
+    },
+    {
+      "Id": 2376,
+      "Name": "PetFigureUpdate"
+    },
+    {
+      "Id": 3103,
+      "Name": "RoomModelBlockedTiles"
+    },
+    {
+      "Id": 2835,
+      "Name": "RoomGetFilterWords"
+    },
+    {
+      "Id": 2109,
+      "Name": "RoomThickness"
+    },
+    {
+      "Id": 3235,
+      "Name": "RoomPaint"
+    },
+    {
+      "Id": 329,
+      "Name": "RoomModelName"
+    },
+    {
+      "Id": 2434,
+      "Name": "RoomModel"
+    },
+    {
+      "Id": 2927,
+      "Name": "RoomHeightMapUpdate"
+    },
+    {
+      "Id": 2604,
+      "Name": "RoomHeightMap"
+    },
+    {
+      "Id": 713,
+      "Name": "PetExperience"
+    },
+    {
+      "Id": 2970,
+      "Name": "FavoriteGroupUdpate"
+    },
+    {
+      "Id": 3674,
+      "Name": "RemainingMute"
+    },
+    {
+      "Id": 430,
+      "Name": "UnitChatShout"
+    },
+    {
+      "Id": 369,
+      "Name": "UserIgnoredResult"
+    },
+    {
+      "Id": 403,
+      "Name": "UserIgnored"
+    },
+    {
+      "Id": 78,
+      "Name": "InClientLink"
+    },
+    {
+      "Id": 2305,
+      "Name": "TalentTrackLevelUp"
+    },
+    {
+      "Id": 3701,
+      "Name": "TalentTrackLevel"
+    },
+    {
+      "Id": 1618,
+      "Name": "HelperTalentTrack"
+    },
+    {
+      "Id": 621,
+      "Name": "UserSongDisksInventory"
+    },
+    {
+      "Id": 1892,
+      "Name": "TraxSongInfo"
+    },
+    {
+      "Id": 1210,
+      "Name": "PlaylistSongAdded"
+    },
+    {
+      "Id": 3246,
+      "Name": "Playlist"
+    },
+    {
+      "Id": 901,
+      "Name": "OfficialSongId"
+    },
+    {
+      "Id": 2398,
+      "Name": "UnitChat"
+    },
+    {
+      "Id": 3668,
+      "Name": "NowPlaying"
+    },
+    {
+      "Id": 765,
+      "Name": "JukeboxPlaylistFull"
+    },
+    {
+      "Id": 41,
+      "Name": "Authenticated"
+    },
+    {
+      "Id": 2626,
+      "Name": "WiredError"
+    },
+    {
+      "Id": 2560,
+      "Name": "WiredSave"
+    },
+    {
+      "Id": 1948,
+      "Name": "WiredReward"
+    },
+    {
+      "Id": 2242,
+      "Name": "WiredOpen"
+    },
+    {
+      "Id": 2194,
+      "Name": "WiredTrigger"
+    },
+    {
+      "Id": 2300,
+      "Name": "WiredCondition"
+    },
+    {
+      "Id": 2530,
+      "Name": "WiredAction"
+    },
+    {
+      "Id": 13,
+      "Name": "UnitTyping"
+    },
+    {
+      "Id": 2814,
+      "Name": "UnitChatWhisper"
+    },
+    {
+      "Id": 1876,
+      "Name": "JukeboxSongDisks"
+    },
+    {
+      "Id": 2358,
+      "Name": "RoomQueueStatus"
+    },
+    {
+      "Id": 2744,
+      "Name": "CanCreateRoom"
+    },
+    {
+      "Id": 2281,
+      "Name": "Cancelmysteryboxwaitmessage"
+    },
+    {
+      "Id": 2127,
+      "Name": "MessengerMessageError"
+    },
+    {
+      "Id": 1472,
+      "Name": "MessengerInstanceMessageError"
+    },
+    {
+      "Id": 2701,
+      "Name": "MessengerSearch"
+    },
+    {
+      "Id": 2752,
+      "Name": "MessengerRequests"
+    },
+    {
+      "Id": 688,
+      "Name": "MessengerFriendNotification"
+    },
+    {
+      "Id": 100,
+      "Name": "MessengerUpdate"
+    },
+    {
+      "Id": 2399,
+      "Name": "MessengerFriends"
+    },
+    {
+      "Id": 2441,
+      "Name": "MessengerFollowFailed"
+    },
+    {
+      "Id": 631,
+      "Name": "MessengerFindFriends"
+    },
+    {
+      "Id": 1025,
+      "Name": "MessengerAcceptFriends"
+    },
+    {
+      "Id": 378,
+      "Name": "DesktopView"
+    },
+    {
+      "Id": 1032,
+      "Name": "CraftingResult"
+    },
+    {
+      "Id": 3519,
+      "Name": "CraftingRecipesAvailable"
+    },
+    {
+      "Id": 2451,
+      "Name": "CraftingRecipe"
+    },
+    {
+      "Id": 1619,
+      "Name": "CraftableProducts"
+    },
+    {
+      "Id": 1357,
+      "Name": "CompetitionSecondsUntil"
+    },
+    {
+      "Id": 2496,
+      "Name": "CompetitionNoOwnedRooms"
+    },
+    {
+      "Id": 1131,
+      "Name": "CompetitionUserPartOf"
+    },
+    {
+      "Id": 1701,
+      "Name": "CompetitionTimingCode"
+    },
+    {
+      "Id": 3634,
+      "Name": "CompetitionVotingInfo"
+    },
+    {
+      "Id": 180,
+      "Name": "CompetitionEntrySubmit"
+    },
+    {
+      "Id": 1272,
+      "Name": "ClientPing"
+    },
+    {
+      "Id": 1402,
+      "Name": "RedeemVoucherOk"
+    },
+    {
+      "Id": 2497,
+      "Name": "MessengerInit"
+    },
+    {
+      "Id": 2421,
+      "Name": "MessengerMinimailNew"
+    },
+    {
+      "Id": 3747,
+      "Name": "MessengerMinimailCount"
+    },
+    {
+      "Id": 3791,
+      "Name": "MessengerChat"
+    },
+    {
+      "Id": 2965,
+      "Name": "WeeklyCompetitiveLeaderboard"
+    },
+    {
+      "Id": 594,
+      "Name": "WeeklyGameRewardWinners"
+    },
+    {
+      "Id": 1104,
+      "Name": "WeeklyGameReward"
+    },
+    {
+      "Id": 3232,
+      "Name": "Leftqueue"
+    },
+    {
+      "Id": 1663,
+      "Name": "Joiningqueuefailed"
+    },
+    {
+      "Id": 1696,
+      "Name": "Joinedqueuemessage"
+    },
+    {
+      "Id": 3619,
+      "Name": "Gameinvite"
+    },
+    {
+      "Id": 3516,
+      "Name": "Gameachievements"
+    },
+    {
+      "Id": 509,
+      "Name": "GameCenterDirectoryStatus"
+    },
+    {
+      "Id": 390,
+      "Name": "GameCenterStopCounter"
+    },
+    {
+      "Id": 1539,
+      "Name": "GameCenterInArenaQueue"
+    },
+    {
+      "Id": 2857,
+      "Name": "RedeemVoucherError"
+    },
+    {
+      "Id": 1856,
+      "Name": "GameCenterStatus"
+    },
+    {
+      "Id": 3739,
+      "Name": "Gamestatusmessage"
+    },
+    {
+      "Id": 655,
+      "Name": "GameCenterGameList"
+    },
+    {
+      "Id": 2607,
+      "Name": "Unloadgame"
+    },
+    {
+      "Id": 1989,
+      "Name": "Loadgame"
+    },
+    {
+      "Id": 1954,
+      "Name": "LoadGameUrl"
+    },
+    {
+      "Id": 254,
+      "Name": "Achievementresolutions"
+    },
+    {
+      "Id": 382,
+      "Name": "Achievementresolutionprogress"
+    },
+    {
+      "Id": 502,
+      "Name": "Achievementresolutioncompleted"
+    },
+    {
+      "Id": 678,
+      "Name": "MessengerInvite"
+    },
+    {
+      "Id": 2617,
+      "Name": "MessengerInviteError"
+    },
+    {
+      "Id": 951,
+      "Name": "MessengerRequest"
+    },
+    {
+      "Id": 2244,
+      "Name": "GameCenterAchievements"
+    },
+    {
+      "Id": 1440,
+      "Name": "TargetOfferNotFound"
+    },
+    {
+      "Id": 3435,
+      "Name": "TargetOffer"
+    },
+    {
+      "Id": 3709,
+      "Name": "CatalogReceivePetBreeds"
+    },
+    {
+      "Id": 340,
+      "Name": "ThumbnailStatus"
+    },
+    {
+      "Id": 446,
+      "Name": "InitCamera"
+    },
+    {
+      "Id": 249,
+      "Name": "CompetitionStatus"
+    },
+    {
+      "Id": 2404,
+      "Name": "CameraStorageUrl"
+    },
+    {
+      "Id": 3927,
+      "Name": "CameraPurchaseOk"
+    },
+    {
+      "Id": 3558,
+      "Name": "CameraPublishStatus"
+    },
+    {
+      "Id": 2801,
+      "Name": "CfhSanctionStatus"
+    },
+    {
+      "Id": 2010,
+      "Name": "CfhTopics"
+    },
+    {
+      "Id": 115,
+      "Name": "CfhSanction"
+    },
+    {
+      "Id": 2075,
+      "Name": "RemoveBotFromInventory"
+    },
+    {
+      "Id": 2656,
+      "Name": "BotReceived"
+    },
+    {
+      "Id": 2169,
+      "Name": "CampaignCalendarData"
+    },
+    {
+      "Id": 824,
+      "Name": "UserBots"
+    },
+    {
+      "Id": 1343,
+      "Name": "UserOutfits"
+    },
+    {
+      "Id": 1042,
+      "Name": "UserFigure"
+    },
+    {
+      "Id": 1686,
+      "Name": "CheckUserName"
+    },
+    {
+      "Id": 1709,
+      "Name": "UserChangeName"
+    },
+    {
+      "Id": 3415,
+      "Name": "HotelMaintenance"
+    },
+    {
+      "Id": 2933,
+      "Name": "HotelWillCloseMinutes"
+    },
+    {
+      "Id": 1508,
+      "Name": "HotelClosesAndOpensAt"
+    },
+    {
+      "Id": 3152,
+      "Name": "HotelClosedAndOpens"
+    },
+    {
+      "Id": 537,
+      "Name": "AvailabilityTime"
+    },
+    {
+      "Id": 3209,
+      "Name": "AvailabilityStatus"
+    },
+    {
+      "Id": 3354,
+      "Name": "RoomAdError"
+    },
+    {
+      "Id": 535,
+      "Name": "AddBotToInventory"
+    },
+    {
+      "Id": 248,
+      "Name": "GroupInfo"
+    },
+    {
+      "Id": 3934,
+      "Name": "CampaignCalendarDoorOpened"
+    },
+    {
+      "Id": 1173,
+      "Name": "BuildersClubFurniCount"
+    },
+    {
+      "Id": 973,
+      "Name": "SeasonalCalendarOffer"
+    },
+    {
+      "Id": 2394,
+      "Name": "RoomAdPurchase"
+    },
+    {
+      "Id": 584,
+      "Name": "CatalogPurchaseOk"
+    },
+    {
+      "Id": 3186,
+      "Name": "CatalogPurchaseNotAllowed"
+    },
+    {
+      "Id": 1721,
+      "Name": "CatalogPurchaseError"
+    },
+    {
+      "Id": 1303,
+      "Name": "ProductOffer"
+    },
+    {
+      "Id": 192,
+      "Name": "NotEnoughBalance"
+    },
+    {
+      "Id": 1792,
+      "Name": "LimitedOfferAppearingNext"
+    },
+    {
+      "Id": 1631,
+      "Name": "LimitedSoldOut"
+    },
+    {
+      "Id": 2663,
+      "Name": "IsOfferGiftable"
+    },
+    {
+      "Id": 3312,
+      "Name": "ClubOffers"
+    },
+    {
+      "Id": 1300,
+      "Name": "BonusRareInfo"
+    },
+    {
+      "Id": 3218,
+      "Name": "ClubExtendedOffer"
+    },
+    {
+      "Id": 2675,
+      "Name": "GiftReceiverNotFound"
+    },
+    {
+      "Id": 40,
+      "Name": "DirectSmsClubBuy"
+    },
+    {
+      "Id": 659,
+      "Name": "ClubGiftSelected"
+    },
+    {
+      "Id": 3950,
+      "Name": "ClubGiftInfo"
+    },
+    {
+      "Id": 1318,
+      "Name": "CatalogPublished"
+    },
+    {
+      "Id": 3102,
+      "Name": "CatalogEarliestExpiry"
+    },
+    {
+      "Id": 2612,
+      "Name": "CatalogPageList"
+    },
+    {
+      "Id": 1763,
+      "Name": "CatalogPage"
+    },
+    {
+      "Id": 737,
+      "Name": "CatalogPageExpiration"
+    },
+    {
+      "Id": 1462,
+      "Name": "BundleDiscountRuleset"
+    },
+    {
+      "Id": 3997,
+      "Name": "BuildersClubSubscription"
+    },
+    {
+      "Id": 3609,
+      "Name": "GiftWrapperConfig"
+    },
+    {
+      "Id": 1438,
+      "Name": "Showmysteryboxwaitmessage"
+    },
+    {
+      "Id": 213,
+      "Name": "GroupMemberRemoveConfirm"
+    },
+    {
+      "Id": 1799,
+      "Name": "GroupCreateOptions"
+    },
+    {
+      "Id": 1419,
+      "Name": "TradeYouNotAllowed"
+    },
+    {
+      "Id": 950,
+      "Name": "TradeOtherNotAllowed"
+    },
+    {
+      "Id": 425,
+      "Name": "TradeOpen"
+    },
+    {
+      "Id": 1589,
+      "Name": "TradeOpenFailed"
+    },
+    {
+      "Id": 1506,
+      "Name": "TradeNotOpen"
+    },
+    {
+      "Id": 1243,
+      "Name": "TradeListItem"
+    },
+    {
+      "Id": 3902,
+      "Name": "TradeConfirmation"
+    },
+    {
+      "Id": 3731,
+      "Name": "TradeCompleted"
+    },
+    {
+      "Id": 1166,
+      "Name": "TradeClosed"
+    },
+    {
+      "Id": 3615,
+      "Name": "TradeAccepted"
+    },
+    {
+      "Id": 2724,
+      "Name": "YoutubeDisplayVideo"
+    },
+    {
+      "Id": 1460,
+      "Name": "YoutubeDisplayPlaylists"
+    },
+    {
+      "Id": 2900,
+      "Name": "YoutubeControlVideo"
+    },
+    {
+      "Id": 542,
+      "Name": "PetPlacingError"
+    },
+    {
+      "Id": 1530,
+      "Name": "PetReceived"
+    },
+    {
+      "Id": 1972,
+      "Name": "UserPetAdd"
+    },
+    {
+      "Id": 1911,
+      "Name": "UserPetRemove"
+    },
+    {
+      "Id": 1380,
+      "Name": "UserPets"
+    },
+    {
+      "Id": 2046,
+      "Name": "UserFurniturePostitPlaced"
+    },
+    {
+      "Id": 1051,
+      "Name": "UserFurnitureRemove"
+    },
+    {
+      "Id": 1206,
+      "Name": "UserFurnitureRefresh"
+    },
+    {
+      "Id": 1332,
+      "Name": "UserFurniture"
+    },
+    {
+      "Id": 275,
+      "Name": "UserFurnitureAdd"
+    },
+    {
+      "Id": 814,
+      "Name": "TradeNoSuchItem"
+    },
+    {
+      "Id": 1194,
+      "Name": "CommunityGoalVoteEvent"
+    },
+    {
+      "Id": 1452,
+      "Name": "PromoArticles"
+    },
+    {
+      "Id": 2661,
+      "Name": "MarketplaceAfterOrderStatus"
+    },
+    {
+      "Id": 2015,
+      "Name": "Gotmysteryboxprizemessage"
+    },
+    {
+      "Id": 70,
+      "Name": "MysteryBoxKeys"
+    },
+    {
+      "Id": 960,
+      "Name": "ModeratorToolPreferences"
+    },
+    {
+      "Id": 2645,
+      "Name": "ModeratorMessage"
+    },
+    {
+      "Id": 1649,
+      "Name": "ModeratorActionResult"
+    },
+    {
+      "Id": 1925,
+      "Name": "IssuePickFailed"
+    },
+    {
+      "Id": 701,
+      "Name": "IssueInfo"
+    },
+    {
+      "Id": 704,
+      "Name": "IssueDeleted"
+    },
+    {
+      "Id": 3450,
+      "Name": "CfhChatlog"
+    },
+    {
+      "Id": 1361,
+      "Name": "ModtoolVisitedRoomsUser"
+    },
+    {
+      "Id": 2998,
+      "Name": "ModerationTool"
+    },
+    {
+      "Id": 3091,
+      "Name": "UserClothing"
+    },
+    {
+      "Id": 3683,
+      "Name": "ModerationUserInfo"
+    },
+    {
+      "Id": 3607,
+      "Name": "ModtoolUserChatlog"
+    },
+    {
+      "Id": 3048,
+      "Name": "ModtoolRoomInfo"
+    },
+    {
+      "Id": 1496,
+      "Name": "ModerationCaution"
+    },
+    {
+      "Id": 3593,
+      "Name": "UserBanned"
+    },
+    {
+      "Id": 1309,
+      "Name": "MarketplaceOwnItems"
+    },
+    {
+      "Id": 1766,
+      "Name": "MarketplaceItemsSearched"
+    },
+    {
+      "Id": 1664,
+      "Name": "MarketplaceItemPosted"
+    },
+    {
+      "Id": 1310,
+      "Name": "MarketplaceItemStats"
+    },
+    {
+      "Id": 802,
+      "Name": "MarketplaceConfig"
+    },
+    {
+      "Id": 1503,
+      "Name": "MarketplaceSellItem"
+    },
+    {
+      "Id": 3991,
+      "Name": "MarketplaceCancelSale"
+    },
+    {
+      "Id": 1692,
+      "Name": "ModtoolRoomChatlog"
+    },
+    {
+      "Id": 1339,
+      "Name": "BadgeRequestFulfilled"
+    },
+    {
+      "Id": 2568,
+      "Name": "BadgePointLimits"
+    },
+    {
+      "Id": 3423,
+      "Name": "UserBadgesAdd"
+    },
+    {
+      "Id": 842,
+      "Name": "GuideSessionAttached"
+    },
+    {
+      "Id": 1,
+      "Name": "GuideOnDutyStatus"
+    },
+    {
+      "Id": 1873,
+      "Name": "CfhResultMessage"
+    },
+    {
+      "Id": 170,
+      "Name": "CfhReply"
+    },
+    {
+      "Id": 2682,
+      "Name": "CfhPendingCalls"
+    },
+    {
+      "Id": 644,
+      "Name": "CfhPendingCallsDeleted"
+    },
+    {
+      "Id": 2014,
+      "Name": "CfhDisabledNotify"
+    },
+    {
+      "Id": 1597,
+      "Name": "GroupForumUpdateThread"
+    },
+    {
+      "Id": 2687,
+      "Name": "GroupForumUpdateMessage"
+    },
+    {
+      "Id": 823,
+      "Name": "GroupForumUnreadCount"
+    },
+    {
+      "Id": 1888,
+      "Name": "GroupForumThreadMessages"
+    },
+    {
+      "Id": 633,
+      "Name": "GuideSessionDetached"
+    },
+    {
+      "Id": 2766,
+      "Name": "GroupForumPostThread"
+    },
+    {
+      "Id": 1906,
+      "Name": "GroupForumThreads"
+    },
+    {
+      "Id": 1045,
+      "Name": "GroupForumList"
+    },
+    {
+      "Id": 779,
+      "Name": "GroupForumData"
+    },
+    {
+      "Id": 2546,
+      "Name": "GroupHabboJoinFailed"
+    },
+    {
+      "Id": 1563,
+      "Name": "GroupDetailsChanged"
+    },
+    {
+      "Id": 1401,
+      "Name": "GroupMembershipRequested"
+    },
+    {
+      "Id": 661,
+      "Name": "GroupDeactivate"
+    },
+    {
+      "Id": 2999,
+      "Name": "GroupBadges"
+    },
+    {
+      "Id": 2199,
+      "Name": "GroupPurchased"
+    },
+    {
+      "Id": 3764,
+      "Name": "GroupSettings"
+    },
+    {
+      "Id": 2138,
+      "Name": "GroupBadgeParts"
+    },
+    {
+      "Id": 600,
+      "Name": "GroupForumPost"
+    },
+    {
+      "Id": 1252,
+      "Name": "GroupMembers"
+    },
+    {
+      "Id": 2554,
+      "Name": "GuideSessionEnded"
+    },
+    {
+      "Id": 3556,
+      "Name": "GuideSessionInvitedToGuideRoom"
+    },
+    {
+      "Id": 2977,
+      "Name": "UserBadges"
+    },
+    {
+      "Id": 3973,
+      "Name": "AvatarEffectSelected"
+    },
+    {
+      "Id": 365,
+      "Name": "UserEffectList"
+    },
+    {
+      "Id": 2614,
+      "Name": "UserEffectListRemove"
+    },
+    {
+      "Id": 2731,
+      "Name": "UserEffectListAdd"
+    },
+    {
+      "Id": 1457,
+      "Name": "UserEffectActivate"
+    },
+    {
+      "Id": 2006,
+      "Name": "UserAchievementScore"
+    },
+    {
+      "Id": 1134,
+      "Name": "AchievementList"
+    },
+    {
+      "Id": 3653,
+      "Name": "AchievementProgressed"
+    },
+    {
+      "Id": 731,
+      "Name": "ChatReviewSessionVotingStatus"
+    },
+    {
+      "Id": 281,
+      "Name": "ChatReviewSessionStarted"
+    },
+    {
+      "Id": 1085,
+      "Name": "GuideSessionError"
+    },
+    {
+      "Id": 1684,
+      "Name": "ChatReviewSessionResults"
+    },
+    {
+      "Id": 1732,
+      "Name": "ChatReviewSessionDetached"
+    },
+    {
+      "Id": 3414,
+      "Name": "QuizResults"
+    },
+    {
+      "Id": 2076,
+      "Name": "QuizData"
+    },
+    {
+      "Id": 581,
+      "Name": "IssueCloseNotification"
+    },
+    {
+      "Id": 2338,
+      "Name": "HotelMergeNameChange"
+    },
+    {
+      "Id": 718,
+      "Name": "GuideReportingStatus"
+    },
+    {
+      "Id": 2092,
+      "Name": "GuideTicketCreationResult"
+    },
+    {
+      "Id": 2326,
+      "Name": "GuideSessionStarted"
+    },
+    {
+      "Id": 478,
+      "Name": "GuideSessionRequesterRoom"
+    },
+    {
+      "Id": 1929,
+      "Name": "GuideSessionPartnerIsTyping"
+    },
+    {
+      "Id": 102,
+      "Name": "GuideSessionMessage"
+    },
+    {
+      "Id": 3292,
+      "Name": "ChatReviewSessionOfferedToGuide"
+    },
+    {
+      "Id": 2270,
+      "Name": "SecurityMachine"
+    }
+  ],
+  "Outgoing": [
+    {
+      "Id": 2311,
+      "Name": "InterstitialShown"
+    },
+    {
+      "Id": 2339,
+      "Name": "ItemColorWheelClick"
+    },
+    {
+      "Id": 110,
+      "Name": "RoomTonerApply"
+    },
+    {
+      "Id": 3398,
+      "Name": "ItemDimmerToggle"
+    },
+    {
+      "Id": 1989,
+      "Name": "ItemDimmerSave"
+    },
+    {
+      "Id": 2543,
+      "Name": "ItemDimmerSettings"
+    },
+    {
+      "Id": 1651,
+      "Name": "FurnitureWallUpdate"
+    },
+    {
+      "Id": 1478,
+      "Name": "FurnitureFloorUpdate"
+    },
+    {
+      "Id": 3762,
+      "Name": "SetYoutubeDisplayPlaylist"
+    },
+    {
+      "Id": 1817,
+      "Name": "GetYoutubeDisplayStatus"
+    },
+    {
+      "Id": 3167,
+      "Name": "ControlYoutubeDisplayPlayback"
+    },
+    {
+      "Id": 3055,
+      "Name": "FurniturePostitSaveStickyPole"
+    },
+    {
+      "Id": 447,
+      "Name": "ItemDiceClick"
+    },
+    {
+      "Id": 565,
+      "Name": "FurniturePostitPlace"
+    },
+    {
+      "Id": 2334,
+      "Name": "FurniturePlace"
+    },
+    {
+      "Id": 2235,
+      "Name": "FurniturePickup"
+    },
+    {
+      "Id": 153,
+      "Name": "FurnitureGroupInfo"
+    },
+    {
+      "Id": 3007,
+      "Name": "FurnitureAliases"
+    },
+    {
+      "Id": 1683,
+      "Name": "SetClothingChangeData"
+    },
+    {
+      "Id": 1510,
+      "Name": "HarvestPet"
+    },
+    {
+      "Id": 2353,
+      "Name": "CompostPlant"
+    },
+    {
+      "Id": 277,
+      "Name": "SetObjectData"
+    },
+    {
+      "Id": 1297,
+      "Name": "SetItemData"
+    },
+    {
+      "Id": 3805,
+      "Name": "PetPickup"
+    },
+    {
+      "Id": 3653,
+      "Name": "PetMove"
+    },
+    {
+      "Id": 992,
+      "Name": "ItemPaint"
+    },
+    {
+      "Id": 172,
+      "Name": "PetPlace"
+    },
+    {
+      "Id": 3810,
+      "Name": "ItemDiceClose"
+    },
+    {
+      "Id": 226,
+      "Name": "FurnitureRandomstate"
+    },
+    {
+      "Id": 1446,
+      "Name": "UnitChatGroupWhisper"
+    },
+    {
+      "Id": 1445,
+      "Name": "UnitChatWhisper"
+    },
+    {
+      "Id": 3535,
+      "Name": "UserSettingsChatStyle"
+    },
+    {
+      "Id": 3044,
+      "Name": "UnitChatShout"
+    },
+    {
+      "Id": 2050,
+      "Name": "UnitChat"
+    },
+    {
+      "Id": 1447,
+      "Name": "UnitGroupWhisper"
+    },
+    {
+      "Id": 3711,
+      "Name": "UnitWalk"
+    },
+    {
+      "Id": 989,
+      "Name": "UnitPosture"
+    },
+    {
+      "Id": 1084,
+      "Name": "UnitSign"
+    },
+    {
+      "Id": 965,
+      "Name": "UnitLook"
+    },
+    {
+      "Id": 728,
+      "Name": "UnitGiveHanditemPet"
+    },
+    {
+      "Id": 3299,
+      "Name": "FurnitureMultistate"
+    },
+    {
+      "Id": 698,
+      "Name": "UnitGiveHanditem"
+    },
+    {
+      "Id": 3616,
+      "Name": "UnitDance"
+    },
+    {
+      "Id": 3923,
+      "Name": "UnitAction"
+    },
+    {
+      "Id": 218,
+      "Name": "RoomModelSave"
+    },
+    {
+      "Id": 2749,
+      "Name": "GetRoomEntryTile"
+    },
+    {
+      "Id": 2772,
+      "Name": "GetOccupiedTiles"
+    },
+    {
+      "Id": 1889,
+      "Name": "RoomModel"
+    },
+    {
+      "Id": 2552,
+      "Name": "ItemClothingRedeem"
+    },
+    {
+      "Id": 3056,
+      "Name": "ItemExchangeRedeem"
+    },
+    {
+      "Id": 3027,
+      "Name": "OneWayDoorClick"
+    },
+    {
+      "Id": 3291,
+      "Name": "FurnitureWallMultistate"
+    },
+    {
+      "Id": 1301,
+      "Name": "ItemStackHelper"
+    },
+    {
+      "Id": 3757,
+      "Name": "UnitDropHandItem"
+    },
+    {
+      "Id": 1859,
+      "Name": "BotSkillSave"
+    },
+    {
+      "Id": 1783,
+      "Name": "BotPickup"
+    },
+    {
+      "Id": 1888,
+      "Name": "BotPlace"
+    },
+    {
+      "Id": 2844,
+      "Name": "TogglePetBreeding"
+    },
+    {
+      "Id": 2549,
+      "Name": "PetInfo"
+    },
+    {
+      "Id": 1077,
+      "Name": "RemovePetSaddle"
+    },
+    {
+      "Id": 605,
+      "Name": "PetSupplement"
+    },
+    {
+      "Id": 2078,
+      "Name": "PetRespect"
+    },
+    {
+      "Id": 3911,
+      "Name": "PetMount"
+    },
+    {
+      "Id": 3742,
+      "Name": "AchievementList"
+    },
+    {
+      "Id": 2504,
+      "Name": "UnseenResetItems"
+    },
+    {
+      "Id": 25,
+      "Name": "UnseenResetCategory"
+    },
+    {
+      "Id": 2585,
+      "Name": "TradeUnaccept"
+    },
+    {
+      "Id": 2698,
+      "Name": "Trade"
+    },
+    {
+      "Id": 3902,
+      "Name": "TogglePetRiding"
+    },
+    {
+      "Id": 2992,
+      "Name": "TradeItemRemove"
+    },
+    {
+      "Id": 2618,
+      "Name": "TradeItem"
+    },
+    {
+      "Id": 340,
+      "Name": "TradeConfirm"
+    },
+    {
+      "Id": 2849,
+      "Name": "TradeClose"
+    },
+    {
+      "Id": 3552,
+      "Name": "TradeCancel"
+    },
+    {
+      "Id": 742,
+      "Name": "TradeAccept"
+    },
+    {
+      "Id": 1610,
+      "Name": "UserPets"
+    },
+    {
+      "Id": 706,
+      "Name": "Requestfurniinventorywhennotinroom"
+    },
+    {
+      "Id": 1790,
+      "Name": "UserFurniture"
+    },
+    {
+      "Id": 1424,
+      "Name": "UserBots"
+    },
+    {
+      "Id": 3903,
+      "Name": "Getisbadgerequestfulfilled"
+    },
+    {
+      "Id": 3734,
+      "Name": "Requestabadge"
+    },
+    {
+      "Id": 2281,
+      "Name": "TradeItems"
+    },
+    {
+      "Id": 264,
+      "Name": "UsePetProduct"
+    },
+    {
+      "Id": 995,
+      "Name": "GetPetTrainingPanel"
+    },
+    {
+      "Id": 274,
+      "Name": "PetOpenPackage"
+    },
+    {
+      "Id": 2115,
+      "Name": "RemoveWallItem"
+    },
+    {
+      "Id": 2883,
+      "Name": "GetItemData"
+    },
+    {
+      "Id": 1083,
+      "Name": "BotConfiguration"
+    },
+    {
+      "Id": 285,
+      "Name": "RoomSettingsUpdateRoomCategoryAndTrade"
+    },
+    {
+      "Id": 1716,
+      "Name": "RoomBanList"
+    },
+    {
+      "Id": 1514,
+      "Name": "RoomRightsList"
+    },
+    {
+      "Id": 2751,
+      "Name": "RoomSettingsSave"
+    },
+    {
+      "Id": 1428,
+      "Name": "RoomSettings"
+    },
+    {
+      "Id": 876,
+      "Name": "RoomDelete"
+    },
+    {
+      "Id": 1788,
+      "Name": "RoomRightsRemoveAll"
+    },
+    {
+      "Id": 2194,
+      "Name": "RoomRightsRemove"
+    },
+    {
+      "Id": 1357,
+      "Name": "RoomMuteUser"
+    },
+    {
+      "Id": 874,
+      "Name": "RoomKick"
+    },
+    {
+      "Id": 2731,
+      "Name": "RoomRightsGive"
+    },
+    {
+      "Id": 817,
+      "Name": "RoomBanRemove"
+    },
+    {
+      "Id": 2232,
+      "Name": "RoomBanGive"
+    },
+    {
+      "Id": 2272,
+      "Name": "RoomAmbassadorAlert"
+    },
+    {
+      "Id": 2601,
+      "Name": "ChangeQueue"
+    },
+    {
+      "Id": 497,
+      "Name": "GoToFlat"
+    },
+    {
+      "Id": 1605,
+      "Name": "RoomDoorbell"
+    },
+    {
+      "Id": 3631,
+      "Name": "RoomEnter"
+    },
+    {
+      "Id": 1037,
+      "Name": "PetConfirmBreeding"
+    },
+    {
+      "Id": 2925,
+      "Name": "PetCancelBreeding"
+    },
+    {
+      "Id": 2013,
+      "Name": "PetsBreed"
+    },
+    {
+      "Id": 12,
+      "Name": "PetSelected"
+    },
+    {
+      "Id": 1755,
+      "Name": "UnitTyping"
+    },
+    {
+      "Id": 1580,
+      "Name": "UnitTypingStop"
+    },
+    {
+      "Id": 1857,
+      "Name": "WiredApplySnapshot"
+    },
+    {
+      "Id": 176,
+      "Name": "WiredOpen"
+    },
+    {
+      "Id": 2472,
+      "Name": "AddJukeboxDisk"
+    },
+    {
+      "Id": 584,
+      "Name": "GetSoundSettings"
+    },
+    {
+      "Id": 1092,
+      "Name": "StartCampaign"
+    },
+    {
+      "Id": 1233,
+      "Name": "RejectQuest"
+    },
+    {
+      "Id": 2234,
+      "Name": "OpenQuestTracker"
+    },
+    {
+      "Id": 1761,
+      "Name": "GetSeasonalQuestsOnly"
+    },
+    {
+      "Id": 3468,
+      "Name": "GetQuests"
+    },
+    {
+      "Id": 903,
+      "Name": "GetDailyQuest"
+    },
+    {
+      "Id": 2484,
+      "Name": "GetConcurrentUsersReward"
+    },
+    {
+      "Id": 703,
+      "Name": "GetConcurrentUsersGoalProgress"
+    },
+    {
+      "Id": 33,
+      "Name": "GetCommunityGoalProgress"
+    },
+    {
+      "Id": 2841,
+      "Name": "GetJukeboxPlaylist"
+    },
+    {
+      "Id": 1266,
+      "Name": "GetCommunityGoalHallOfFame"
+    },
+    {
+      "Id": 1972,
+      "Name": "CancelQuest"
+    },
+    {
+      "Id": 1849,
+      "Name": "ActivateQuest"
+    },
+    {
+      "Id": 3822,
+      "Name": "AcceptQuest"
+    },
+    {
+      "Id": 2781,
+      "Name": "GetPromoArticles"
+    },
+    {
+      "Id": 2696,
+      "Name": "CommunityGoalVoteComposer"
+    },
+    {
+      "Id": 148,
+      "Name": "ClientToolbarToggle"
+    },
+    {
+      "Id": 553,
+      "Name": "UserSettingsVolume"
+    },
+    {
+      "Id": 1584,
+      "Name": "UserSettingsInvites"
+    },
+    {
+      "Id": 624,
+      "Name": "UserSettingsOldChat"
+    },
+    {
+      "Id": 3919,
+      "Name": "UserSettingsCamera"
+    },
+    {
+      "Id": 1706,
+      "Name": "MysteryboxOpenTrophy"
+    },
+    {
+      "Id": 1922,
+      "Name": "FriendRequestQuestComplete"
+    },
+    {
+      "Id": 3335,
+      "Name": "GetNowPlaying"
+    },
+    {
+      "Id": 3131,
+      "Name": "GetOfficialSongId"
+    },
+    {
+      "Id": 3819,
+      "Name": "GetSongInfo"
+    },
+    {
+      "Id": 2345,
+      "Name": "EventTracker"
+    },
+    {
+      "Id": 2508,
+      "Name": "ClientLatencyMeasure"
+    },
+    {
+      "Id": 1395,
+      "Name": "ClientLatency"
+    },
+    {
+      "Id": 1527,
+      "Name": "RentableGetRentOrBuyoutOffer"
+    },
+    {
+      "Id": 2271,
+      "Name": "RentableExtendRentOrBuyoutFurni"
+    },
+    {
+      "Id": 1918,
+      "Name": "RentableExtendRentOrBuyoutStripItem"
+    },
+    {
+      "Id": 3685,
+      "Name": "RoomDirectoryRoomNetworkOpenConnection"
+    },
+    {
+      "Id": 16,
+      "Name": "TrackingLagWarningReport"
+    },
+    {
+      "Id": 2712,
+      "Name": "TrackingPerformanceLog"
+    },
+    {
+      "Id": 763,
+      "Name": "RecyclerItems"
+    },
+    {
+      "Id": 2733,
+      "Name": "RecyclerStatus"
+    },
+    {
+      "Id": 1516,
+      "Name": "RentableSpaceStatus"
+    },
+    {
+      "Id": 1593,
+      "Name": "RentableSpaceRent"
+    },
+    {
+      "Id": 930,
+      "Name": "RentableSpaceCancelRent"
+    },
+    {
+      "Id": 1443,
+      "Name": "EmailChange"
+    },
+    {
+      "Id": 1708,
+      "Name": "EmailGetStatus"
+    },
+    {
+      "Id": 2162,
+      "Name": "WelcomeGiftChangeEmail"
+    },
+    {
+      "Id": 3351,
+      "Name": "WelcomeOpenGift"
+    },
+    {
+      "Id": 1345,
+      "Name": "NewUserExperienceScriptProceed"
+    },
+    {
+      "Id": 530,
+      "Name": "NewUserExperienceGetGifts"
+    },
+    {
+      "Id": 157,
+      "Name": "TalentTrackGetLevel"
+    },
+    {
+      "Id": 2815,
+      "Name": "HelperTalentTrack"
+    },
+    {
+      "Id": 190,
+      "Name": "RemoveJukeboxDisk"
+    },
+    {
+      "Id": 2958,
+      "Name": "GetUserSongDisks"
+    },
+    {
+      "Id": 1675,
+      "Name": "GetSoundMachinePlaylist"
+    },
+    {
+      "Id": 1152,
+      "Name": "Mysteryboxwaitingcanceledmessage"
+    },
+    {
+      "Id": 1940,
+      "Name": "GetBadgePointsLimits"
+    },
+    {
+      "Id": 2303,
+      "Name": "ReleaseIssues"
+    },
+    {
+      "Id": 1682,
+      "Name": "ModtoolSanction"
+    },
+    {
+      "Id": 1901,
+      "Name": "MarketplaceConfig"
+    },
+    {
+      "Id": 1833,
+      "Name": "PresentOpenPresent"
+    },
+    {
+      "Id": 2813,
+      "Name": "MannequinSaveLook"
+    },
+    {
+      "Id": 1109,
+      "Name": "MannequinSaveName"
+    },
+    {
+      "Id": 1453,
+      "Name": "MessengerRelationships"
+    },
+    {
+      "Id": 3339,
+      "Name": "UserTags"
+    },
+    {
+      "Id": 3999,
+      "Name": "UserProfileByName"
+    },
+    {
+      "Id": 576,
+      "Name": "UserProfile"
+    },
+    {
+      "Id": 2889,
+      "Name": "UserMotto"
+    },
+    {
+      "Id": 1717,
+      "Name": "UserFigure"
+    },
+    {
+      "Id": 954,
+      "Name": "UserBadgesCurrent"
+    },
+    {
+      "Id": 881,
+      "Name": "MarketplaceSellItem"
+    },
+    {
+      "Id": 3964,
+      "Name": "UserUnignore"
+    },
+    {
+      "Id": 2640,
+      "Name": "UserIgnore"
+    },
+    {
+      "Id": 609,
+      "Name": "UserIgnored"
+    },
+    {
+      "Id": 459,
+      "Name": "UserClassification"
+    },
+    {
+      "Id": 3315,
+      "Name": "PeerUsersClassification"
+    },
+    {
+      "Id": 3658,
+      "Name": "ScrGetKickbackInfo"
+    },
+    {
+      "Id": 3036,
+      "Name": "UserRespect"
+    },
+    {
+      "Id": 3779,
+      "Name": "ApproveName"
+    },
+    {
+      "Id": 282,
+      "Name": "RoomMute"
+    },
+    {
+      "Id": 1490,
+      "Name": "WiredTriggerSave"
+    },
+    {
+      "Id": 582,
+      "Name": "WiredConditionSave"
+    },
+    {
+      "Id": 1150,
+      "Name": "WiredActionSave"
+    },
+    {
+      "Id": 1182,
+      "Name": "UserIgnoreId"
+    },
+    {
+      "Id": 3328,
+      "Name": "MarketplaceRequestOwnItems"
+    },
+    {
+      "Id": 1498,
+      "Name": "MarketplaceTakeBackItem"
+    },
+    {
+      "Id": 3407,
+      "Name": "MarketplaceRequestOffers"
+    },
+    {
+      "Id": 2682,
+      "Name": "ModtoolPreferences"
+    },
+    {
+      "Id": 2163,
+      "Name": "GetCfhChatlog"
+    },
+    {
+      "Id": 675,
+      "Name": "DefaultSanction"
+    },
+    {
+      "Id": 186,
+      "Name": "CloseIssues"
+    },
+    {
+      "Id": 3673,
+      "Name": "CloseIssueDefaultAction"
+    },
+    {
+      "Id": 3521,
+      "Name": "ModtoolRoomAlert"
+    },
+    {
+      "Id": 3272,
+      "Name": "ModtoolRequestUserRooms"
+    },
+    {
+      "Id": 2493,
+      "Name": "ModtoolSanctionMute"
+    },
+    {
+      "Id": 206,
+      "Name": "ModtoolAlertevent"
+    },
+    {
+      "Id": 2403,
+      "Name": "ModtoolSanctionTradelock"
+    },
+    {
+      "Id": 3143,
+      "Name": "ModtoolSanctionKick"
+    },
+    {
+      "Id": 1480,
+      "Name": "ModtoolSanctionBan"
+    },
+    {
+      "Id": 2468,
+      "Name": "ModtoolSanctionAlert"
+    },
+    {
+      "Id": 3542,
+      "Name": "ModToolUserInfo"
+    },
+    {
+      "Id": 2578,
+      "Name": "ModtoolRequestRoomChatlog"
+    },
+    {
+      "Id": 759,
+      "Name": "ModtoolRequestUserChatlog"
+    },
+    {
+      "Id": 1397,
+      "Name": "ModtoolChangeRoomSettings"
+    },
+    {
+      "Id": 1602,
+      "Name": "ModtoolRequestRoomInfo"
+    },
+    {
+      "Id": 1846,
+      "Name": "UserSubscription"
+    },
+    {
+      "Id": 2978,
+      "Name": "UserCurrency"
+    },
+    {
+      "Id": 3130,
+      "Name": "RequestMarketplaceItemStats"
+    },
+    {
+      "Id": 1977,
+      "Name": "RequestSellItem"
+    },
+    {
+      "Id": 1902,
+      "Name": "MarketplaceBuyTokens"
+    },
+    {
+      "Id": 1151,
+      "Name": "MarketplaceRedeemCredits"
+    },
+    {
+      "Id": 3476,
+      "Name": "MarketplaceBuyOffer"
+    },
+    {
+      "Id": 1330,
+      "Name": "PickIssues"
+    },
+    {
+      "Id": 3845,
+      "Name": "MessengerFriends"
+    },
+    {
+      "Id": 915,
+      "Name": "UserBadgesCurrentUpdate"
+    },
+    {
+      "Id": 636,
+      "Name": "UserEffectEnable"
+    },
+    {
+      "Id": 3857,
+      "Name": "Gameunloadedmessage"
+    },
+    {
+      "Id": 491,
+      "Name": "Acceptgameinvite"
+    },
+    {
+      "Id": 283,
+      "Name": "AchievementResolutionOpen"
+    },
+    {
+      "Id": 3227,
+      "Name": "VisitUser"
+    },
+    {
+      "Id": 1525,
+      "Name": "SetRelationshipStatus"
+    },
+    {
+      "Id": 1967,
+      "Name": "SendRoomInvite"
+    },
+    {
+      "Id": 2465,
+      "Name": "MessengerChat"
+    },
+    {
+      "Id": 2025,
+      "Name": "RequestFriend"
+    },
+    {
+      "Id": 1361,
+      "Name": "RemoveFriend"
+    },
+    {
+      "Id": 700,
+      "Name": "MessengerInit"
+    },
+    {
+      "Id": 3588,
+      "Name": "HabboSearch"
+    },
+    {
+      "Id": 2392,
+      "Name": "Getgameachievementsmessage"
+    },
+    {
+      "Id": 3230,
+      "Name": "GetFriendRequests"
+    },
+    {
+      "Id": 1867,
+      "Name": "FollowFriend"
+    },
+    {
+      "Id": 1005,
+      "Name": "FindNewFriends"
+    },
+    {
+      "Id": 3330,
+      "Name": "DeclineFriend"
+    },
+    {
+      "Id": 1685,
+      "Name": "AcceptFriend"
+    },
+    {
+      "Id": 1674,
+      "Name": "FriendFurniConfirmLock"
+    },
+    {
+      "Id": 1054,
+      "Name": "GetCraftingRecipesAvailable"
+    },
+    {
+      "Id": 3347,
+      "Name": "GetCraftingRecipe"
+    },
+    {
+      "Id": 3059,
+      "Name": "GetCraftableProducts"
+    },
+    {
+      "Id": 1583,
+      "Name": "CraftSecret"
+    },
+    {
+      "Id": 538,
+      "Name": "Craft"
+    },
+    {
+      "Id": 2316,
+      "Name": "VoteForRoom"
+    },
+    {
+      "Id": 2535,
+      "Name": "FriendListUpdate"
+    },
+    {
+      "Id": 3787,
+      "Name": "SubmitRoomToCompetition"
+    },
+    {
+      "Id": 3955,
+      "Name": "GamesList"
+    },
+    {
+      "Id": 1773,
+      "Name": "Getusergameachievementsmessage"
+    },
+    {
+      "Id": 2246,
+      "Name": "UpdateForumReadMarker"
+    },
+    {
+      "Id": 2199,
+      "Name": "ForumPostMessage"
+    },
+    {
+      "Id": 2797,
+      "Name": "ForumModerateThread"
+    },
+    {
+      "Id": 3313,
+      "Name": "ForumModerateMessage"
+    },
+    {
+      "Id": 2325,
+      "Name": "GetUnreadForumsCount"
+    },
+    {
+      "Id": 2683,
+      "Name": "GetForumThreads"
+    },
+    {
+      "Id": 2112,
+      "Name": "GetForumThread"
+    },
+    {
+      "Id": 3109,
+      "Name": "GetForumMessages"
+    },
+    {
+      "Id": 1959,
+      "Name": "GetForumsList"
+    },
+    {
+      "Id": 3361,
+      "Name": "GetForumStats"
+    },
+    {
+      "Id": 3154,
+      "Name": "VerifyCode"
+    },
+    {
+      "Id": 2747,
+      "Name": "Getgamestatusmessage"
+    },
+    {
+      "Id": 1760,
+      "Name": "TryPhoneNumber"
+    },
+    {
+      "Id": 2668,
+      "Name": "ResetPhoneNumberState"
+    },
+    {
+      "Id": 3102,
+      "Name": "Game2getweeklyleaderboard"
+    },
+    {
+      "Id": 3606,
+      "Name": "Game2getweeklyfriendsleaderboard"
+    },
+    {
+      "Id": 1456,
+      "Name": "Game2gamechatmessage"
+    },
+    {
+      "Id": 3311,
+      "Name": "Game2exitgamemessage"
+    },
+    {
+      "Id": 293,
+      "Name": "Game2getaccountgamestatusmessage"
+    },
+    {
+      "Id": 1107,
+      "Name": "Getweeklygamerewardwinners"
+    },
+    {
+      "Id": 2376,
+      "Name": "GamesInit"
+    },
+    {
+      "Id": 2276,
+      "Name": "Resetresolutionachievementmessage"
+    },
+    {
+      "Id": 949,
+      "Name": "Leavequeuemessage"
+    },
+    {
+      "Id": 46,
+      "Name": "Joinqueuemessage"
+    },
+    {
+      "Id": 1249,
+      "Name": "SetPhoneNumberVerificationStatus"
+    },
+    {
+      "Id": 2738,
+      "Name": "RoomCompetitionInit"
+    },
+    {
+      "Id": 3234,
+      "Name": "GetSecondsUntil"
+    },
+    {
+      "Id": 3046,
+      "Name": "GetIsUserPartOfCompetition"
+    },
+    {
+      "Id": 3655,
+      "Name": "CatalogRedeemVoucher"
+    },
+    {
+      "Id": 1596,
+      "Name": "GetClubGiftInfo"
+    },
+    {
+      "Id": 999,
+      "Name": "GetClubOffers"
+    },
+    {
+      "Id": 2466,
+      "Name": "GetProductOffer"
+    },
+    {
+      "Id": 451,
+      "Name": "CatalogPurchaseGift"
+    },
+    {
+      "Id": 997,
+      "Name": "CatalogPurchase"
+    },
+    {
+      "Id": 85,
+      "Name": "GetCatalogPage"
+    },
+    {
+      "Id": 839,
+      "Name": "GetCatalogIndex"
+    },
+    {
+      "Id": 1408,
+      "Name": "BuildersClubQueryFurniCount"
+    },
+    {
+      "Id": 1418,
+      "Name": "BuildersClubPlaceWallItem"
+    },
+    {
+      "Id": 1798,
+      "Name": "BuildersClubPlaceRoomItem"
+    },
+    {
+      "Id": 1105,
+      "Name": "GroupMemberships"
+    },
+    {
+      "Id": 3207,
+      "Name": "OpenCampaignCalendarDoorStaff"
+    },
+    {
+      "Id": 916,
+      "Name": "PhotoCompetition"
+    },
+    {
+      "Id": 3265,
+      "Name": "PublishPhoto"
+    },
+    {
+      "Id": 557,
+      "Name": "PurchasePhoto"
+    },
+    {
+      "Id": 90,
+      "Name": "RenderRoomThumbnail"
+    },
+    {
+      "Id": 2686,
+      "Name": "RenderRoom"
+    },
+    {
+      "Id": 3840,
+      "Name": "RequestCameraConfiguration"
+    },
+    {
+      "Id": 1756,
+      "Name": "CheckUsername"
+    },
+    {
+      "Id": 3465,
+      "Name": "ChangeUsername"
+    },
+    {
+      "Id": 1346,
+      "Name": "SaveWardrobeOutfit"
+    },
+    {
+      "Id": 1787,
+      "Name": "GetWardrobe"
+    },
+    {
+      "Id": 3077,
+      "Name": "GetInterstitial"
+    },
+    {
+      "Id": 2832,
+      "Name": "OpenCampaignCalendarDoor"
+    },
+    {
+      "Id": 776,
+      "Name": "GetGiftWrappingConfig"
+    },
+    {
+      "Id": 2160,
+      "Name": "CatalogSelectVipGift"
+    },
+    {
+      "Id": 1549,
+      "Name": "CatalogRequesetPetBreeds"
+    },
+    {
+      "Id": 3612,
+      "Name": "GetCurrentTimingCode"
+    },
+    {
+      "Id": 518,
+      "Name": "ForwardToRandomCompetitionRoom"
+    },
+    {
+      "Id": 21,
+      "Name": "ForwardToASubmittableRoom"
+    },
+    {
+      "Id": 3049,
+      "Name": "ForwardToACompetitionRoom"
+    },
+    {
+      "Id": 972,
+      "Name": "ShopTargetedOfferViewed"
+    },
+    {
+      "Id": 258,
+      "Name": "SetTargettedOfferState"
+    },
+    {
+      "Id": 679,
+      "Name": "RoomAdPurchaseInitiated"
+    },
+    {
+      "Id": 3943,
+      "Name": "PurchaseVipMembershipExtension"
+    },
+    {
+      "Id": 49,
+      "Name": "PurchaseTargetedOffer"
+    },
+    {
+      "Id": 632,
+      "Name": "PurchaseRoomAd"
+    },
+    {
+      "Id": 1728,
+      "Name": "PurchaseBasicMembershipExtension"
+    },
+    {
+      "Id": 3393,
+      "Name": "MarkCatalogNewAdditionsPageOpened"
+    },
+    {
+      "Id": 2462,
+      "Name": "GetTargetedOffer"
+    },
+    {
+      "Id": 2366,
+      "Name": "GetSeasonalCalendarDailyOffer"
+    },
+    {
+      "Id": 142,
+      "Name": "GetRoomAdPurchaseInfo"
+    },
+    {
+      "Id": 2839,
+      "Name": "GetNextTargetedOffer"
+    },
+    {
+      "Id": 3375,
+      "Name": "GetLimitedOfferAppearingNext"
+    },
+    {
+      "Id": 1101,
+      "Name": "GetIsOfferGiftable"
+    },
+    {
+      "Id": 1503,
+      "Name": "GetHabboClubExtendOffer"
+    },
+    {
+      "Id": 731,
+      "Name": "GetHabboBasicMembershipExtendOffer"
+    },
+    {
+      "Id": 713,
+      "Name": "GetDirectClubBuyAvailable"
+    },
+    {
+      "Id": 3928,
+      "Name": "GetCatalogPageWithEarliestExp"
+    },
+    {
+      "Id": 1809,
+      "Name": "GetCatalogPageExpiration"
+    },
+    {
+      "Id": 1970,
+      "Name": "GetBundleDiscountRuleset"
+    },
+    {
+      "Id": 1186,
+      "Name": "GetBonusRareInfo"
+    },
+    {
+      "Id": 1409,
+      "Name": "UpdateForumSettings"
+    },
+    {
+      "Id": 1159,
+      "Name": "ForumUpdateThread"
+    },
+    {
+      "Id": 3294,
+      "Name": "ClientPong"
+    },
+    {
+      "Id": 4000,
+      "Name": "ReleaseVersion"
+    },
+    {
+      "Id": 3427,
+      "Name": "MyRoomHistorySearch"
+    },
+    {
+      "Id": 2626,
+      "Name": "MyRecommendedRooms"
+    },
+    {
+      "Id": 3123,
+      "Name": "MyGuildBasesSearch"
+    },
+    {
+      "Id": 1644,
+      "Name": "MyFriendsRoomSearch"
+    },
+    {
+      "Id": 1320,
+      "Name": "MyFrequentRoomHistorySearch"
+    },
+    {
+      "Id": 1521,
+      "Name": "MyFavouriteRoomsSearch"
+    },
+    {
+      "Id": 2043,
+      "Name": "GuildBaseSearch"
+    },
+    {
+      "Id": 555,
+      "Name": "GetPopularRoomTags"
+    },
+    {
+      "Id": 1215,
+      "Name": "GetOfficialRooms"
+    },
+    {
+      "Id": 2191,
+      "Name": "GetGuestRoom"
+    },
+    {
+      "Id": 1574,
+      "Name": "ForwardToSomeRoom"
+    },
+    {
+      "Id": 3369,
+      "Name": "MyRoomRightsSearch"
+    },
+    {
+      "Id": 28,
+      "Name": "ForwardToRandomPromotedRoom"
+    },
+    {
+      "Id": 1500,
+      "Name": "RoomFavoriteRemove"
+    },
+    {
+      "Id": 2970,
+      "Name": "GetUserEventCats"
+    },
+    {
+      "Id": 3210,
+      "Name": "GetUserFlatCats"
+    },
+    {
+      "Id": 1671,
+      "Name": "RoomCreate"
+    },
+    {
+      "Id": 3974,
+      "Name": "CompetitionRoomSearch"
+    },
+    {
+      "Id": 2987,
+      "Name": "ConvertGlobalRoomId"
+    },
+    {
+      "Id": 2473,
+      "Name": "CancelRoomEvent"
+    },
+    {
+      "Id": 1890,
+      "Name": "CanCreateRoom"
+    },
+    {
+      "Id": 1383,
+      "Name": "RoomFavorite"
+    },
+    {
+      "Id": 489,
+      "Name": "GroupUnblockMember"
+    },
+    {
+      "Id": 568,
+      "Name": "ApproveAllMembershipRequests"
+    },
+    {
+      "Id": 3726,
+      "Name": "EditRoomEvent"
+    },
+    {
+      "Id": 2988,
+      "Name": "MyRoomsSearch"
+    },
+    {
+      "Id": 26,
+      "Name": "PopularRoomsSearch"
+    },
+    {
+      "Id": 57,
+      "Name": "RoomLike"
+    },
+    {
+      "Id": 644,
+      "Name": "UserEffectActivate"
+    },
+    {
+      "Id": 2100,
+      "Name": "PollStart"
+    },
+    {
+      "Id": 2722,
+      "Name": "PollReject"
+    },
+    {
+      "Id": 2503,
+      "Name": "PollAnswer"
+    },
+    {
+      "Id": 2924,
+      "Name": "NavigatorDeleteSavedSearch"
+    },
+    {
+      "Id": 950,
+      "Name": "NavigatorCategoryListMode"
+    },
+    {
+      "Id": 1537,
+      "Name": "NavigatorSettingsSave"
+    },
+    {
+      "Id": 526,
+      "Name": "NavigatorSearchSave"
+    },
+    {
+      "Id": 3879,
+      "Name": "NavigatorSearchOpen"
+    },
+    {
+      "Id": 267,
+      "Name": "NavigatorSearch"
+    },
+    {
+      "Id": 1969,
+      "Name": "NavigatorSearchClose"
+    },
+    {
+      "Id": 1429,
+      "Name": "NavigatorInit"
+    },
+    {
+      "Id": 2400,
+      "Name": "UpdateRoomThumbnail"
+    },
+    {
+      "Id": 2144,
+      "Name": "UserHomeRoom"
+    },
+    {
+      "Id": 1668,
+      "Name": "RoomFilterWordsModify"
+    },
+    {
+      "Id": 3970,
+      "Name": "RoomFilterWords"
+    },
+    {
+      "Id": 3778,
+      "Name": "RoomStaffPick"
+    },
+    {
+      "Id": 1769,
+      "Name": "SetRoomSessionTags"
+    },
+    {
+      "Id": 3321,
+      "Name": "RoomsWithHighestScoreSearch"
+    },
+    {
+      "Id": 1875,
+      "Name": "RoomsWhereMyFriendsAre"
+    },
+    {
+      "Id": 3582,
+      "Name": "RoomTextSearch"
+    },
+    {
+      "Id": 608,
+      "Name": "RoomAdSearch"
+    },
+    {
+      "Id": 1352,
+      "Name": "RoomAdEventTabViewed"
+    },
+    {
+      "Id": 2896,
+      "Name": "RoomAdEventTabClicked"
+    },
+    {
+      "Id": 2530,
+      "Name": "RoomRightsRemoveOwn"
+    },
+    {
+      "Id": 1656,
+      "Name": "GroupBadges"
+    },
+    {
+      "Id": 3148,
+      "Name": "UserBadges"
+    },
+    {
+      "Id": 2641,
+      "Name": "GroupUnfavorite"
+    },
+    {
+      "Id": 583,
+      "Name": "GroupSavePreferences"
+    },
+    {
+      "Id": 607,
+      "Name": "GuideSessionFeedback"
+    },
+    {
+      "Id": 1268,
+      "Name": "GuideSessionCreate"
+    },
+    {
+      "Id": 2646,
+      "Name": "GetQuizQuestions"
+    },
+    {
+      "Id": 318,
+      "Name": "GetPendingCallsForHelp"
+    },
+    {
+      "Id": 2256,
+      "Name": "GetGuideReportingStatus"
+    },
+    {
+      "Id": 1027,
+      "Name": "GetCfhStatus"
+    },
+    {
+      "Id": 3683,
+      "Name": "DeletePendingCallsForHelp"
+    },
+    {
+      "Id": 3962,
+      "Name": "ChatReviewSessionCreate"
+    },
+    {
+      "Id": 2221,
+      "Name": "ChatReviewGuideVote"
+    },
+    {
+      "Id": 3747,
+      "Name": "ChatReviewGuideDetached"
+    },
+    {
+      "Id": 2278,
+      "Name": "ChatReviewGuideDecides"
+    },
+    {
+      "Id": 2282,
+      "Name": "GuideSessionGetRequesterRoom"
+    },
+    {
+      "Id": 1335,
+      "Name": "CallForHelp"
+    },
+    {
+      "Id": 2469,
+      "Name": "CallForHelpFromPhoto"
+    },
+    {
+      "Id": 1088,
+      "Name": "CallForHelpFromIm"
+    },
+    {
+      "Id": 1785,
+      "Name": "CallForHelpFromForumThread"
+    },
+    {
+      "Id": 392,
+      "Name": "CallForHelpFromForumMessage"
+    },
+    {
+      "Id": 3744,
+      "Name": "HandshakeCompleteDiffie"
+    },
+    {
+      "Id": 2206,
+      "Name": "HandshakeInitDiffie"
+    },
+    {
+      "Id": 1021,
+      "Name": "ClientVariables"
+    },
+    {
+      "Id": 2819,
+      "Name": "SecurityMachine"
+    },
+    {
+      "Id": 2740,
+      "Name": "Disconnect"
+    },
+    {
+      "Id": 232,
+      "Name": "UserInfo"
+    },
+    {
+      "Id": 1461,
+      "Name": "SecurityTicket"
+    },
+    {
+      "Id": 3514,
+      "Name": "CallForHelpFromSelfie"
+    },
+    {
+      "Id": 647,
+      "Name": "GuideSessionGuideDecides"
+    },
+    {
+      "Id": 3260,
+      "Name": "GuideSessionInviteRequester"
+    },
+    {
+      "Id": 2902,
+      "Name": "GuideSessionIsTyping"
+    },
+    {
+      "Id": 209,
+      "Name": "GroupSaveInformation"
+    },
+    {
+      "Id": 235,
+      "Name": "GroupSaveColors"
+    },
+    {
+      "Id": 357,
+      "Name": "GroupSaveBadge"
+    },
+    {
+      "Id": 217,
+      "Name": "GroupSettings"
+    },
+    {
+      "Id": 3071,
+      "Name": "GroupBuy"
+    },
+    {
+      "Id": 1962,
+      "Name": "GroupParts"
+    },
+    {
+      "Id": 2453,
+      "Name": "GroupCreateOptions"
+    },
+    {
+      "Id": 1984,
+      "Name": "GroupDelete"
+    },
+    {
+      "Id": 3938,
+      "Name": "GroupRequestDecline"
+    },
+    {
+      "Id": 2292,
+      "Name": "GroupRequestAccept"
+    },
+    {
+      "Id": 585,
+      "Name": "GroupAdminRemove"
+    },
+    {
+      "Id": 306,
+      "Name": "GroupAdminAdd"
+    },
+    {
+      "Id": 3310,
+      "Name": "GroupMembers"
+    },
+    {
+      "Id": 2326,
+      "Name": "GroupMemberRemove"
+    },
+    {
+      "Id": 837,
+      "Name": "GroupMemberRemoveConfirm"
+    },
+    {
+      "Id": 1126,
+      "Name": "GroupRequest"
+    },
+    {
+      "Id": 1802,
+      "Name": "GroupInfo"
+    },
+    {
+      "Id": 2918,
+      "Name": "DesktopView"
+    },
+    {
+      "Id": 1664,
+      "Name": "SearchFaqs"
+    },
+    {
+      "Id": 2372,
+      "Name": "PostQuizAnswers"
+    },
+    {
+      "Id": 653,
+      "Name": "GuideSessionResolved"
+    },
+    {
+      "Id": 1724,
+      "Name": "GuideSessionRequesterCancels"
+    },
+    {
+      "Id": 506,
+      "Name": "GuideSessionReport"
+    },
+    {
+      "Id": 1039,
+      "Name": "GuideSessionOnDutyUpdate"
+    },
+    {
+      "Id": 2915,
+      "Name": "GuideSessionMessage"
+    },
+    {
+      "Id": 230,
+      "Name": "GroupFavorite"
+    },
+    {
+      "Id": 54,
+      "Name": "RecyclerPrizes"
+    }
+  ]
+}

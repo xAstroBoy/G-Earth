@@ -11,6 +11,10 @@ out/
 bin/
 **/target/
 
+# python helper scripts
+__pycache__/
+*.py[cod]
+
 # our self-made build folder
 /Build/
 
