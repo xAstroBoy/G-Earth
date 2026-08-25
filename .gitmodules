@@ -1,6 +1,6 @@
 [submodule "deps/Proxyee"]
 	path = deps/Proxyee
-	url = https://github.com/AbandonedAccount1111/proxyee.git
+	url = https://github.com/xAstroBoy/proxyee.git
 	branch = xastro-proxy-fixes
 [submodule "deps/g-wasm"]
 	path = deps/g-wasm
